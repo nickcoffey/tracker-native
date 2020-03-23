@@ -1,5 +1,4 @@
 import React from 'react';
-import PageLayout from '../layouts/PageLayout';
 import {Text} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 
@@ -11,11 +10,9 @@ const CurrentWorkout = () => {
   });
 
   return (
-    <PageLayout>
-      <Text style={styles.header} h3>
-        Current Workout
-      </Text>
-    </PageLayout>
+    <Text style={styles.header} h3>
+      Current Workout
+    </Text>
   );
 };
 

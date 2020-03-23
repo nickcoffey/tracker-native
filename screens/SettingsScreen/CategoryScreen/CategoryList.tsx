@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import ThemeContext from '../../../contexts/ThemeContext';
-import {ListItem, Text, Divider} from 'react-native-elements';
+import {ListItem, Text} from 'react-native-elements';
 import {Category} from 'services/CategoryService';
 
 type CategoryListProps = {
@@ -19,10 +19,7 @@ const CategoryList = ({
   const styles = StyleSheet.create({
     header: {
       textAlign: 'center',
-    },
-    divider: {
-      padding: 10,
-      backgroundColor: theme.white,
+      fontSize: 20,
     },
   });
 
@@ -33,16 +30,13 @@ const CategoryList = ({
 
   return (
     <>
-      <Text style={styles.header} h3>
-        Categories
-      </Text>
-      <Divider style={styles.divider} />
+      <Text style={styles.header}>Categories</Text>
       {categories.map((category, index) => (
         <ListItem
           key={index}
           title={category.name}
           subtitle={category.desc}
-          chevron={{color: theme.secondary}}
+          chevron
           topDivider={index === 0}
           bottomDivider
           onPress={() => handlePress(category.id)}

@@ -1,76 +1,36 @@
-import React, {useState} from 'react';
-import {View, StatusBar, StyleSheet} from 'react-native';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import CurrentWorkout from './pages/CurrentWorkout';
-import PastWorkouts from './pages/PastWorkouts';
-import Settings from './pages/Settings/Settings';
+import React from 'react';
+import {StatusBar} from 'react-native';
+import Home from './screens/HomeScreen';
+import CurrentWorkout from './screens/CurrentWorkout';
+import PastWorkouts from './screens/PastWorkouts';
+import Settings from './screens/SettingsScreen/SettingsScreen';
 import ThemeContext, {theme} from './contexts/ThemeContext';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+export type RootStackParamList = {
+  Home: undefined;
+  Current: undefined;
+  Past: undefined;
+  Settings: undefined;
+};
 
 const App = () => {
-  const [pages, setPages] = useState([
-    {
-      isVisible: true,
-      content: <Home />,
-      icon: 'home',
-      title: 'Home',
-    },
-    {
-      isVisible: false,
-      content: <CurrentWorkout />,
-      icon: 'fitness-center',
-      title: 'Current',
-    },
-    {
-      isVisible: false,
-      content: <PastWorkouts />,
-      icon: 'list',
-      title: 'Past',
-    },
-    {
-      isVisible: false,
-      content: <Settings />,
-      icon: 'settings',
-      title: 'Settings',
-    },
-  ]);
-
-  const handleNavPress = (index: number) => {
-    setPages(
-      pages.map((page, i) => ({
-        ...page,
-        isVisible: i === index ? true : false,
-      })),
-    );
-  };
+  const RootStack = createStackNavigator<RootStackParamList>();
 
   return (
     <ThemeContext.Provider value={theme}>
-      <StatusBar barStyle="light-content" />
-      <View style={styles.container}>
-        {pages.map((page, index) => {
-          return (
-            page.isVisible && (
-              <React.Fragment key={index}>{page.content}</React.Fragment>
-            )
-          );
-        })}
-      </View>
-      <Navbar
-        navItems={pages.map(item => ({icon: item.icon, title: item.title}))}
-        onNavPress={handleNavPress}
-      />
+      <StatusBar barStyle="dark-content" />
+      <NavigationContainer>
+        <RootStack.Navigator initialRouteName="Home">
+          <RootStack.Screen name="Home" component={Home} />
+          <RootStack.Screen name="Current" component={CurrentWorkout} />
+          <RootStack.Screen name="Past" component={PastWorkouts} />
+          <RootStack.Screen name="Settings" component={Settings} />
+        </RootStack.Navigator>
+      </NavigationContainer>
     </ThemeContext.Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    backgroundColor: theme.white,
-  },
-});
 
 export default App;

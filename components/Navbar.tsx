@@ -2,38 +2,57 @@ import React, {useContext} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import ThemeContext from '../contexts/ThemeContext';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../App';
 
-type NavProps = {
-  navItems: NavItem[];
-  onNavPress: (index: number) => void;
+type NavigationProp = StackNavigationProp<RootStackParamList>;
+
+type NavbarProps = {
+  navigation: NavigationProp;
 };
 
 type NavItem = {
   icon: string;
-  title: string;
+  title: 'Home' | 'Current' | 'Past' | 'Settings';
 };
 
-const Navbar = ({onNavPress, navItems}: NavProps) => {
+const Navbar = ({navigation}: NavbarProps) => {
   const theme = useContext(ThemeContext);
+  const navItems: NavItem[] = [
+    {
+      icon: 'home',
+      title: 'Home',
+    },
+    {
+      icon: 'fitness-center',
+      title: 'Current',
+    },
+    {
+      icon: 'list',
+      title: 'Past',
+    },
+    {
+      icon: 'settings',
+      title: 'Settings',
+    },
+  ];
 
   const styles = StyleSheet.create({
     nav: {
       flex: 0.075,
       flexDirection: 'row',
-      backgroundColor: theme.primary,
+      backgroundColor: theme.white,
     },
     navItem: {
       flex: 1,
       paddingTop: 4,
-      borderTopWidth: 1,
-      borderColor: theme.black,
     },
     navItemLeftBorder: {
       borderLeftWidth: 1,
     },
     navItemText: {
       textAlign: 'center',
-      color: theme.white,
+      color: theme.black,
     },
   });
 
@@ -41,10 +60,10 @@ const Navbar = ({onNavPress, navItems}: NavProps) => {
     <View style={styles.nav}>
       {navItems.map((navItem, index) => (
         <TouchableOpacity
-          style={[styles.navItem, index !== 0 && styles.navItemLeftBorder]}
-          onPress={() => onNavPress(index)}
+          style={[styles.navItem]}
+          onPress={() => navigation.navigate(navItem.title)}
           key={index}>
-          <Icon name={navItem.icon} type="material" color={theme.white} />
+          <Icon name={navItem.icon} type="material" color={theme.black} />
           <Text style={styles.navItemText}>{navItem.title}</Text>
         </TouchableOpacity>
       ))}

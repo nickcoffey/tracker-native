@@ -5,7 +5,7 @@ import CategoryList from './CategoryList';
 import {Overlay, Button, Divider} from 'react-native-elements';
 import ThemeContext from '../../../contexts/ThemeContext';
 import {StyleSheet} from 'react-native';
-import EditCategory from './EditCategory';
+import EditCategory from './EditCategoryScreen';
 
 type CategorySettingsProps = {
   categories: Category[];
@@ -81,11 +81,7 @@ const CategorySettings = ({
             />
           </Overlay>
           <Divider style={styles.divider} />
-          <Button
-            title="New Category"
-            onPress={() => setIsFormVisible(true)}
-            buttonStyle={styles.btn}
-          />
+          <Button title="New Category" onPress={() => setIsFormVisible(true)} />
         </>
       )}
     </>

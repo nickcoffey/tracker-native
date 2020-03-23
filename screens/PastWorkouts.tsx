@@ -1,9 +1,8 @@
 import React from 'react';
-import PageLayout from '../layouts/PageLayout';
 import {Text} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 
-const Home = () => {
+const PastWorkouts = () => {
   const styles = StyleSheet.create({
     header: {
       textAlign: 'center',
@@ -11,12 +10,10 @@ const Home = () => {
   });
 
   return (
-    <PageLayout>
-      <Text style={styles.header} h3>
-        Home
-      </Text>
-    </PageLayout>
+    <Text style={styles.header} h3>
+      Past Workouts
+    </Text>
   );
 };
 
-export default Home;
+export default PastWorkouts;

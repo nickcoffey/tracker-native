@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {getCategories, CategoryInput} from '../../services/CategoryService';
-import PageLayout from '../../layouts/PageLayout';
-import CategorySettings from './Category/CategorySettings';
+import CategorySettings from './CategoryScreen/CategoryScreen';
 import {createCategory, deleteCategory} from '../../services/CategoryService';
 
 const Settings = () => {
@@ -18,13 +17,11 @@ const Settings = () => {
   };
 
   return (
-    <PageLayout>
-      <CategorySettings
-        categories={categories}
-        createNewCategory={createNewCategory}
-        deleteACategory={deleteACategory}
-      />
-    </PageLayout>
+    <CategorySettings
+      categories={categories}
+      createNewCategory={createNewCategory}
+      deleteACategory={deleteACategory}
+    />
   );
 };
 
