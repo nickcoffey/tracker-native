@@ -35,7 +35,11 @@ const App = () => {
           <RootStack.Screen name="Home" component={Home} />
           <RootStack.Screen name="Current" component={CurrentWorkout} />
           <RootStack.Screen name="Past" component={PastWorkouts} />
-          <RootStack.Screen name="Settings" component={Settings} />
+          <RootStack.Screen
+            name="Settings"
+            component={Settings}
+            options={{title: 'Categories'}}
+          />
           <RootStack.Screen
             name="EditCategory"
             component={EditCategory}

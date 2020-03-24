@@ -1,15 +1,15 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {Overlay, Button, Divider} from 'react-native-elements';
 import {getCategories, CategoryInput} from '../../services/CategoryService';
 import CategoryList from './Category/CategoryList';
 import {createCategory} from '../../services/CategoryService';
 import Form, {InputType} from '../../components/Form';
-import ThemeContext from '../../contexts/ThemeContext';
 import {StyleSheet} from 'react-native';
 import {NavigationProps} from '../../App';
+import {useTheme} from '@react-navigation/native';
 
 const Settings = ({navigation}: NavigationProps) => {
-  const theme = useContext(ThemeContext);
+  const {colors} = useTheme();
   const [categories, setCategories] = useState(getCategories);
   const [newCategory, setNewCategory] = useState(initialNewCategory);
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -51,17 +51,15 @@ const Settings = ({navigation}: NavigationProps) => {
   };
 
   const styles = StyleSheet.create({
-    btn: {
-      backgroundColor: theme.primary,
-    },
     divider: {
       padding: 10,
-      backgroundColor: theme.white,
+      backgroundColor: colors.background,
     },
   });
 
   return (
     <>
+      <Divider style={styles.divider} />
       <CategoryList
         categories={categories}
         openEditCategory={openEditCategory}
