@@ -7,12 +7,19 @@ import Settings from './screens/SettingsScreen/SettingsScreen';
 import ThemeContext, {theme} from './contexts/ThemeContext';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import EditCategory from './screens/SettingsScreen/Category/EditCategoryScreen';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 export type RootStackParamList = {
   Home: undefined;
   Current: undefined;
   Past: undefined;
   Settings: undefined;
+  EditCategory: {id: number};
+};
+
+export type NavigationProps = {
+  navigation: StackNavigationProp<RootStackParamList>;
 };
 
 const App = () => {
@@ -27,6 +34,7 @@ const App = () => {
           <RootStack.Screen name="Current" component={CurrentWorkout} />
           <RootStack.Screen name="Past" component={PastWorkouts} />
           <RootStack.Screen name="Settings" component={Settings} />
+          <RootStack.Screen name="EditCategory" component={EditCategory} />
         </RootStack.Navigator>
       </NavigationContainer>
     </ThemeContext.Provider>

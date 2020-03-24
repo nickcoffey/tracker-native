@@ -1,32 +1,20 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
-import ThemeContext from '../../../contexts/ThemeContext';
 import {ListItem, Text} from 'react-native-elements';
 import {Category} from 'services/CategoryService';
 
 type CategoryListProps = {
   categories: Category[];
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<number>>;
+  openEditCategory: (id: number) => void;
 };
 
-const CategoryList = ({
-  categories,
-  setEditMode,
-  setSelectedCategory,
-}: CategoryListProps) => {
-  const theme = useContext(ThemeContext);
+const CategoryList = ({categories, openEditCategory}: CategoryListProps) => {
   const styles = StyleSheet.create({
     header: {
       textAlign: 'center',
       fontSize: 20,
     },
   });
-
-  const handlePress = (id: number) => {
-    setSelectedCategory(id);
-    setEditMode(true);
-  };
 
   return (
     <>
@@ -39,7 +27,7 @@ const CategoryList = ({
           chevron
           topDivider={index === 0}
           bottomDivider
-          onPress={() => handlePress(category.id)}
+          onPress={() => openEditCategory(category.id)}
         />
       ))}
     </>

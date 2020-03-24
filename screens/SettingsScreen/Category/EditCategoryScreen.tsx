@@ -4,16 +4,24 @@ import {Text, Button, Icon, Overlay} from 'react-native-elements';
 import {StyleSheet, View} from 'react-native';
 import ThemeContext from '../../../contexts/ThemeContext';
 import Form, {InputType} from '../../../components/Form';
+import {RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../../../App';
+
+type EditCategoryScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'EditCategory'
+>;
 
 type EditCategoryProps = {
-  id: number;
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  route: EditCategoryScreenRouteProp;
 };
 
-const EditCategory = ({id, setEditMode}: EditCategoryProps) => {
+const EditCategory = ({route}: EditCategoryProps) => {
   const theme = useContext(ThemeContext);
-  const [category, setCategory] = useState(getACategory(id));
-  const [editableCategory, setEditableCategory] = useState(getACategory(id));
+  const [category, setCategory] = useState(getACategory(route.params.id));
+  const [editableCategory, setEditableCategory] = useState(
+    getACategory(route.params.id),
+  );
   const [isFormVisible, setIsFormVisible] = useState(false);
   const inputs: InputType[] = [
     {
@@ -38,28 +46,13 @@ const EditCategory = ({id, setEditMode}: EditCategoryProps) => {
   const handleSubmit = () => {
     editableCategory && updateACategory(editableCategory);
     setCategory(editableCategory);
-    setEditableCategory(getACategory(id));
+    setEditableCategory(getACategory(route.params.id));
     setIsFormVisible(false);
   };
 
   const styles = StyleSheet.create({
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'stretch',
-    },
-    headerBtn: {
-      backgroundColor: theme.default,
-    },
-    headerBtnContainer: {
-      flex: 1,
-    },
-    headerBtnText: {
-      color: theme.secondary,
-    },
     headerText: {
       textAlign: 'center',
-      flex: 1,
     },
     subHeaderText: {
       textAlign: 'center',
@@ -68,34 +61,11 @@ const EditCategory = ({id, setEditMode}: EditCategoryProps) => {
 
   return (
     <>
-      <View style={styles.header}>
-        <Button
-          containerStyle={styles.headerBtnContainer}
-          buttonStyle={styles.headerBtn}
-          titleStyle={styles.headerBtnText}
-          icon={
-            <Icon
-              type="material"
-              name="chevron-left"
-              size={15}
-              color={theme.secondary}
-            />
-          }
-          title="Back"
-          onPress={() => setEditMode(false)}
-        />
-        <Text style={styles.headerText} h3>
-          {category && category.name}
-        </Text>
-        <Button
-          containerStyle={styles.headerBtnContainer}
-          buttonStyle={styles.headerBtn}
-          titleStyle={styles.headerBtnText}
-          title="Edit"
-          onPress={() => setIsFormVisible(true)}
-        />
-      </View>
+      <Text style={styles.headerText} h3>
+        {category && category.name}
+      </Text>
       <Text style={styles.subHeaderText}>{category && category.desc}</Text>
+      <Button title="Edit" onPress={() => setIsFormVisible(true)} />
       <Overlay
         isVisible={isFormVisible}
         onBackdropPress={() => setIsFormVisible(false)}

@@ -1,16 +1,9 @@
 import React from 'react';
 import {Text, Button} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
-import {RootStackParamList} from '../App';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NavigationProps} from '../App';
 
-type NavigationProp = StackNavigationProp<RootStackParamList>;
-
-type HomeScreenProps = {
-  navigation: NavigationProp;
-};
-
-const HomeScreen = ({navigation}: HomeScreenProps) => {
+const HomeScreen = ({navigation}: NavigationProps) => {
   const styles = StyleSheet.create({
     header: {
       textAlign: 'center',

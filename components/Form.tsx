@@ -21,9 +21,6 @@ const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
   const theme = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
-    btn: {
-      backgroundColor: theme.primary,
-    },
     title: {
       textAlign: 'center',
     },
@@ -49,7 +46,7 @@ const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
         </React.Fragment>
       ))}
       <Divider style={styles.divider} />
-      <Button title="Submit" onPress={handleSubmit} buttonStyle={styles.btn} />
+      <Button title="Submit" onPress={handleSubmit} />
     </>
   );
 };
