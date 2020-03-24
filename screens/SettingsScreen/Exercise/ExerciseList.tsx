@@ -5,7 +5,7 @@ import {Exercise} from 'services/ExerciseService';
 
 type ExerciseListProps = {
   exercises: Exercise[];
-  openEditExercise: (id: number) => void;
+  openEditExercise: (id: number, name: string) => void;
 };
 
 const ExerciseList = ({exercises, openEditExercise}: ExerciseListProps) => {
@@ -27,7 +27,7 @@ const ExerciseList = ({exercises, openEditExercise}: ExerciseListProps) => {
           chevron
           topDivider={index === 0}
           bottomDivider
-          onPress={() => openEditExercise(exercise.id)}
+          onPress={() => openEditExercise(exercise.id, exercise.name)}
         />
       ))}
     </>

@@ -5,7 +5,7 @@ import {Category} from 'services/CategoryService';
 
 type CategoryListProps = {
   categories: Category[];
-  openEditCategory: (id: number) => void;
+  openEditCategory: (id: number, name: string) => void;
 };
 
 const CategoryList = ({categories, openEditCategory}: CategoryListProps) => {
@@ -27,7 +27,7 @@ const CategoryList = ({categories, openEditCategory}: CategoryListProps) => {
           chevron
           topDivider={index === 0}
           bottomDivider
-          onPress={() => openEditCategory(category.id)}
+          onPress={() => openEditCategory(category.id, category.name)}
         />
       ))}
     </>

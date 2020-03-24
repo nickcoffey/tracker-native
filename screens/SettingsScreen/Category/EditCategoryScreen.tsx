@@ -53,16 +53,14 @@ const EditCategory = ({navigation, route}: EditCategoryProps) => {
     setIsFormVisible(false);
   };
 
-  const openEditExercise = (id: number) => {
+  const openEditExercise = (id: number, name: string) => {
     navigation.navigate('EditExercise', {
-      id: id,
+      id,
+      name,
     });
   };
 
   const styles = StyleSheet.create({
-    headerText: {
-      textAlign: 'center',
-    },
     subHeaderText: {
       textAlign: 'center',
     },
@@ -70,9 +68,6 @@ const EditCategory = ({navigation, route}: EditCategoryProps) => {
 
   return (
     <>
-      <Text style={styles.headerText} h3>
-        {category && category.name}
-      </Text>
       <Text style={styles.subHeaderText}>{category && category.desc}</Text>
       <Button title="Edit" onPress={() => setIsFormVisible(true)} />
       <ExerciseList exercises={exercises} openEditExercise={openEditExercise} />

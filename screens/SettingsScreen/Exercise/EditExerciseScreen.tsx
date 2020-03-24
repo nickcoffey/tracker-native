@@ -52,9 +52,6 @@ const EditExercise = ({route}: EditExerciseProps) => {
   };
 
   const styles = StyleSheet.create({
-    headerText: {
-      textAlign: 'center',
-    },
     subHeaderText: {
       textAlign: 'center',
     },
@@ -62,9 +59,6 @@ const EditExercise = ({route}: EditExerciseProps) => {
 
   return (
     <>
-      <Text style={styles.headerText} h3>
-        {exercise && exercise.name}
-      </Text>
       <Text style={styles.subHeaderText}>{exercise && exercise.desc}</Text>
       <Button title="Edit" onPress={() => setIsFormVisible(true)} />
       <Overlay

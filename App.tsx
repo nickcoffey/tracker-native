@@ -16,8 +16,8 @@ export type RootStackParamList = {
   Current: undefined;
   Past: undefined;
   Settings: undefined;
-  EditCategory: {id: number};
-  EditExercise: {id: number};
+  EditCategory: {id: number; name: string};
+  EditExercise: {id: number; name: string};
 };
 
 export type NavigationProps = {
@@ -36,8 +36,16 @@ const App = () => {
           <RootStack.Screen name="Current" component={CurrentWorkout} />
           <RootStack.Screen name="Past" component={PastWorkouts} />
           <RootStack.Screen name="Settings" component={Settings} />
-          <RootStack.Screen name="EditCategory" component={EditCategory} />
-          <RootStack.Screen name="EditExercise" component={EditExercise} />
+          <RootStack.Screen
+            name="EditCategory"
+            component={EditCategory}
+            options={({route}) => ({title: route.params.name})}
+          />
+          <RootStack.Screen
+            name="EditExercise"
+            component={EditExercise}
+            options={({route}) => ({title: route.params.name})}
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     </ThemeContext.Provider>

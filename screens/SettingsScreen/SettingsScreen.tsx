@@ -43,9 +43,10 @@ const Settings = ({navigation}: NavigationProps) => {
     setIsFormVisible(false);
   };
 
-  const openEditCategory = (id: number) => {
+  const openEditCategory = (id: number, name: string) => {
     navigation.navigate('EditCategory', {
-      id: id,
+      id,
+      name,
     });
   };
 
