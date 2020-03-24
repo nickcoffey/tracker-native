@@ -9,6 +9,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import EditCategory from './screens/SettingsScreen/Category/EditCategoryScreen';
 import {StackNavigationProp} from '@react-navigation/stack';
+import EditExercise from './screens/SettingsScreen/Exercise/EditExerciseScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   Past: undefined;
   Settings: undefined;
   EditCategory: {id: number};
+  EditExercise: {id: number};
 };
 
 export type NavigationProps = {
@@ -35,6 +37,7 @@ const App = () => {
           <RootStack.Screen name="Past" component={PastWorkouts} />
           <RootStack.Screen name="Settings" component={Settings} />
           <RootStack.Screen name="EditCategory" component={EditCategory} />
+          <RootStack.Screen name="EditExercise" component={EditExercise} />
         </RootStack.Navigator>
       </NavigationContainer>
     </ThemeContext.Provider>

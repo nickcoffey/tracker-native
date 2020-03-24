@@ -2,6 +2,10 @@ export const getExercises = (): Exercise[] => {
   return exercises;
 };
 
+export const getExercisesByCategory = (categoryId: number): Exercise[] => {
+  return exercises.filter(exercise => exercise.categoryId === categoryId);
+};
+
 export const getAnExercise = (id: number): Exercise | undefined => {
   return exercises.find(exercise => exercise.id === id);
 };
@@ -10,6 +14,12 @@ export const createExercise = ({name, desc, categoryId}: ExerciseInput) => {
   const tempExercises = getExercises();
   let id = tempExercises[tempExercises.length - 1].id + 1;
   exercises.push({id, name, desc, categoryId});
+};
+
+export const updateAnExercise = (updatedExercise: Exercise) => {
+  exercises.map(
+    exercise => updatedExercise.id === exercise.id && updatedExercise,
+  );
 };
 
 export const deleteExercise = (id: number) => {
