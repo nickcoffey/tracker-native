@@ -1,8 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {getACategory, updateACategory} from '../../../services/CategoryService';
-import {Text, Button, Icon, Overlay} from 'react-native-elements';
-import {StyleSheet, View} from 'react-native';
-import ThemeContext from '../../../contexts/ThemeContext';
+import {Text, Button, Overlay} from 'react-native-elements';
+import {StyleSheet} from 'react-native';
 import Form, {InputType} from '../../../components/Form';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../../App';
@@ -17,7 +16,6 @@ type EditCategoryProps = {
 };
 
 const EditCategory = ({route}: EditCategoryProps) => {
-  const theme = useContext(ThemeContext);
   const [category, setCategory] = useState(getACategory(route.params.id));
   const [editableCategory, setEditableCategory] = useState(
     getACategory(route.params.id),

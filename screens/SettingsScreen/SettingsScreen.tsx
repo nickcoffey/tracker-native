@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {Overlay, Button, Divider} from 'react-native-elements';
 import {getCategories, CategoryInput} from '../../services/CategoryService';
 import CategoryList from './Category/CategoryList';
-import {createCategory, deleteCategory} from '../../services/CategoryService';
+import {createCategory} from '../../services/CategoryService';
 import Form, {InputType} from '../../components/Form';
 import ThemeContext from '../../contexts/ThemeContext';
 import {StyleSheet} from 'react-native';
@@ -30,11 +30,6 @@ const Settings = ({navigation}: NavigationProps) => {
 
   const createNewCategory = ({name, desc}: CategoryInput) => {
     createCategory({name, desc});
-    setCategories(getCategories());
-  };
-
-  const deleteACategory = (id: number) => {
-    deleteCategory(id);
     setCategories(getCategories());
   };
 
