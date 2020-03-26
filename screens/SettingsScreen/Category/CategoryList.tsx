@@ -1,6 +1,6 @@
 import React from 'react';
 import {ListItem} from 'react-native-elements';
-import {Category} from 'services/CategoryService';
+import {Category} from '../../../graphql/CategoryGQL';
 
 type CategoryListProps = {
   categories: Category[];

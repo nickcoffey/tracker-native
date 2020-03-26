@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {ListItem, Text} from 'react-native-elements';
-import {Exercise} from 'services/ExerciseService';
+import {Exercise} from '../../../graphql/ExerciseGQL';
 
 type ExerciseListProps = {
   exercises: Exercise[];

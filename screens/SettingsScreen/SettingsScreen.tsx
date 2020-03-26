@@ -1,50 +1,24 @@
-import React, {useState} from 'react';
-import {Overlay, Button, Divider} from 'react-native-elements';
-import {getCategories, CategoryInput} from '../../services/CategoryService';
+import React, {useState, useEffect} from 'react';
+import {Button, Divider} from 'react-native-elements';
+import {ALL_CATEGORIES, AllCategoriesData} from '../../graphql/CategoryGQL';
 import CategoryList from './Category/CategoryList';
-import {createCategory} from '../../services/CategoryService';
-import Form, {InputType} from '../../components/Form';
 import {StyleSheet} from 'react-native';
 import {NavigationProps} from '../../App';
 import {useTheme} from '@react-navigation/native';
+import {useQuery} from '@apollo/react-hooks';
+import NewCategory from './Category/NewCategory';
 
 const Settings = ({navigation}: NavigationProps) => {
+  const {data, refetch} = useQuery<AllCategoriesData>(ALL_CATEGORIES);
   const {colors} = useTheme();
-  const [categories, setCategories] = useState(getCategories);
-  const [newCategory, setNewCategory] = useState(initialNewCategory);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const inputs: InputType[] = [
-    {
-      label: 'Name',
-      placeholder: 'Enter a name',
-      key: 'name',
-      value: newCategory.name,
-    },
-    {
-      label: 'Description',
-      placeholder: 'Enter a description',
-      key: 'desc',
-      value: newCategory.desc,
-    },
-  ];
 
-  const createNewCategory = ({name, desc}: CategoryInput) => {
-    createCategory({name, desc});
-    setCategories(getCategories());
-  };
-
-  const handleCategoryChange = (key: string, value: string) => {
-    setNewCategory({...newCategory, [key]: value});
-  };
-
-  const handleSubmit = () => {
-    createNewCategory(newCategory);
-    setNewCategory(initialNewCategory);
-    setIsFormVisible(false);
-  };
+  useEffect(() => {
+    refetch();
+  });
 
   const openEditCategory = (id: number, name: string) => {
-    navigation.navigate('EditCategory', {
+    navigation.navigate('Category', {
       id,
       name,
     });
@@ -61,29 +35,18 @@ const Settings = ({navigation}: NavigationProps) => {
     <>
       <Divider style={styles.divider} />
       <CategoryList
-        categories={categories}
+        categories={data?.categories || []}
         openEditCategory={openEditCategory}
       />
-      <Overlay
-        isVisible={isFormVisible}
-        onBackdropPress={() => setIsFormVisible(false)}
-        height="auto">
-        <Form
-          inputs={inputs}
-          title="New Category"
-          handleChange={handleCategoryChange}
-          handleSubmit={handleSubmit}
-        />
-      </Overlay>
+      <NewCategory
+        isFormVisible={isFormVisible}
+        setIsFormVisible={setIsFormVisible}
+        refetch={refetch}
+      />
       <Divider style={styles.divider} />
       <Button title="New Category" onPress={() => setIsFormVisible(true)} />
     </>
   );
-};
-
-const initialNewCategory = {
-  name: '',
-  desc: '',
 };
 
 export default Settings;

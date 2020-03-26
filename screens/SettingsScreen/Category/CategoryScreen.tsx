@@ -1,10 +1,5 @@
 import React, {useState} from 'react';
-import {getACategory, updateACategory} from '../../../services/CategoryService';
-import {
-  getExercisesByCategory,
-  ExerciseInput,
-  createExercise,
-} from '../../../services/ExerciseService';
+import {ExerciseInput, createExercise} from '../../../services/ExerciseService';
 import {Text, Button, Overlay, Divider} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 import Form, {InputType} from '../../../components/Form';
@@ -12,42 +7,29 @@ import {RouteProp, useTheme} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../App';
 import ExerciseList from '../Exercise/ExerciseList';
+import {
+  CATEGORY_WITH_EXERCISES,
+  CategoryWithExercisesData,
+} from '../../../graphql/CategoryGQL';
+import {useQuery} from '@apollo/react-hooks';
+import EditCategory from './EditCategory';
 
-type EditCategoryScreenRouteProp = RouteProp<
-  RootStackParamList,
-  'EditCategory'
->;
+type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
 
-type EditCategoryProps = {
+type CategoryScreenProps = {
   navigation: StackNavigationProp<RootStackParamList>;
-  route: EditCategoryScreenRouteProp;
+  route: CategoryScreenRouteProp;
 };
 
-const EditCategory = ({navigation, route}: EditCategoryProps) => {
+const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
   const {colors} = useTheme();
-  const [category, setCategory] = useState(getACategory(route.params.id));
-  const [exercises, setExercises] = useState(
-    getExercisesByCategory(route.params.id),
-  );
-
-  const [editableCategory, setEditableCategory] = useState(
-    getACategory(route.params.id),
+  const {data, refetch} = useQuery<CategoryWithExercisesData>(
+    CATEGORY_WITH_EXERCISES,
+    {
+      variables: {id: route.params.id},
+    },
   );
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-  const editInputs: InputType[] = [
-    {
-      label: 'Name',
-      placeholder: 'Enter a name',
-      key: 'name',
-      value: (editableCategory && editableCategory.name) || '',
-    },
-    {
-      label: 'Description',
-      placeholder: 'Enter a description',
-      key: 'desc',
-      value: (editableCategory && editableCategory.desc) || '',
-    },
-  ];
 
   const [newExercise, setNewExercise] = useState<ExerciseInput>({
     name: '',
@@ -76,25 +58,13 @@ const EditCategory = ({navigation, route}: EditCategoryProps) => {
 
   const handleExerciseSubmit = () => {
     createExercise(newExercise);
-    setExercises(getExercisesByCategory(route.params.id));
+    //setExercises(getExercisesByCategory(route.params.id));
     setNewExercise({
       name: '',
       desc: '',
       categoryId: route.params.id,
     });
     setIsExerciseFormVisible(false);
-  };
-
-  const handleCategoryChange = (key: string, value: string) => {
-    editableCategory &&
-      setEditableCategory({...editableCategory, [key]: value});
-  };
-
-  const handleCategorySubmit = () => {
-    editableCategory && updateACategory(editableCategory);
-    setCategory(editableCategory);
-    setEditableCategory(getACategory(route.params.id));
-    setIsEditFormVisible(false);
   };
 
   const openEditExercise = (id: number, name: string) => {
@@ -116,21 +86,23 @@ const EditCategory = ({navigation, route}: EditCategoryProps) => {
 
   return (
     <>
-      <Text style={styles.subHeaderText}>{category && category.desc}</Text>
-      <Button title="Edit" onPress={() => setIsEditFormVisible(true)} />
+      <Text style={styles.subHeaderText}>{data && data?.category.desc}</Text>
+      {data?.category && (
+        <>
+          <Button title="Edit" onPress={() => setIsEditFormVisible(true)} />
+          <EditCategory
+            category={data?.category}
+            isFormVisible={isEditFormVisible}
+            setIsFormVisible={setIsEditFormVisible}
+            refetch={refetch}
+          />
+        </>
+      )}
       <Divider style={styles.divider} />
-      <Overlay
-        isVisible={isEditFormVisible}
-        onBackdropPress={() => setIsEditFormVisible(false)}
-        height="auto">
-        <Form
-          inputs={editInputs}
-          title={`Edit ${category && category.name}`}
-          handleChange={handleCategoryChange}
-          handleSubmit={handleCategorySubmit}
-        />
-      </Overlay>
-      <ExerciseList exercises={exercises} openEditExercise={openEditExercise} />
+      <ExerciseList
+        exercises={data?.category.exercises || []}
+        openEditExercise={openEditExercise}
+      />
       <Divider style={styles.divider} />
       <Button
         title="New Exercise"
@@ -151,4 +123,4 @@ const EditCategory = ({navigation, route}: EditCategoryProps) => {
   );
 };
 
-export default EditCategory;
+export default CategoryScreen;
