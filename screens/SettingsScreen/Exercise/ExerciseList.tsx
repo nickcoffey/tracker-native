@@ -5,16 +5,28 @@ import {Exercise} from '../../../graphql/ExerciseGQL';
 
 type ExerciseListProps = {
   exercises: Exercise[];
-  openEditExercise: (id: number, name: string) => void;
+  openEditExercise: (id: string, name: string) => void;
+  setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteExerciseId: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const ExerciseList = ({exercises, openEditExercise}: ExerciseListProps) => {
+const ExerciseList = ({
+  exercises,
+  openEditExercise,
+  setDeleteExerciseId,
+  setIsDeleteModalVisible,
+}: ExerciseListProps) => {
   const styles = StyleSheet.create({
     header: {
       textAlign: 'center',
       fontSize: 20,
     },
   });
+
+  const handleDeletePress = (id: string) => {
+    setDeleteExerciseId(id);
+    setIsDeleteModalVisible(true);
+  };
 
   return (
     <>
@@ -28,6 +40,7 @@ const ExerciseList = ({exercises, openEditExercise}: ExerciseListProps) => {
           topDivider={index === 0}
           bottomDivider
           onPress={() => openEditExercise(exercise.id, exercise.name)}
+          onLongPress={() => handleDeletePress(exercise.id)}
         />
       ))}
     </>

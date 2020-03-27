@@ -39,13 +39,13 @@ const EditCategory = ({
       label: 'Name',
       placeholder: 'Enter a name',
       key: 'name',
-      value: (editableCategory && editableCategory.name) || '',
+      value: editableCategory.name,
     },
     {
       label: 'Description',
       placeholder: 'Enter a description',
       key: 'desc',
-      value: (editableCategory && editableCategory.desc) || '',
+      value: editableCategory.desc,
     },
   ];
 

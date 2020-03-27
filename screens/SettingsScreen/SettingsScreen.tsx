@@ -14,7 +14,7 @@ import {useTheme} from '@react-navigation/native';
 import {useQuery, useMutation} from '@apollo/react-hooks';
 import NewCategory from './Category/NewCategory';
 
-const Settings = ({navigation}: NavigationProps) => {
+const SettingsScreen = ({navigation}: NavigationProps) => {
   // GRAPHQL
   const {data, loading} = useQuery<AllCategoriesData>(ALL_CATEGORIES);
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
@@ -89,4 +89,4 @@ const Settings = ({navigation}: NavigationProps) => {
   );
 };
 
-export default Settings;
+export default SettingsScreen;

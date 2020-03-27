@@ -3,13 +3,13 @@ import {StatusBar} from 'react-native';
 import Home from './screens/HomeScreen';
 import CurrentWorkout from './screens/CurrentWorkout';
 import PastWorkouts from './screens/PastWorkouts';
-import Settings from './screens/SettingsScreen/SettingsScreen';
+import SettingsScreen from './screens/SettingsScreen/SettingsScreen';
 import ThemeContext, {theme} from './contexts/ThemeContext';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import CategoryScreen from './screens/SettingsScreen/Category/CategoryScreen';
 import {StackNavigationProp} from '@react-navigation/stack';
-import EditExercise from './screens/SettingsScreen/Exercise/ExerciseScreen';
+import ExerciseScreen from './screens/SettingsScreen/Exercise/ExerciseScreen';
 import GQLProvider from './graphql/GQLProvider';
 
 export type RootStackParamList = {
@@ -18,7 +18,7 @@ export type RootStackParamList = {
   Past: undefined;
   Settings: undefined;
   Category: {id: string; name: string};
-  Exercise: {id: number; name: string};
+  Exercise: {id: string; name: string};
 };
 
 export type NavigationProps = {
@@ -39,7 +39,7 @@ const App = () => {
             <RootStack.Screen name="Past" component={PastWorkouts} />
             <RootStack.Screen
               name="Settings"
-              component={Settings}
+              component={SettingsScreen}
               options={{title: 'Categories'}}
             />
             <RootStack.Screen
@@ -49,7 +49,7 @@ const App = () => {
             />
             <RootStack.Screen
               name="Exercise"
-              component={EditExercise}
+              component={ExerciseScreen}
               options={({route}) => ({title: route.params.name})}
             />
           </RootStack.Navigator>
