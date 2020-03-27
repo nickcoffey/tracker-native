@@ -17,7 +17,7 @@ export type RootStackParamList = {
   Current: undefined;
   Past: undefined;
   Settings: undefined;
-  Category: {id: number; name: string};
+  Category: {id: string; name: string};
   EditExercise: {id: number; name: string};
 };
 

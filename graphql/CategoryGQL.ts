@@ -46,6 +46,16 @@ export const UPDATE_CATEGORY = gql`
   }
 `;
 
+export const REMOVE_CATEGORY = gql`
+  mutation removeCategory($id: ID!) {
+    removeCategory(id: $id) {
+      id
+      name
+      desc
+    }
+  }
+`;
+
 export type Category = {
   id: string;
   name: string;

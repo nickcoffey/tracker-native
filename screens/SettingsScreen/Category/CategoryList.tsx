@@ -4,23 +4,38 @@ import {Category} from '../../../graphql/CategoryGQL';
 
 type CategoryListProps = {
   categories: Category[];
-  openEditCategory: (id: number, name: string) => void;
+  openEditCategory: (id: string, name: string) => void;
+  setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteCategoryId: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CategoryList = ({categories, openEditCategory}: CategoryListProps) => (
-  <>
-    {categories.map((category, index) => (
-      <ListItem
-        key={index}
-        title={category.name}
-        subtitle={category.desc}
-        chevron
-        topDivider={index === 0}
-        bottomDivider
-        onPress={() => openEditCategory(category.id, category.name)}
-      />
-    ))}
-  </>
-);
+const CategoryList = ({
+  categories,
+  openEditCategory,
+  setIsDeleteModalVisible,
+  setDeleteCategoryId,
+}: CategoryListProps) => {
+  const handleDeletePress = (id: string) => {
+    setDeleteCategoryId(id);
+    setIsDeleteModalVisible(true);
+  };
+
+  return (
+    <>
+      {categories.map((category, index) => (
+        <ListItem
+          key={index}
+          title={category.name}
+          subtitle={category.desc}
+          chevron
+          topDivider={index === 0}
+          bottomDivider
+          onPress={() => openEditCategory(category.id, category.name)}
+          onLongPress={() => handleDeletePress(category.id)}
+        />
+      ))}
+    </>
+  );
+};
 
 export default CategoryList;
