@@ -50,8 +50,7 @@ const EditCategory = ({
   ];
 
   const handleChange = (key: string, value: string) => {
-    editableCategory &&
-      setEditableCategory({...editableCategory, [key]: value});
+    setEditableCategory({...editableCategory, [key]: value});
   };
 
   const handleSubmit = () => {

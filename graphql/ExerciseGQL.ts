@@ -10,6 +10,16 @@ export const ADD_EXERCISE = gql`
   }
 `;
 
+export const EXERCISE = gql`
+  query getExercise($id: ID!) {
+    exercise(id: $id) {
+      id
+      name
+      desc
+    }
+  }
+`;
+
 export type ExerciseCreateInput = {
   name: string;
   desc?: string;
@@ -20,9 +30,13 @@ export type Exercise = {
   id: string;
   name: string;
   desc: string;
-  exerciseId: string;
+  categoryId: string;
 };
 
 export type ExerciseData = {
   exercise: Exercise;
+};
+
+export type ExercisesData = {
+  exercises: Exercise[];
 };

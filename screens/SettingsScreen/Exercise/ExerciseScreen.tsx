@@ -1,28 +1,27 @@
 import React, {useState} from 'react';
-import {
-  getAnExercise,
-  updateAnExercise,
-} from '../../../services/ExerciseService';
+import PageLayout from '../../../layouts/PageLayout';
+import {updateAnExercise} from '../../../services/ExerciseService';
 import {Text, Button, Overlay} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 import Form, {InputType} from '../../../components/Form';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../../App';
+import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL';
+import {useQuery} from '@apollo/react-hooks';
 
-type EditExerciseScreenRouteProp = RouteProp<
-  RootStackParamList,
-  'EditExercise'
->;
+type ExerciseScreenRouteProp = RouteProp<RootStackParamList, 'Exercise'>;
 
 type EditExerciseProps = {
-  route: EditExerciseScreenRouteProp;
+  route: ExerciseScreenRouteProp;
 };
 
 const EditExercise = ({route}: EditExerciseProps) => {
-  const [exercise, setExercise] = useState(getAnExercise(route.params.id));
-  const [editableExercise, setEditableExercise] = useState(
-    getAnExercise(route.params.id),
-  );
+  const exerciseId = route.params.id;
+  const {data, loading} = useQuery<ExerciseData>(EXERCISE, {
+    variables: {id: exerciseId},
+  });
+  //const [exercise, setExercise] = useState(getAnExercise(route.params.id));
+  const [editableExercise, setEditableExercise] = useState(data?.exercise);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const inputs: InputType[] = [
     {
@@ -46,8 +45,7 @@ const EditExercise = ({route}: EditExerciseProps) => {
 
   const handleSubmit = () => {
     editableExercise && updateAnExercise(editableExercise);
-    setExercise(editableExercise);
-    setEditableExercise(getAnExercise(route.params.id));
+    //setEditableExercise(getAnExercise(route.params.id));
     setIsFormVisible(false);
   };
 
@@ -58,8 +56,8 @@ const EditExercise = ({route}: EditExerciseProps) => {
   });
 
   return (
-    <>
-      <Text style={styles.subHeaderText}>{exercise && exercise.desc}</Text>
+    <PageLayout loading={loading}>
+      <Text style={styles.subHeaderText}>{data?.exercise.desc}</Text>
       <Button title="Edit" onPress={() => setIsFormVisible(true)} />
       <Overlay
         isVisible={isFormVisible}
@@ -67,12 +65,12 @@ const EditExercise = ({route}: EditExerciseProps) => {
         height="auto">
         <Form
           inputs={inputs}
-          title={`Edit ${exercise && exercise.name}`}
+          title={`Edit ${data?.exercise.name}`}
           handleChange={handleExerciseChange}
           handleSubmit={handleSubmit}
         />
       </Overlay>
-    </>
+    </PageLayout>
   );
 };
 
