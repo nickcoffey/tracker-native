@@ -1,24 +1,28 @@
-import React, {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
-import ThemeContext from '../contexts/ThemeContext';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {Text} from 'react-native-elements';
 
 type PageLayoutProps = {
+  loading: boolean;
   children?: JSX.Element | JSX.Element[];
 };
 
-const PageLayout = ({children}: PageLayoutProps) => {
-  const theme = useContext(ThemeContext);
+const styles = StyleSheet.create({
+  loading: {
+    textAlign: 'center',
+  },
+});
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'stretch',
-      backgroundColor: theme.white,
-    },
-  });
-
-  return <View style={styles.container}>{children}</View>;
-};
+const PageLayout = ({loading, children}: PageLayoutProps) => (
+  <React.Fragment>
+    {loading ? (
+      <Text style={styles.loading} h4>
+        Loading...
+      </Text>
+    ) : (
+      children
+    )}
+  </React.Fragment>
+);
 
 export default PageLayout;

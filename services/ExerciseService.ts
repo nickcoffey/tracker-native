@@ -2,11 +2,11 @@ export const getExercises = (): Exercise[] => {
   return exercises;
 };
 
-export const getExercisesByCategory = (categoryId: number): Exercise[] => {
+export const getExercisesByCategory = (categoryId: string): Exercise[] => {
   return exercises.filter(exercise => exercise.categoryId === categoryId);
 };
 
-export const getAnExercise = (id: number): Exercise | undefined => {
+export const getAnExercise = (id: string): Exercise | undefined => {
   return exercises.find(exercise => exercise.id === id);
 };
 
@@ -22,59 +22,59 @@ export const updateAnExercise = (updatedExercise: Exercise) => {
   );
 };
 
-export const deleteExercise = (id: number) => {
+export const deleteExercise = (id: string) => {
   exercises = exercises.filter(exercise => exercise.id !== id && exercise);
 };
 
 export type ExerciseInput = {
   name: string;
   desc: string;
-  categoryId: number;
+  categoryId: string;
 };
 
 export type Exercise = {
-  id: number;
+  id: string;
   name: string;
   desc: string;
-  categoryId: number;
+  categoryId: string;
 };
 
 let exercises: Exercise[] = [
   {
-    id: 0,
+    id: '0',
     name: 'Bench Press',
     desc: 'Bench description',
-    categoryId: 0,
+    categoryId: '0',
   },
   {
-    id: 1,
+    id: '1',
     name: 'Push-Ups',
     desc: 'Push-Up description',
-    categoryId: 0,
+    categoryId: '0',
   },
   {
-    id: 2,
+    id: '2',
     name: 'Squats',
     desc: 'Squat description',
-    categoryId: 1,
+    categoryId: '1',
   },
   {
-    id: 3,
+    id: '3',
     name: 'Calf Raises',
     desc: 'Calf raise description',
-    categoryId: 1,
+    categoryId: '1',
   },
 
   {
-    id: 4,
+    id: '4',
     name: 'Pull-Ups',
     desc: 'Pull-Up description',
-    categoryId: 2,
+    categoryId: '2',
   },
   {
-    id: 5,
+    id: '5',
     name: 'Bent Over Rows',
     desc: 'Bent Over Row description',
-    categoryId: 2,
+    categoryId: '2',
   },
 ];

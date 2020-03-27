@@ -9,7 +9,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import CategoryScreen from './screens/SettingsScreen/Category/CategoryScreen';
 import {StackNavigationProp} from '@react-navigation/stack';
-import EditExercise from './screens/SettingsScreen/Exercise/EditExerciseScreen';
+import EditExercise from './screens/SettingsScreen/Exercise/ExerciseScreen';
 import GQLProvider from './graphql/GQLProvider';
 
 export type RootStackParamList = {
@@ -18,7 +18,7 @@ export type RootStackParamList = {
   Past: undefined;
   Settings: undefined;
   Category: {id: string; name: string};
-  EditExercise: {id: number; name: string};
+  Exercise: {id: number; name: string};
 };
 
 export type NavigationProps = {
@@ -48,7 +48,7 @@ const App = () => {
               options={({route}) => ({title: route.params.name})}
             />
             <RootStack.Screen
-              name="EditExercise"
+              name="Exercise"
               component={EditExercise}
               options={({route}) => ({title: route.params.name})}
             />

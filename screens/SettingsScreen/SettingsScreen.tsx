@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PageLayout from '../../layouts/PageLayout';
 import {Button, Divider, Overlay, Text} from 'react-native-elements';
 import {
   ALL_CATEGORIES,
@@ -15,7 +16,7 @@ import NewCategory from './Category/NewCategory';
 
 const Settings = ({navigation}: NavigationProps) => {
   // GRAPHQL
-  const {data} = useQuery<AllCategoriesData>(ALL_CATEGORIES);
+  const {data, loading} = useQuery<AllCategoriesData>(ALL_CATEGORIES);
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [removeCategory] = useMutation<
     {removedCategory: CategoryData},
@@ -53,7 +54,7 @@ const Settings = ({navigation}: NavigationProps) => {
   });
 
   return (
-    <>
+    <PageLayout loading={loading}>
       <Divider style={styles.divider} />
       <CategoryList
         categories={data?.categories || []}
@@ -84,7 +85,7 @@ const Settings = ({navigation}: NavigationProps) => {
           <Button title="No" onPress={() => handleCategoryRemove(false)} />
         </>
       </Overlay>
-    </>
+    </PageLayout>
   );
 };
 

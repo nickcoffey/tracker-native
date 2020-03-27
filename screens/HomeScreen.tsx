@@ -1,4 +1,5 @@
 import React from 'react';
+import PageLayout from '../layouts/PageLayout';
 import {Text, Button, Divider} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 import {NavigationProps} from '../App';
@@ -17,7 +18,7 @@ const HomeScreen = ({navigation}: NavigationProps) => {
   });
 
   return (
-    <>
+    <PageLayout loading={false}>
       <Text style={styles.header} h3>
         Home
       </Text>
@@ -36,7 +37,7 @@ const HomeScreen = ({navigation}: NavigationProps) => {
         title="Go to Settings"
         onPress={() => navigation.navigate('Settings')}
       />
-    </>
+    </PageLayout>
   );
 };
 
