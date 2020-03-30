@@ -7,17 +7,23 @@ import {
 } from '../../../graphql/ExerciseGQL';
 import {useMutation} from '@apollo/react-hooks';
 import Form, {InputType} from '../../../components/Form';
+import {ApolloQueryResult} from 'apollo-boost';
+import {CategoryWithExercisesData} from 'graphql/CategoryGQL';
 
 type NewExerciseProps = {
   isFormVisible: boolean;
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   categoryId: string;
+  refetch: (
+    variables?: Record<string, any> | undefined,
+  ) => Promise<ApolloQueryResult<CategoryWithExercisesData>>;
 };
 
 const NewExercise = ({
   isFormVisible,
   setIsFormVisible,
   categoryId,
+  refetch,
 }: NewExerciseProps) => {
   const blankExercise: ExerciseCreateInput = {
     name: '',
@@ -51,6 +57,7 @@ const NewExercise = ({
 
   const handleSubmit = () => {
     addExercise();
+    refetch();
     setNewExercise(blankExercise);
     setIsFormVisible(false);
   };

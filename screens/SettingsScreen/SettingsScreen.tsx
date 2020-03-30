@@ -44,6 +44,10 @@ const SettingsScreen = ({navigation}: NavigationProps) => {
       padding: 10,
       backgroundColor: colors.background,
     },
+    modalDivider: {
+      padding: 10,
+      backgroundColor: 'white',
+    },
     dangerBtn: {
       backgroundColor: 'red',
     },
@@ -76,7 +80,7 @@ const SettingsScreen = ({navigation}: NavigationProps) => {
           <Text style={styles.deleteWarning}>
             Are you sure you want to delete this category?
           </Text>
-          <Divider style={styles.divider} />
+          <Divider style={styles.modalDivider} />
           <Button
             title="Yes"
             buttonStyle={styles.dangerBtn}

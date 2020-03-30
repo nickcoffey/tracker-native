@@ -25,7 +25,7 @@ type CategoryScreenProps = {
 const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
   const {colors} = useTheme();
   const categoryId = route.params.id;
-  const {data, loading} = useQuery<CategoryWithExercisesData>(
+  const {data, loading, refetch} = useQuery<CategoryWithExercisesData>(
     CATEGORY_WITH_EXERCISES,
     {
       variables: {id: categoryId},
@@ -59,6 +59,10 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     divider: {
       padding: 10,
       backgroundColor: colors.background,
+    },
+    modalDivider: {
+      padding: 10,
+      backgroundColor: 'white',
     },
     dangerBtn: {
       backgroundColor: 'red',
@@ -100,6 +104,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
         isFormVisible={isExerciseFormVisible}
         setIsFormVisible={setIsExerciseFormVisible}
         categoryId={categoryId}
+        refetch={refetch}
       />
       <Overlay
         isVisible={isDeleteModalVisible}
@@ -109,7 +114,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
           <Text style={styles.deleteWarning}>
             Are you sure you want to delete this exercise?
           </Text>
-          <Divider style={styles.divider} />
+          <Divider style={styles.modalDivider} />
           <Button
             title="Yes"
             buttonStyle={styles.dangerBtn}
