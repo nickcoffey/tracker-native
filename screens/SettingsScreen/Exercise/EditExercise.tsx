@@ -8,17 +8,22 @@ import {
   UPDATE_EXERCISE,
 } from '../../../graphql/ExerciseGQL';
 import {useMutation} from '@apollo/react-hooks';
+import {ApolloQueryResult} from 'apollo-boost';
 
 type EditExerciseProps = {
   exercise: Exercise;
   isFormVisible: boolean;
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  refetch: (
+    variables?: Record<string, any> | undefined,
+  ) => Promise<ApolloQueryResult<ExerciseData>>;
 };
 
 const EditExercise = ({
   exercise,
   isFormVisible,
   setIsFormVisible,
+  refetch,
 }: EditExerciseProps) => {
   const [editableExercise, setEditableExercise] = useState(() => {
     const {id, name, desc, category} = exercise;
@@ -55,7 +60,7 @@ const EditExercise = ({
   };
 
   const handleSubmit = () => {
-    updateExercise();
+    updateExercise().then(() => refetch());
     setIsFormVisible(false);
   };
   return (

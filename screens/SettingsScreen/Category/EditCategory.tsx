@@ -5,20 +5,26 @@ import {
   CategoryData,
   UPDATE_CATEGORY,
   CategoryUpdateInput,
+  CategoryWithExercisesData,
 } from '../../../graphql/CategoryGQL';
 import {Overlay} from 'react-native-elements';
 import {useMutation} from '@apollo/react-hooks';
+import {ApolloQueryResult} from 'apollo-boost';
 
 type EditCategoryProps = {
   category: Category;
   isFormVisible: boolean;
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  refetch: (
+    variables?: Record<string, any> | undefined,
+  ) => Promise<ApolloQueryResult<CategoryWithExercisesData>>;
 };
 
 const EditCategory = ({
   category,
   isFormVisible,
   setIsFormVisible,
+  refetch,
 }: EditCategoryProps) => {
   const [editableCategory, setEditableCategory] = useState<Category>(() => {
     const {id, name, desc} = category;
@@ -54,7 +60,7 @@ const EditCategory = ({
   };
 
   const handleSubmit = () => {
-    updateCategory();
+    updateCategory().then(() => refetch());
     setIsFormVisible(false);
   };
 

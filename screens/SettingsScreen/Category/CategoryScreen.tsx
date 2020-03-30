@@ -49,7 +49,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
 
   const handleExerciseRemove = (doDelete: boolean) => {
     setIsDeleteModalVisible(false);
-    doDelete && removeExercise();
+    doDelete && removeExercise().then(() => refetch());
   };
 
   const styles = StyleSheet.create({
@@ -83,6 +83,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
             category={data.category}
             isFormVisible={isEditFormVisible}
             setIsFormVisible={setIsEditFormVisible}
+            refetch={refetch}
           />
         </>
       ) : (

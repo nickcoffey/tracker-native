@@ -5,15 +5,24 @@ import {
   Category,
   CategoryCreateInput,
   ADD_CATEGORY,
+  AllCategoriesData,
 } from '../../../graphql/CategoryGQL';
 import {useMutation} from '@apollo/react-hooks';
+import {ApolloQueryResult} from 'apollo-boost';
 
 type NewCategoryProps = {
   isFormVisible: boolean;
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  refetch: (
+    variables?: Record<string, any> | undefined,
+  ) => Promise<ApolloQueryResult<AllCategoriesData>>;
 };
 
-const NewCategory = ({isFormVisible, setIsFormVisible}: NewCategoryProps) => {
+const NewCategory = ({
+  isFormVisible,
+  setIsFormVisible,
+  refetch,
+}: NewCategoryProps) => {
   const initialNewCategory = {
     name: '',
     desc: '',
@@ -30,7 +39,7 @@ const NewCategory = ({isFormVisible, setIsFormVisible}: NewCategoryProps) => {
   };
 
   const handleSubmit = () => {
-    addCategory();
+    addCategory().then(() => refetch());
     setNewCategory(initialNewCategory);
     setIsFormVisible(false);
   };

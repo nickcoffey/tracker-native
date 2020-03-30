@@ -16,7 +16,7 @@ import NewCategory from './Category/NewCategory';
 
 const SettingsScreen = ({navigation}: NavigationProps) => {
   // GRAPHQL
-  const {data, loading} = useQuery<AllCategoriesData>(ALL_CATEGORIES);
+  const {data, loading, refetch} = useQuery<AllCategoriesData>(ALL_CATEGORIES);
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [removeCategory] = useMutation<
     {removedCategory: CategoryData},
@@ -36,7 +36,7 @@ const SettingsScreen = ({navigation}: NavigationProps) => {
 
   const handleCategoryRemove = (doDelete: boolean) => {
     setIsDeleteModalVisible(false);
-    doDelete && removeCategory();
+    doDelete && removeCategory().then(() => refetch());
   };
 
   const styles = StyleSheet.create({
@@ -69,6 +69,7 @@ const SettingsScreen = ({navigation}: NavigationProps) => {
       <NewCategory
         isFormVisible={isNewFormVisible}
         setIsFormVisible={setIsNewFormVisible}
+        refetch={refetch}
       />
       <Divider style={styles.divider} />
       <Button title="New Category" onPress={() => setIsNewFormVisible(true)} />

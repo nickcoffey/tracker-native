@@ -18,7 +18,7 @@ const ExerciseScreen = ({route}: ExerciseProps) => {
   const {colors} = useTheme();
 
   const exerciseId = route.params.id;
-  const {data, loading} = useQuery<ExerciseData>(EXERCISE, {
+  const {data, loading, refetch} = useQuery<ExerciseData>(EXERCISE, {
     variables: {id: exerciseId},
   });
 
@@ -45,6 +45,7 @@ const ExerciseScreen = ({route}: ExerciseProps) => {
             exercise={data.exercise}
             isFormVisible={isFormVisible}
             setIsFormVisible={setIsFormVisible}
+            refetch={refetch}
           />
         </>
       ) : (
