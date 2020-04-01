@@ -9,12 +9,12 @@ import {
 } from '../../graphql/CategoryGQL';
 import CategoryList from './Category/CategoryList';
 import {StyleSheet} from 'react-native';
-import {NavigationProps} from '../../App';
+import {SettingsNavigationProps} from './SettingsNavigator';
 import {useTheme} from '@react-navigation/native';
 import {useQuery, useMutation} from '@apollo/react-hooks';
 import NewCategory from './Category/NewCategory';
 
-const SettingsScreen = ({navigation}: NavigationProps) => {
+const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
   // GRAPHQL
   const {data, loading, refetch} = useQuery<AllCategoriesData>(ALL_CATEGORIES);
   const [deleteCategoryId, setDeleteCategoryId] = useState('');

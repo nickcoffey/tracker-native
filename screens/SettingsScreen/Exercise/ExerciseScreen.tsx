@@ -3,16 +3,16 @@ import PageLayout from '../../../layouts/PageLayout';
 import {Text, Button, Divider} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 import {RouteProp, useTheme} from '@react-navigation/native';
-import {RootStackParamList} from '../../../App';
+import {SettingsStackParamList} from '../SettingsNavigator';
 import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL';
 import {useQuery} from '@apollo/react-hooks';
 import EditExercise from './EditExercise';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-type ExerciseScreenRouteProp = RouteProp<RootStackParamList, 'Exercise'>;
+type ExerciseScreenRouteProp = RouteProp<SettingsStackParamList, 'Exercise'>;
 
 type ExerciseProps = {
-  navigation: StackNavigationProp<RootStackParamList>;
+  navigation: StackNavigationProp<SettingsStackParamList>;
   route: ExerciseScreenRouteProp;
 };
 

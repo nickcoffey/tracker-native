@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 
-const PastWorkouts = () => {
+const CurrentWorkoutScreen = () => {
   const styles = StyleSheet.create({
     header: {
       textAlign: 'center',
@@ -11,9 +11,9 @@ const PastWorkouts = () => {
 
   return (
     <Text style={styles.header} h3>
-      Past Workouts
+      Current Workout
     </Text>
   );
 };
 
-export default PastWorkouts;
+export default CurrentWorkoutScreen;

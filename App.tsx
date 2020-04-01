@@ -1,60 +1,82 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
-import Home from './screens/HomeScreen';
-import CurrentWorkout from './screens/CurrentWorkout';
-import PastWorkouts from './screens/PastWorkouts';
-import SettingsScreen from './screens/SettingsScreen/SettingsScreen';
-import ThemeContext, {theme} from './contexts/ThemeContext';
+import {Icon} from 'react-native-elements';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import CategoryScreen from './screens/SettingsScreen/Category/CategoryScreen';
-import {StackNavigationProp} from '@react-navigation/stack';
-import ExerciseScreen from './screens/SettingsScreen/Exercise/ExerciseScreen';
+import {
+  createBottomTabNavigator,
+  BottomTabNavigationProp,
+} from '@react-navigation/bottom-tabs';
+
+import HomeNavigator from './screens/HomeScreen/HomeNavigator';
+import CurrentWorkoutNavigator from './screens/CurrentWorkoutScreen/CurrentWorkoutNavigator';
+import PastWorkoutsNavigator from './screens/PastWorkoutsScreen/PastWorkoutsNavigator';
+import SettingsNavigator from './screens/SettingsScreen/SettingsNavigator';
 import GQLProvider from './graphql/GQLProvider';
 
-export type RootStackParamList = {
-  Home: undefined;
-  Current: undefined;
-  Past: undefined;
-  Settings: undefined;
-  Category: {id: string; name: string};
-  Exercise: {id: string; name: string};
+export type RootTabParamList = {
+  HomeNavigator: undefined;
+  CurrentWorkoutNavigator: undefined;
+  PastWorkoutsNavigator: undefined;
+  SettingsNavigator: undefined;
 };
 
-export type NavigationProps = {
-  navigation: StackNavigationProp<RootStackParamList>;
+export type RootNavigationProps = {
+  navigation: BottomTabNavigationProp<RootTabParamList>;
 };
 
 const App = () => {
-  const RootStack = createStackNavigator<RootStackParamList>();
+  const RootTabs = createBottomTabNavigator<RootTabParamList>();
 
   return (
     <GQLProvider>
-      <ThemeContext.Provider value={theme}>
-        <StatusBar barStyle="dark-content" />
-        <NavigationContainer>
-          <RootStack.Navigator initialRouteName="Home">
-            <RootStack.Screen name="Home" component={Home} />
-            <RootStack.Screen name="Current" component={CurrentWorkout} />
-            <RootStack.Screen name="Past" component={PastWorkouts} />
-            <RootStack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{title: 'Categories'}}
-            />
-            <RootStack.Screen
-              name="Category"
-              component={CategoryScreen}
-              options={({route}) => ({title: route.params.name})}
-            />
-            <RootStack.Screen
-              name="Exercise"
-              component={ExerciseScreen}
-              options={({route}) => ({title: route.params.name})}
-            />
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </ThemeContext.Provider>
+      <StatusBar barStyle="dark-content" />
+      <NavigationContainer>
+        <RootTabs.Navigator
+          initialRouteName="HomeNavigator"
+          screenOptions={({route}) => ({
+            tabBarIcon: ({color}) => {
+              let iconName = '';
+              switch (route.name) {
+                case 'HomeNavigator':
+                  iconName = 'home';
+                  break;
+                case 'CurrentWorkoutNavigator':
+                  iconName = 'fitness-center';
+                  break;
+                case 'PastWorkoutsNavigator':
+                  iconName = 'list';
+                  break;
+                case 'SettingsNavigator':
+                  iconName = 'settings';
+                  break;
+                default:
+                  break;
+              }
+              return <Icon name={iconName} type="material" color={color} />;
+            },
+          })}>
+          <RootTabs.Screen
+            name="HomeNavigator"
+            component={HomeNavigator}
+            options={{title: 'Home'}}
+          />
+          <RootTabs.Screen
+            name="CurrentWorkoutNavigator"
+            component={CurrentWorkoutNavigator}
+            options={{title: 'Current'}}
+          />
+          <RootTabs.Screen
+            name="PastWorkoutsNavigator"
+            component={PastWorkoutsNavigator}
+            options={{title: 'Past'}}
+          />
+          <RootTabs.Screen
+            name="SettingsNavigator"
+            component={SettingsNavigator}
+            options={{title: 'Categories'}}
+          />
+        </RootTabs.Navigator>
+      </NavigationContainer>
     </GQLProvider>
   );
 };

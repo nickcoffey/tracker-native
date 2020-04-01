@@ -4,7 +4,7 @@ import {Text, Button, Divider, Overlay} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 import {RouteProp, useTheme} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../App';
+import {SettingsStackParamList} from '../SettingsNavigator';
 import ExerciseList from '../Exercise/ExerciseList';
 import {
   CATEGORY_WITH_EXERCISES,
@@ -15,10 +15,10 @@ import {useQuery, useMutation} from '@apollo/react-hooks';
 import EditCategory from './EditCategory';
 import NewExercise from '../Exercise/NewExercise';
 
-type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
+type CategoryScreenRouteProp = RouteProp<SettingsStackParamList, 'Category'>;
 
 type CategoryScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList>;
+  navigation: StackNavigationProp<SettingsStackParamList>;
   route: CategoryScreenRouteProp;
 };
 
