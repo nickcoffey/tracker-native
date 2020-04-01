@@ -11,6 +11,21 @@ export const ALL_CATEGORIES = gql`
   }
 `;
 
+export const ALL_CATEGORIES_WITH_EXERCISES = gql`
+  {
+    categories {
+      id
+      name
+      desc
+      exercises {
+        id
+        name
+        desc
+      }
+    }
+  }
+`;
+
 export const CATEGORY_WITH_EXERCISES = gql`
   query getCategoryWithExercises($id: ID!) {
     category(id: $id) {
@@ -75,6 +90,10 @@ export type CategoryWithExercises = {
   name: string;
   desc: string;
   exercises: Exercise[];
+};
+
+export type CategoriesWithExercisesData = {
+  categories: CategoryWithExercises[];
 };
 
 export type CategoryWithExercisesData = {

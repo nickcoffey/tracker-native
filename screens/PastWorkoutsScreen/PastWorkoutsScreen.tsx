@@ -10,7 +10,7 @@ const PastWorkoutsScreen = () => {
   });
 
   return (
-    <Text style={styles.header} h3>
+    <Text style={styles.header} h4>
       Past Workouts
     </Text>
   );

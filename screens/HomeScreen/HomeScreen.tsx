@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   return (
     <PageLayout loading={false}>
-      <Text style={styles.header} h3>
+      <Text style={styles.header} h4>
         Home
       </Text>
     </PageLayout>
