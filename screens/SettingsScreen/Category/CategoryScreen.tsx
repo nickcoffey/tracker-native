@@ -40,6 +40,20 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     {id: string}
   >(REMOVE_EXERCISE, {variables: {id: deleteExerciseId}});
 
+  navigation.setOptions({
+    headerRight: () =>
+      data?.category ? (
+        <Button
+          title="Edit"
+          type="clear"
+          onPress={() => setIsEditFormVisible(true)}
+        />
+      ) : (
+        <></>
+      ),
+    title: data?.category.name || '',
+  });
+
   const openEditExercise = (id: string, name: string) => {
     navigation.navigate('Exercise', {
       id,
@@ -53,8 +67,12 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
   };
 
   const styles = StyleSheet.create({
-    subHeaderText: {
+    desc: {
       textAlign: 'center',
+    },
+    exerciseTitle: {
+      textAlign: 'center',
+      fontSize: 20,
     },
     divider: {
       padding: 10,
@@ -75,31 +93,29 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
 
   return (
     <PageLayout loading={loading}>
-      <Text style={styles.subHeaderText}>{data && data?.category.desc}</Text>
+      <Text style={styles.desc}>{data && data?.category.desc}</Text>
       {data?.category ? (
-        <>
-          <Button title="Edit" onPress={() => setIsEditFormVisible(true)} />
-          <EditCategory
-            category={data.category}
-            isFormVisible={isEditFormVisible}
-            setIsFormVisible={setIsEditFormVisible}
-            refetch={refetch}
-          />
-        </>
+        <EditCategory
+          category={data.category}
+          isFormVisible={isEditFormVisible}
+          setIsFormVisible={setIsEditFormVisible}
+          refetch={refetch}
+        />
       ) : (
         <></>
       )}
       <Divider style={styles.divider} />
+      <Text style={styles.exerciseTitle}>Exercises</Text>
+      <Button
+        title="Create New"
+        type="clear"
+        onPress={() => setIsExerciseFormVisible(true)}
+      />
       <ExerciseList
         exercises={data?.category.exercises || []}
         openEditExercise={openEditExercise}
         setIsDeleteModalVisible={setIsDeleteModalVisible}
         setDeleteExerciseId={setDeleteExerciseId}
-      />
-      <Divider style={styles.divider} />
-      <Button
-        title="New Exercise"
-        onPress={() => setIsExerciseFormVisible(true)}
       />
       <NewExercise
         isFormVisible={isExerciseFormVisible}

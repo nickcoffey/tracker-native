@@ -27,6 +27,16 @@ const SettingsScreen = ({navigation}: NavigationProps) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isNewFormVisible, setIsNewFormVisible] = useState(false);
 
+  navigation.setOptions({
+    headerRight: () => (
+      <Button
+        title="Create"
+        type="clear"
+        onPress={() => setIsNewFormVisible(true)}
+      />
+    ),
+  });
+
   const openEditCategory = (id: string, name: string) => {
     navigation.navigate('Category', {
       id,
@@ -71,8 +81,6 @@ const SettingsScreen = ({navigation}: NavigationProps) => {
         setIsFormVisible={setIsNewFormVisible}
         refetch={refetch}
       />
-      <Divider style={styles.divider} />
-      <Button title="New Category" onPress={() => setIsNewFormVisible(true)} />
       <Overlay
         isVisible={isDeleteModalVisible}
         onBackdropPress={() => setIsDeleteModalVisible(false)}

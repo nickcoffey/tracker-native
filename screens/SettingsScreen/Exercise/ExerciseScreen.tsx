@@ -7,14 +7,16 @@ import {RootStackParamList} from '../../../App';
 import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL';
 import {useQuery} from '@apollo/react-hooks';
 import EditExercise from './EditExercise';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 type ExerciseScreenRouteProp = RouteProp<RootStackParamList, 'Exercise'>;
 
 type ExerciseProps = {
+  navigation: StackNavigationProp<RootStackParamList>;
   route: ExerciseScreenRouteProp;
 };
 
-const ExerciseScreen = ({route}: ExerciseProps) => {
+const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
   const {colors} = useTheme();
 
   const exerciseId = route.params.id;
@@ -23,6 +25,20 @@ const ExerciseScreen = ({route}: ExerciseProps) => {
   });
 
   const [isFormVisible, setIsFormVisible] = useState(false);
+
+  navigation.setOptions({
+    headerRight: () =>
+      data?.exercise ? (
+        <Button
+          title="Edit"
+          type="clear"
+          onPress={() => setIsFormVisible(true)}
+        />
+      ) : (
+        <></>
+      ),
+    title: data?.exercise.name || '',
+  });
 
   const styles = StyleSheet.create({
     subHeaderText: {
@@ -39,15 +55,12 @@ const ExerciseScreen = ({route}: ExerciseProps) => {
       <Text style={styles.subHeaderText}>{data?.exercise.desc}</Text>
       <Divider style={styles.divider} />
       {data?.exercise ? (
-        <>
-          <Button title="Edit" onPress={() => setIsFormVisible(true)} />
-          <EditExercise
-            exercise={data.exercise}
-            isFormVisible={isFormVisible}
-            setIsFormVisible={setIsFormVisible}
-            refetch={refetch}
-          />
-        </>
+        <EditExercise
+          exercise={data.exercise}
+          isFormVisible={isFormVisible}
+          setIsFormVisible={setIsFormVisible}
+          refetch={refetch}
+        />
       ) : (
         <></>
       )}

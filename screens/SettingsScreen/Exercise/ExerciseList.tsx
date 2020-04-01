@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {ListItem, Text} from 'react-native-elements';
+import {ListItem} from 'react-native-elements';
 import {Exercise} from '../../../graphql/ExerciseGQL';
 
 type ExerciseListProps = {
@@ -16,13 +15,6 @@ const ExerciseList = ({
   setDeleteExerciseId,
   setIsDeleteModalVisible,
 }: ExerciseListProps) => {
-  const styles = StyleSheet.create({
-    header: {
-      textAlign: 'center',
-      fontSize: 20,
-    },
-  });
-
   const handleDeletePress = (id: string) => {
     setDeleteExerciseId(id);
     setIsDeleteModalVisible(true);
@@ -30,7 +22,6 @@ const ExerciseList = ({
 
   return (
     <>
-      <Text style={styles.header}>Exercises</Text>
       {exercises.map((exercise, index) => (
         <ListItem
           key={index}
