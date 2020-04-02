@@ -1,58 +1,44 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Text, Button} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
-import {useQuery} from '@apollo/react-hooks';
-import RNPickerSelect from 'react-native-picker-select';
+import {useMutation} from '@apollo/react-hooks';
 
+import CurrentWorkoutTimer from './CurrentWorkoutTimer';
+import CurrentWorkoutSelectExercise from './CurrentWorkoutSelectExercise';
+import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator';
 import {
-  ALL_CATEGORIES_WITH_EXERCISES,
-  CategoryWithExercises,
-  CategoriesWithExercisesData,
-} from '../../graphql/CategoryGQL';
+  ADD_WORKOUT,
+  WorkoutCreateInput,
+  Workout,
+} from '../../graphql/WorkoutGQL';
 
-const CurrentWorkoutScreen = () => {
-  const {data} = useQuery<CategoriesWithExercisesData>(
-    ALL_CATEGORIES_WITH_EXERCISES,
-  );
-  const [isTimerStarted, setIsTimerStarted] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-  // const [startTime] = useState<number>(new Date().getTime());
-  const [selectedCategory, setSelectedCategory] = useState<
-    CategoryWithExercises
-  >();
-  const [selectedExercise, setSelectedExercise] = useState('');
+const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
+  const [addWorkout] = useMutation<
+    {returnedWorkout: Workout},
+    {newWorkout: WorkoutCreateInput}
+  >(ADD_WORKOUT);
 
-  const padDigits = (timeSegment: number): string => {
-    return ('00' + timeSegment).slice(-2);
-  };
+  navigation.setOptions({
+    headerRight: () => (
+      <Button
+        title="New"
+        type="clear"
+        onPress={() =>
+          addWorkout({
+            variables: {
+              newWorkout: {...blankWorkout, startTime: getCurrentTimeString()},
+            },
+          })
+        }
+      />
+    ),
+  });
 
-  const getTimerForattedString = (seconds: number): string => {
-    let sec = seconds % 60;
-    seconds = (seconds - sec) / 60;
-    let mm = seconds % 60;
-    let hh = (seconds - mm) / 60;
-    return `${padDigits(hh)}:${padDigits(mm)}:${padDigits(sec)}`;
-  };
-
-  let interval: NodeJS.Timeout;
-  useEffect(() => {
-    if (isTimerStarted) {
-      interval = setInterval(() => {
-        setSeconds(seconds => seconds + 1);
-      }, 1000);
-    } else if (!isTimerStarted && seconds !== 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isTimerStarted, seconds]);
+  const getCurrentTimeString = (): string => new Date().getTime().toString();
 
   const styles = StyleSheet.create({
     header: {
       textAlign: 'center',
-    },
-    timer: {
-      textAlign: 'center',
-      fontSize: 20,
     },
   });
 
@@ -61,51 +47,15 @@ const CurrentWorkoutScreen = () => {
       <Text style={styles.header} h4>
         Current Workout
       </Text>
-      <Text style={styles.timer}>
-        {isTimerStarted && getTimerForattedString(seconds)}
-      </Text>
-      {isTimerStarted ? (
-        <Button
-          title="Stop"
-          type="clear"
-          onPress={() => setIsTimerStarted(false)}
-        />
-      ) : (
-        <Button
-          title="Start"
-          type="clear"
-          onPress={() => setIsTimerStarted(true)}
-        />
-      )}
-      <Text>Category</Text>
-      <RNPickerSelect
-        onValueChange={value => {
-          setSelectedCategory(value);
-          setSelectedExercise('');
-        }}
-        items={
-          data?.categories.map(category => ({
-            label: category.name,
-            value: category,
-          })) || []
-        }
-        placeholder={{label: 'Select a category', value: null}}
-      />
-      <Text>Exercise</Text>
-      <RNPickerSelect
-        value={selectedExercise}
-        onValueChange={value => setSelectedExercise(value)}
-        items={
-          selectedCategory?.exercises.map(exercise => ({
-            label: exercise.name,
-            value: exercise.id,
-          })) || []
-        }
-        style={{textAlign: 'center'}}
-        placeholder={{label: 'Select an exercise', value: null}}
-      />
+      <CurrentWorkoutTimer />
+      <CurrentWorkoutSelectExercise />
     </>
   );
+};
+
+const blankWorkout: WorkoutCreateInput = {
+  startTime: '',
+  endTime: '',
 };
 
 export default CurrentWorkoutScreen;
