@@ -1,6 +1,5 @@
-import React from 'react';
-import {Text, Button} from 'react-native-elements';
-import {StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {Button} from 'react-native-elements';
 import {useMutation} from '@apollo/react-hooks';
 
 import CurrentWorkoutTimer from './CurrentWorkoutTimer';
@@ -10,45 +9,76 @@ import {
   ADD_WORKOUT,
   WorkoutCreateInput,
   Workout,
+  WorkoutUpdateInput,
+  UPDATE_WORKOUT,
 } from '../../graphql/WorkoutGQL';
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [addWorkout] = useMutation<
-    {returnedWorkout: Workout},
+    {addWorkout: Workout},
     {newWorkout: WorkoutCreateInput}
   >(ADD_WORKOUT);
 
+  const [updateWorkout] = useMutation<
+    {updateWorkout: Workout},
+    {updatedWorkout: WorkoutUpdateInput}
+  >(UPDATE_WORKOUT);
+
+  const [workout, setWorkout] = useState<Workout | undefined>();
+
+  const [seconds, setSeconds] = useState(0);
+  const [isTimerStarted, setIsTimerStarted] = useState(false);
+
   navigation.setOptions({
-    headerRight: () => (
-      <Button
-        title="New"
-        type="clear"
-        onPress={() =>
-          addWorkout({
-            variables: {
-              newWorkout: {...blankWorkout, startTime: getCurrentTimeString()},
-            },
-          })
-        }
-      />
-    ),
+    headerRight: () =>
+      workout === undefined ? (
+        <Button
+          title="New"
+          type="clear"
+          onPress={() =>
+            addWorkout({
+              variables: {
+                newWorkout: {
+                  ...blankWorkout,
+                  startTime: getCurrentTimeString(),
+                },
+              },
+            }).then(res => {
+              setWorkout(res.data?.addWorkout);
+              setIsTimerStarted(true);
+            })
+          }
+        />
+      ) : (
+        <Button
+          title="Stop"
+          type="clear"
+          onPress={() => {
+            const {id} = workout;
+            updateWorkout({
+              variables: {
+                updatedWorkout: {id, endTime: getCurrentTimeString()},
+              },
+            }).then(() => {
+              setIsTimerStarted(false);
+              setSeconds(0);
+              setWorkout(undefined);
+            });
+          }}
+        />
+      ),
   });
 
   const getCurrentTimeString = (): string => new Date().getTime().toString();
 
-  const styles = StyleSheet.create({
-    header: {
-      textAlign: 'center',
-    },
-  });
-
   return (
     <>
-      <Text style={styles.header} h4>
-        Current Workout
-      </Text>
-      <CurrentWorkoutTimer />
-      <CurrentWorkoutSelectExercise />
+      <CurrentWorkoutTimer
+        seconds={seconds}
+        setSeconds={setSeconds}
+        isTimerStarted={isTimerStarted}
+      />
+      {workout !== undefined && <CurrentWorkoutSelectExercise />}
     </>
   );
 };

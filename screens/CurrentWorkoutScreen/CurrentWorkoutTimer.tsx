@@ -1,11 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
-import {Text, Button, ButtonGroup, ElementObject} from 'react-native-elements';
+import {
+  Text /*Button, ButtonGroup, ElementObject*/,
+} from 'react-native-elements';
 
-const CurrentWorkoutTimer = () => {
-  const [isTimerStarted, setIsTimerStarted] = useState(false);
-  const [seconds, setSeconds] = useState(0);
+type CurrentWorkoutTimerProps = {
+  seconds: number;
+  setSeconds: React.Dispatch<React.SetStateAction<number>>;
+  isTimerStarted: boolean;
+};
 
+const CurrentWorkoutTimer = ({
+  seconds,
+  setSeconds,
+  isTimerStarted,
+}: CurrentWorkoutTimerProps) => {
   const padDigits = (timeSegment: number): string => {
     return ('00' + timeSegment).slice(-2);
   };
@@ -30,19 +39,19 @@ const CurrentWorkoutTimer = () => {
     return () => clearInterval(interval);
   }, [isTimerStarted, seconds]);
 
-  const handleButtonPress = (index: number) => {
-    switch (index) {
-      case 0:
-        setIsTimerStarted(!isTimerStarted);
-        break;
-      case 1:
-        setSeconds(0);
-        setIsTimerStarted(false);
-        break;
-      default:
-        break;
-    }
-  };
+  // const handleButtonPress = (index: number) => {
+  //   switch (index) {
+  //     case 0:
+  //       setIsTimerStarted(!isTimerStarted);
+  //       break;
+  //     case 1:
+  //       setSeconds(0);
+  //       setIsTimerStarted(false);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const styles = StyleSheet.create({
     timer: {
@@ -51,20 +60,20 @@ const CurrentWorkoutTimer = () => {
     },
   });
 
-  let buttons = [isTimerStarted ? 'Stop' : 'Start'];
-  if (seconds !== 0) {
-    buttons.push('Reset');
-  }
+  // let buttons = [isTimerStarted ? 'Stop' : 'Start'];
+  // if (seconds !== 0) {
+  //   buttons.push('Reset');
+  // }
 
   return (
     <>
       <Text style={styles.timer}>
         {(seconds !== 0 || isTimerStarted) && getTimerForattedString(seconds)}
       </Text>
-      <ButtonGroup
+      {/* <ButtonGroup
         buttons={buttons}
         onPress={index => handleButtonPress(index)}
-      />
+      /> */}
     </>
   );
 };

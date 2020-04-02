@@ -10,6 +10,16 @@ export const ADD_WORKOUT = gql`
   }
 `;
 
+export const UPDATE_WORKOUT = gql`
+  mutation updateWorkout($updatedWorkout: WorkoutUpdateInput!) {
+    updateWorkout(workout: $updatedWorkout) {
+      id
+      startTime
+      endTime
+    }
+  }
+`;
+
 export type Workout = {
   id: string;
   startTime: string;
@@ -22,5 +32,11 @@ export type WorkoutData = {
 
 export type WorkoutCreateInput = {
   startTime: string;
+  endTime?: string;
+};
+
+export type WorkoutUpdateInput = {
+  id: string;
+  startTime?: string;
   endTime?: string;
 };
