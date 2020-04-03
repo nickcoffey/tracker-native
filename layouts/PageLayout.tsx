@@ -1,28 +1,39 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Text} from 'react-native-elements';
+import React, {useState, useCallback, useEffect} from 'react';
+import {RefreshControl, ScrollView} from 'react-native';
+import {ApolloQueryResult} from 'apollo-boost';
 
 type PageLayoutProps = {
   loading: boolean;
   children?: JSX.Element | JSX.Element[];
+  refetch?: (
+    variables?: Record<string, any> | undefined,
+  ) => Promise<ApolloQueryResult<any>>;
 };
 
-const styles = StyleSheet.create({
-  loading: {
-    textAlign: 'center',
-  },
-});
+const PageLayout = ({loading, children, refetch}: PageLayoutProps) => {
+  const [refreshing, setRefreshing] = useState(loading);
+  const onRefresh = useCallback(() => {
+    if (refetch) {
+      // if refreshable
+      setRefreshing(true);
+      refetch().then(() => setRefreshing(false));
+    }
+  }, [refreshing]);
 
-const PageLayout = ({loading, children}: PageLayoutProps) => (
-  <React.Fragment>
-    {loading ? (
-      <Text style={styles.loading} h4>
-        Loading...
-      </Text>
-    ) : (
-      children
-    )}
-  </React.Fragment>
-);
+  useEffect(() => {
+    setRefreshing(loading);
+  }, [loading]);
+
+  return (
+    <ScrollView
+      refreshControl={
+        refetch && (
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        )
+      }>
+      {!refreshing && children}
+    </ScrollView>
+  );
+};
 
 export default PageLayout;

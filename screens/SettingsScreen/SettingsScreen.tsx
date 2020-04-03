@@ -68,7 +68,7 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
   });
 
   return (
-    <PageLayout loading={loading}>
+    <PageLayout loading={loading} refetch={refetch}>
       <Divider style={styles.divider} />
       <CategoryList
         categories={data?.categories || []}

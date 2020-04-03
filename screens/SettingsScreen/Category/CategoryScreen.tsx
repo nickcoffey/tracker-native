@@ -92,7 +92,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
   });
 
   return (
-    <PageLayout loading={loading}>
+    <PageLayout loading={loading} refetch={refetch}>
       <Text style={styles.desc}>{data && data?.category.desc}</Text>
       {data?.category ? (
         <EditCategory

@@ -51,7 +51,7 @@ const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
   });
 
   return (
-    <PageLayout loading={loading}>
+    <PageLayout loading={loading} refetch={refetch}>
       <Text style={styles.subHeaderText}>{data?.exercise.desc}</Text>
       <Divider style={styles.divider} />
       {data?.exercise ? (
