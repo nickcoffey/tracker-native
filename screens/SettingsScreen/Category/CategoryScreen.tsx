@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PageLayout from '../../../layouts/PageLayout';
 import {Text, Button, Divider, Overlay} from 'react-native-elements';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {RouteProp, useTheme} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SettingsStackParamList} from '../SettingsNavigator';
@@ -70,8 +70,13 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     desc: {
       textAlign: 'center',
     },
+    exerciseHeader: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
     exerciseTitle: {
-      textAlign: 'center',
       fontSize: 20,
     },
     divider: {
@@ -105,12 +110,14 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
         <></>
       )}
       <Divider style={styles.divider} />
-      <Text style={styles.exerciseTitle}>Exercises</Text>
-      <Button
-        title="Create New"
-        type="clear"
-        onPress={() => setIsExerciseFormVisible(true)}
-      />
+      <View style={styles.exerciseHeader}>
+        <Text style={styles.exerciseTitle}>Exercises</Text>
+        <Button
+          title="Create New"
+          type="clear"
+          onPress={() => setIsExerciseFormVisible(true)}
+        />
+      </View>
       <ExerciseList
         exercises={data?.category.exercises || []}
         openEditExercise={openEditExercise}
