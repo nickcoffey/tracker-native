@@ -11,6 +11,21 @@ export const ADD_WORKOUT = gql`
   }
 `;
 
+export const WORKOUT_WITH_EXERCISES = gql`
+  query getWorkoutWithExercises($id: ID!) {
+    workout(id: $id) {
+      id
+      startTime
+      endTime
+      workoutExercises {
+        id
+        name
+        desc
+      }
+    }
+  }
+`;
+
 export const UPDATE_WORKOUT = gql`
   mutation updateWorkout($updatedWorkout: WorkoutUpdateInput!) {
     updateWorkout(workout: $updatedWorkout) {
@@ -25,11 +40,17 @@ export type Workout = {
   id: string;
   startTime: string;
   endTime: string;
+};
+
+export type WorkoutWithExercises = {
+  id: string;
+  startTime: string;
+  endTime: string;
   workoutExercises: WorkoutExercise[];
 };
 
-export type WorkoutData = {
-  workout: Workout;
+export type WorkoutDataWithExercises = {
+  workout: WorkoutWithExercises;
 };
 
 export type WorkoutCreateInput = {

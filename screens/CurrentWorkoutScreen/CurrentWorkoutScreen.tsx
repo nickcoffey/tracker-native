@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Button} from 'react-native-elements';
-import {useMutation} from '@apollo/react-hooks';
+import {Button, ListItem} from 'react-native-elements';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 
 import CurrentWorkoutTimer from './CurrentWorkoutTimer';
 import CurrentWorkoutSelectExercise from './CurrentWorkoutSelectExercise';
@@ -8,23 +8,39 @@ import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator';
 import {
   ADD_WORKOUT,
   WorkoutCreateInput,
-  Workout,
+  WorkoutWithExercises,
+  WorkoutDataWithExercises,
   WorkoutUpdateInput,
   UPDATE_WORKOUT,
+  WORKOUT_WITH_EXERCISES,
 } from '../../graphql/WorkoutGQL';
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [addWorkout] = useMutation<
-    {addWorkout: Workout},
+    {addWorkout: WorkoutWithExercises},
     {newWorkout: WorkoutCreateInput}
   >(ADD_WORKOUT);
 
   const [updateWorkout] = useMutation<
-    {updateWorkout: Workout},
+    {updateWorkout: WorkoutWithExercises},
     {updatedWorkout: WorkoutUpdateInput}
   >(UPDATE_WORKOUT);
 
-  const [workout, setWorkout] = useState<Workout | undefined>();
+  const [workout, setWorkout] = useState<WorkoutWithExercises | undefined>();
+  const {refetch} = useQuery<WorkoutDataWithExercises>(WORKOUT_WITH_EXERCISES, {
+    variables: {id: workout?.id},
+    skip: true,
+  });
+
+  const refreshWorkout = () => {
+    if (workout?.id) {
+      refetch().then((res) => {
+        if (res.data.workout.id) {
+          setWorkout(res.data.workout);
+        }
+      });
+    }
+  };
 
   const [seconds, setSeconds] = useState(0);
   const [isTimerStarted, setIsTimerStarted] = useState(false);
@@ -43,7 +59,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
                   startTime: getCurrentTimeString(),
                 },
               },
-            }).then(res => {
+            }).then((res) => {
               setWorkout(res.data?.addWorkout);
               setIsTimerStarted(true);
             })
@@ -78,7 +94,24 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
         setSeconds={setSeconds}
         isTimerStarted={isTimerStarted}
       />
-      {workout !== undefined && <CurrentWorkoutSelectExercise />}
+      {workout && workout.id && (
+        <CurrentWorkoutSelectExercise
+          workoutId={workout.id}
+          refreshWorkout={refreshWorkout}
+        />
+      )}
+      {workout?.workoutExercises?.map((exercise, index) => (
+        <ListItem
+          key={index}
+          title={exercise.name}
+          subtitle={exercise.desc}
+          chevron
+          topDivider={index === 0}
+          bottomDivider
+          // onPress={() => openEditExercise(exercise.id, exercise.name)}
+          // onLongPress={() => handleDeletePress(exercise.id)}
+        />
+      ))}
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {useQuery} from '@apollo/react-hooks';
-import {Text, Icon} from 'react-native-elements';
+import {useQuery, useMutation} from '@apollo/react-hooks';
+import {Text, Icon, Button} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 
 import {
@@ -10,8 +10,21 @@ import {
   CategoryWithExercises,
 } from '../../graphql/CategoryGQL';
 import {Exercise} from 'graphql/ExerciseGQL';
+import {
+  ADD_WORKOUT_EXERCISE,
+  CreateWorkoutExerciseInput,
+  WorkoutExercise,
+} from '../../graphql/WorkoutExerciseGQL';
 
-const CurrentWorkoutSelectExercise = () => {
+type SelectExerciseProps = {
+  workoutId: string;
+  refreshWorkout: () => void;
+};
+
+const CurrentWorkoutSelectExercise = ({
+  workoutId,
+  refreshWorkout,
+}: SelectExerciseProps) => {
   const {data} = useQuery<CategoriesWithExercisesData>(
     ALL_CATEGORIES_WITH_EXERCISES,
   );
@@ -19,6 +32,22 @@ const CurrentWorkoutSelectExercise = () => {
     CategoryWithExercises
   >();
   const [selectedExercise, setSelectedExercise] = useState<Exercise>();
+
+  const [addWorkoutExercise] = useMutation<
+    {addWorkoutExercise: WorkoutExercise},
+    {newWorkoutExercise: CreateWorkoutExerciseInput}
+  >(ADD_WORKOUT_EXERCISE);
+
+  const onWorkoutExerciseSubmit = () => {
+    if (selectedExercise) {
+      const {name, desc} = selectedExercise;
+      addWorkoutExercise({
+        variables: {newWorkoutExercise: {name, desc, workoutId}},
+      }).then((res) => {
+        if (res.data?.addWorkoutExercise.id) refreshWorkout();
+      });
+    }
+  };
 
   const baseStyles = StyleSheet.create({
     styles: {
@@ -52,12 +81,12 @@ const CurrentWorkoutSelectExercise = () => {
       <Text style={styles.label}>Category</Text>
       <RNPickerSelect
         style={pickerStyles}
-        onValueChange={value => {
+        onValueChange={(value) => {
           setSelectedCategory(value);
-          setSelectedExercise('');
+          setSelectedExercise(undefined);
         }}
         items={
-          data?.categories.map(category => ({
+          data?.categories.map((category) => ({
             label: category.name,
             value: category,
           })) || []
@@ -68,9 +97,9 @@ const CurrentWorkoutSelectExercise = () => {
       <Text style={styles.label}>Exercise</Text>
       <RNPickerSelect
         value={selectedExercise}
-        onValueChange={value => setSelectedExercise(value)}
+        onValueChange={(value) => setSelectedExercise(value)}
         items={
-          selectedCategory?.exercises.map(exercise => ({
+          selectedCategory?.exercises.map((exercise) => ({
             label: exercise.name,
             value: exercise,
           })) || []
@@ -78,6 +107,11 @@ const CurrentWorkoutSelectExercise = () => {
         style={pickerStyles}
         placeholder={{label: 'Select an exercise', value: null}}
         Icon={() => <Icon type="material" name="expand-more" size={40} />}
+      />
+      <Button
+        title="Add Exercise"
+        type="clear"
+        onPress={onWorkoutExerciseSubmit}
       />
     </>
   );
