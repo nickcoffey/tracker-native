@@ -9,6 +9,7 @@ import {
   ALL_CATEGORIES_WITH_EXERCISES,
   CategoryWithExercises,
 } from '../../graphql/CategoryGQL';
+import {Exercise} from 'graphql/ExerciseGQL';
 
 const CurrentWorkoutSelectExercise = () => {
   const {data} = useQuery<CategoriesWithExercisesData>(
@@ -17,7 +18,7 @@ const CurrentWorkoutSelectExercise = () => {
   const [selectedCategory, setSelectedCategory] = useState<
     CategoryWithExercises
   >();
-  const [selectedExercise, setSelectedExercise] = useState('');
+  const [selectedExercise, setSelectedExercise] = useState<Exercise>();
 
   const baseStyles = StyleSheet.create({
     styles: {
@@ -71,7 +72,7 @@ const CurrentWorkoutSelectExercise = () => {
         items={
           selectedCategory?.exercises.map(exercise => ({
             label: exercise.name,
-            value: exercise.id,
+            value: exercise,
           })) || []
         }
         style={pickerStyles}

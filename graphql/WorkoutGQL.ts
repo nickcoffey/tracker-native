@@ -1,4 +1,5 @@
 import {gql} from 'apollo-boost';
+import {WorkoutExercise} from './WorkoutExerciseGQL';
 
 export const ADD_WORKOUT = gql`
   mutation addWorkout($newWorkout: WorkoutCreateInput!) {
@@ -24,6 +25,7 @@ export type Workout = {
   id: string;
   startTime: string;
   endTime: string;
+  workoutExercises: WorkoutExercise[];
 };
 
 export type WorkoutData = {
