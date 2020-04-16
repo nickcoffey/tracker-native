@@ -32,6 +32,8 @@ const Dropdown = ({
     setSelectedItem(items[index].value);
   };
 
+  const handlePress = () => setIsOpen(!isOpen);
+
   return (
     <>
       <Text>{!isOpen && selectedItem}</Text>
@@ -47,7 +49,7 @@ const Dropdown = ({
             />
           ))}
       </ScrollView>
-      <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+      <TouchableOpacity onPress={handlePress}>
         <Text style={styles.btn}>Toggle</Text>
       </TouchableOpacity>
     </>

@@ -1,5 +1,7 @@
 import React from 'react';
+import {GestureResponderEvent} from 'react-native';
 import {ListItem} from 'react-native-elements';
+
 import {Category} from '../../../graphql/CategoryGQL';
 
 type CategoryListProps = {
@@ -30,8 +32,8 @@ const CategoryList = ({
           chevron
           topDivider={index === 0}
           bottomDivider
-          onPress={() => openEditCategory(category.id, category.name)}
-          onLongPress={() => handleDeletePress(category.id)}
+          onPress={() => openEditCategory(category.id, category.name)} // TODO find way to extract from render
+          onLongPress={() => handleDeletePress(category.id)} // TODO find way to extract from render
         />
       ))}
     </>

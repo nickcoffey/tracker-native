@@ -26,14 +26,11 @@ const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
 
   const [isFormVisible, setIsFormVisible] = useState(false);
 
+  const handleEditPress = () => setIsFormVisible(true);
   navigation.setOptions({
     headerRight: () =>
       data?.exercise ? (
-        <Button
-          title="Edit"
-          type="clear"
-          onPress={() => setIsFormVisible(true)}
-        />
+        <Button title="Edit" type="clear" onPress={handleEditPress} />
       ) : (
         <></>
       ),

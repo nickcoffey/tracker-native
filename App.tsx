@@ -27,6 +27,8 @@ export type RootNavigationProps = {
 const App = () => {
   const RootTabs = createBottomTabNavigator<RootTabParamList>();
 
+  // const screenOptions; TODO: extract rendered function
+
   return (
     <GQLProvider>
       <StatusBar barStyle="dark-content" />

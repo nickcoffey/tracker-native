@@ -3,6 +3,8 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+
 import SettingsScreen from './SettingsScreen';
 import CategoryScreen from './Category/CategoryScreen';
 import ExerciseScreen from './Exercise/ExerciseScreen';
@@ -19,6 +21,20 @@ export type SettingsNavigationProps = {
 
 const SettingsNavigator = () => {
   const SettingsStack = createStackNavigator<SettingsStackParamList>();
+
+  const options = ({
+    route,
+  }: {
+    route:
+      | RouteProp<SettingsStackParamList, 'Category'>
+      | RouteProp<SettingsStackParamList, 'Exercise'>;
+    navigation: any;
+  }): {
+    title: any;
+  } => {
+    return {title: route.params.name};
+  };
+
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
@@ -29,12 +45,12 @@ const SettingsNavigator = () => {
       <SettingsStack.Screen
         name="Category"
         component={CategoryScreen}
-        options={({route}) => ({title: route.params.name})}
+        options={options}
       />
       <SettingsStack.Screen
         name="Exercise"
         component={ExerciseScreen}
-        options={({route}) => ({title: route.params.name})}
+        options={options}
       />
     </SettingsStack.Navigator>
   );

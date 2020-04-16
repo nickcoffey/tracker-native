@@ -3,7 +3,7 @@ import ApolloClient from 'apollo-boost';
 import {ApolloProvider} from '@apollo/react-hooks';
 
 const client = new ApolloClient({
-  uri: 'http://192.168.1.112:4000/graphql', // TODO update with final URI
+  uri: 'https://api-lift-track.herokuapp.com/',
 });
 
 type GQLProviderProps = {

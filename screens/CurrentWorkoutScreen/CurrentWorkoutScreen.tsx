@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {Button, ListItem} from 'react-native-elements';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 
+import PageLayout from '../../layouts/PageLayout';
 import CurrentWorkoutTimer from './CurrentWorkoutTimer';
-import CurrentWorkoutSelectExercise from './CurrentWorkoutSelectExercise';
+import ExerciseSelector from './ExerciseSelector/ExerciseSelector';
 import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator';
 import {
   ADD_WORKOUT,
@@ -27,92 +28,99 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   >(UPDATE_WORKOUT);
 
   const [workout, setWorkout] = useState<WorkoutWithExercises | undefined>();
-  const {refetch} = useQuery<WorkoutDataWithExercises>(WORKOUT_WITH_EXERCISES, {
-    variables: {id: workout?.id},
-    skip: true,
-  });
+  const {refetch, loading} = useQuery<WorkoutDataWithExercises>(
+    WORKOUT_WITH_EXERCISES,
+    {
+      //variables: {id: workout?.id}, // TODO: left for opening screen from past workouts
+      skip: true,
+    },
+  );
 
   const refreshWorkout = () => {
     if (workout?.id) {
-      refetch().then((res) => {
-        if (res.data.workout.id) {
-          setWorkout(res.data.workout);
-        }
-      });
+      refetch({id: workout.id})
+        .then((res) => {
+          if (res.data.workout.id) {
+            setWorkout(res.data.workout);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   const [seconds, setSeconds] = useState(0);
   const [isTimerStarted, setIsTimerStarted] = useState(false);
 
+  const handleNewPress = () => {
+    addWorkout({
+      variables: {
+        newWorkout: {
+          ...blankWorkout,
+          startTime: getCurrentTimeString(),
+        },
+      },
+    })
+      .then((res) => {
+        setWorkout(res.data?.addWorkout);
+        setIsTimerStarted(true);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleStopPress = () => {
+    if (workout) {
+      const {id} = workout;
+      updateWorkout({
+        variables: {
+          updatedWorkout: {id, endTime: getCurrentTimeString()},
+        },
+      })
+        .then(() => {
+          setIsTimerStarted(false);
+          setSeconds(0);
+          setWorkout(undefined);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   navigation.setOptions({
     headerRight: () =>
       workout === undefined ? (
-        <Button
-          title="New"
-          type="clear"
-          onPress={() =>
-            addWorkout({
-              variables: {
-                newWorkout: {
-                  ...blankWorkout,
-                  startTime: getCurrentTimeString(),
-                },
-              },
-            }).then((res) => {
-              setWorkout(res.data?.addWorkout);
-              setIsTimerStarted(true);
-            })
-          }
-        />
+        <Button title="New" type="clear" onPress={handleNewPress} />
       ) : (
-        <Button
-          title="Stop"
-          type="clear"
-          onPress={() => {
-            const {id} = workout;
-            updateWorkout({
-              variables: {
-                updatedWorkout: {id, endTime: getCurrentTimeString()},
-              },
-            }).then(() => {
-              setIsTimerStarted(false);
-              setSeconds(0);
-              setWorkout(undefined);
-            });
-          }}
-        />
+        <Button title="Stop" type="clear" onPress={handleStopPress} />
       ),
   });
 
   const getCurrentTimeString = (): string => new Date().getTime().toString();
 
   return (
-    <>
+    <PageLayout loading={loading} refetch={workout?.id ? refetch : undefined}>
       <CurrentWorkoutTimer
         seconds={seconds}
         setSeconds={setSeconds}
         isTimerStarted={isTimerStarted}
       />
-      {workout && workout.id && (
-        <CurrentWorkoutSelectExercise
-          workoutId={workout.id}
-          refreshWorkout={refreshWorkout}
-        />
-      )}
-      {workout?.workoutExercises?.map((exercise, index) => (
-        <ListItem
-          key={index}
-          title={exercise.name}
-          subtitle={exercise.desc}
-          chevron
-          topDivider={index === 0}
-          bottomDivider
-          // onPress={() => openEditExercise(exercise.id, exercise.name)}
-          // onLongPress={() => handleDeletePress(exercise.id)}
-        />
-      ))}
-    </>
+      <>
+        {workout && workout.id && (
+          <ExerciseSelector
+            workoutId={workout.id}
+            refreshWorkout={refreshWorkout}
+          />
+        )}
+      </>
+      <>
+        {workout?.workoutExercises?.map((exercise, index) => (
+          <ListItem
+            key={index}
+            title={exercise.name}
+            topDivider={index === 0}
+            bottomDivider
+          />
+        ))}
+      </>
+    </PageLayout>
   );
 };
 

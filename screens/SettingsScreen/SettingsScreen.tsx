@@ -27,13 +27,12 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isNewFormVisible, setIsNewFormVisible] = useState(false);
 
+  const handleCreatePress = () => {
+    setIsNewFormVisible(true);
+  };
   navigation.setOptions({
     headerRight: () => (
-      <Button
-        title="Create"
-        type="clear"
-        onPress={() => setIsNewFormVisible(true)}
-      />
+      <Button title="Create" type="clear" onPress={handleCreatePress} />
     ),
   });
 
@@ -44,9 +43,14 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
     });
   };
 
+  const handleYesPress = () => handleCategoryRemove(true);
+  const handleNoPress = () => handleCategoryRemove(false);
   const handleCategoryRemove = (doDelete: boolean) => {
     setIsDeleteModalVisible(false);
-    doDelete && removeCategory().then(() => refetch());
+    doDelete &&
+      removeCategory()
+        .then(() => refetch())
+        .catch((err) => console.log(err));
   };
 
   const styles = StyleSheet.create({
@@ -67,6 +71,8 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
     },
   });
 
+  const handleBackdropPress = () => setIsDeleteModalVisible(false);
+
   return (
     <PageLayout loading={loading} refetch={refetch}>
       <Divider style={styles.divider} />
@@ -83,7 +89,7 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
       />
       <Overlay
         isVisible={isDeleteModalVisible}
-        onBackdropPress={() => setIsDeleteModalVisible(false)}
+        onBackdropPress={handleBackdropPress}
         height="auto">
         <>
           <Text style={styles.deleteWarning}>
@@ -93,9 +99,9 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
           <Button
             title="Yes"
             buttonStyle={styles.dangerBtn}
-            onPress={() => handleCategoryRemove(true)}
+            onPress={handleYesPress}
           />
-          <Button title="No" onPress={() => handleCategoryRemove(false)} />
+          <Button title="No" onPress={handleNoPress} />
         </>
       </Overlay>
     </PageLayout>

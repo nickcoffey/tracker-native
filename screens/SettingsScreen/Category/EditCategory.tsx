@@ -60,15 +60,19 @@ const EditCategory = ({
   };
 
   const handleSubmit = () => {
-    updateCategory().then(() => refetch());
+    updateCategory()
+      .then(() => refetch())
+      .catch((err) => console.log(err));
     setIsFormVisible(false);
   };
+
+  const handleBackDropPress = () => setIsFormVisible(false);
 
   return (
     <>
       <Overlay
         isVisible={isFormVisible}
-        onBackdropPress={() => setIsFormVisible(false)}
+        onBackdropPress={handleBackDropPress}
         height="auto">
         <Form
           inputs={editInputs}

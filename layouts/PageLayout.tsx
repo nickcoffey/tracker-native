@@ -16,7 +16,9 @@ const PageLayout = ({loading, children, refetch}: PageLayoutProps) => {
     if (refetch) {
       // if refreshable
       setRefreshing(true);
-      refetch().then(() => setRefreshing(false));
+      refetch()
+        .then(() => setRefreshing(false))
+        .catch((err) => console.log(err));
     }
   }, [refreshing]);
 

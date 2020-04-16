@@ -60,13 +60,18 @@ const EditExercise = ({
   };
 
   const handleSubmit = () => {
-    updateExercise().then(() => refetch());
+    updateExercise()
+      .then(() => refetch())
+      .catch((err) => console.log(err));
     setIsFormVisible(false);
   };
+
+  const handleBackdropPress = () => setIsFormVisible(false);
+
   return (
     <Overlay
       isVisible={isFormVisible}
-      onBackdropPress={() => setIsFormVisible(false)}
+      onBackdropPress={handleBackdropPress}
       height="auto">
       <Form
         inputs={inputs}

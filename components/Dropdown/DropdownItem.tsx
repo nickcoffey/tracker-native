@@ -26,8 +26,10 @@ const DropdownItem = ({
     deselectedItem: {},
   });
 
+  const handleSelect = () => selectItem(index);
+
   return (
-    <TouchableOpacity onPress={() => selectItem(index)}>
+    <TouchableOpacity onPress={handleSelect}>
       <Text
         style={{
           ...styles.item,

@@ -30,8 +30,8 @@ const ExerciseList = ({
           chevron
           topDivider={index === 0}
           bottomDivider
-          onPress={() => openEditExercise(exercise.id, exercise.name)}
-          onLongPress={() => handleDeletePress(exercise.id)}
+          onPress={() => openEditExercise(exercise.id, exercise.name)} // TODO find way to extract from render
+          onLongPress={() => handleDeletePress(exercise.id)} // TODO find way to extract from render
         />
       ))}
     </>

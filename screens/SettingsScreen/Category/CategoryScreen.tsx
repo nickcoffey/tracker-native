@@ -40,14 +40,11 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     {id: string}
   >(REMOVE_EXERCISE, {variables: {id: deleteExerciseId}});
 
+  const handleEditPress = () => setIsEditFormVisible(true);
   navigation.setOptions({
     headerRight: () =>
       data?.category ? (
-        <Button
-          title="Edit"
-          type="clear"
-          onPress={() => setIsEditFormVisible(true)}
-        />
+        <Button title="Edit" type="clear" onPress={handleEditPress} />
       ) : (
         <></>
       ),
@@ -63,7 +60,10 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
 
   const handleExerciseRemove = (doDelete: boolean) => {
     setIsDeleteModalVisible(false);
-    doDelete && removeExercise().then(() => refetch());
+    doDelete &&
+      removeExercise()
+        .then(() => refetch())
+        .catch((err) => console.log(err));
   };
 
   const styles = StyleSheet.create({
@@ -96,6 +96,11 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     },
   });
 
+  const handleNewPress = () => setIsExerciseFormVisible(true);
+  const handleBackDropPress = () => setIsDeleteModalVisible(false);
+  const handleYesPress = () => handleExerciseRemove(true);
+  const handleNoPress = () => handleExerciseRemove(false);
+
   return (
     <PageLayout loading={loading} refetch={refetch}>
       <Text style={styles.desc}>{data && data?.category.desc}</Text>
@@ -112,11 +117,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       <Divider style={styles.divider} />
       <View style={styles.exerciseHeader}>
         <Text style={styles.exerciseTitle}>Exercises</Text>
-        <Button
-          title="Create New"
-          type="clear"
-          onPress={() => setIsExerciseFormVisible(true)}
-        />
+        <Button title="Create New" type="clear" onPress={handleNewPress} />
       </View>
       <ExerciseList
         exercises={data?.category.exercises || []}
@@ -132,7 +133,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       />
       <Overlay
         isVisible={isDeleteModalVisible}
-        onBackdropPress={() => setIsDeleteModalVisible(false)}
+        onBackdropPress={handleBackDropPress}
         height="auto">
         <>
           <Text style={styles.deleteWarning}>
@@ -142,9 +143,9 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
           <Button
             title="Yes"
             buttonStyle={styles.dangerBtn}
-            onPress={() => handleExerciseRemove(true)}
+            onPress={handleYesPress}
           />
-          <Button title="No" onPress={() => handleExerciseRemove(false)} />
+          <Button title="No" onPress={handleNoPress} />
         </>
       </Overlay>
     </PageLayout>

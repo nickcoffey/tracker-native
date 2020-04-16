@@ -39,7 +39,9 @@ const NewCategory = ({
   };
 
   const handleSubmit = () => {
-    addCategory().then(() => refetch());
+    addCategory()
+      .then(() => refetch())
+      .catch((err) => console.log(err));
     setNewCategory(initialNewCategory);
     setIsFormVisible(false);
   };
@@ -59,10 +61,12 @@ const NewCategory = ({
     },
   ];
 
+  const handleBackdropPress = () => setIsFormVisible(false);
+
   return (
     <Overlay
       isVisible={isFormVisible}
-      onBackdropPress={() => setIsFormVisible(false)}
+      onBackdropPress={handleBackdropPress}
       height="auto">
       <Form
         inputs={inputs}

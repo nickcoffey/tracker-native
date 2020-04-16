@@ -62,10 +62,12 @@ const NewExercise = ({
     setIsFormVisible(false);
   };
 
+  const handleBackdropPress = () => setIsFormVisible(false);
+
   return (
     <Overlay
       isVisible={isFormVisible}
-      onBackdropPress={() => setIsFormVisible(false)}
+      onBackdropPress={handleBackdropPress}
       height="auto">
       <Form
         inputs={exerciseInputs}
