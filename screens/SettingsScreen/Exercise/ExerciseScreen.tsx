@@ -1,51 +1,46 @@
-import React, {useState} from 'react';
-import PageLayout from '../../../layouts/PageLayout';
-import {Text, Button, Divider} from 'react-native-elements';
-import {StyleSheet} from 'react-native';
-import {RouteProp, useTheme} from '@react-navigation/native';
-import {SettingsStackParamList} from '../SettingsNavigator';
-import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL';
-import {useQuery} from '@apollo/react-hooks';
-import EditExercise from './EditExercise';
-import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useState} from 'react'
+import PageLayout from '../../../layouts/PageLayout'
+import {Text, Button, Divider} from 'react-native-elements'
+import {StyleSheet} from 'react-native'
+import {RouteProp, useTheme} from '@react-navigation/native'
+import {SettingsStackParamList} from '../SettingsNavigator'
+import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL'
+import {useQuery} from '@apollo/react-hooks'
+import EditExercise from './EditExercise'
+import {StackNavigationProp} from '@react-navigation/stack'
 
-type ExerciseScreenRouteProp = RouteProp<SettingsStackParamList, 'Exercise'>;
+type ExerciseScreenRouteProp = RouteProp<SettingsStackParamList, 'Exercise'>
 
 type ExerciseProps = {
-  navigation: StackNavigationProp<SettingsStackParamList>;
-  route: ExerciseScreenRouteProp;
-};
+  navigation: StackNavigationProp<SettingsStackParamList>
+  route: ExerciseScreenRouteProp
+}
 
 const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
-  const {colors} = useTheme();
+  const {colors} = useTheme()
 
-  const exerciseId = route.params.id;
+  const exerciseId = route.params.id
   const {data, loading, refetch} = useQuery<ExerciseData>(EXERCISE, {
-    variables: {id: exerciseId},
-  });
+    variables: {id: exerciseId}
+  })
 
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false)
 
-  const handleEditPress = () => setIsFormVisible(true);
+  const handleEditPress = () => setIsFormVisible(true)
   navigation.setOptions({
-    headerRight: () =>
-      data?.exercise ? (
-        <Button title="Edit" type="clear" onPress={handleEditPress} />
-      ) : (
-        <></>
-      ),
-    title: data?.exercise.name || '',
-  });
+    headerRight: () => (data?.exercise ? <Button title='Edit' type='clear' onPress={handleEditPress} /> : <></>),
+    title: data?.exercise.name || ''
+  })
 
   const styles = StyleSheet.create({
     subHeaderText: {
-      textAlign: 'center',
+      textAlign: 'center'
     },
     divider: {
       padding: 10,
-      backgroundColor: colors.background,
-    },
-  });
+      backgroundColor: colors.background
+    }
+  })
 
   return (
     <PageLayout loading={loading} refetch={refetch}>
@@ -62,7 +57,7 @@ const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
         <></>
       )}
     </PageLayout>
-  );
-};
+  )
+}
 
-export default ExerciseScreen;
+export default ExerciseScreen

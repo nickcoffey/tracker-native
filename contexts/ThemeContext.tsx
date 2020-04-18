@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export const theme = {
   primary: '#456990',
@@ -7,9 +7,9 @@ export const theme = {
   warning: '#EEB868',
   danger: '#EF767A',
   white: '#ffffff',
-  black: '#000000',
-};
+  black: '#000000'
+}
 
-const ThemeContext = React.createContext(theme);
+const ThemeContext = React.createContext(theme)
 
-export default ThemeContext;
+export default ThemeContext

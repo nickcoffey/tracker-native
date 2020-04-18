@@ -1,105 +1,94 @@
-import React, {useState} from 'react';
-import PageLayout from '../../../layouts/PageLayout';
-import {Text, Button, Divider, Overlay} from 'react-native-elements';
-import {StyleSheet, View} from 'react-native';
-import {RouteProp, useTheme} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {SettingsStackParamList} from '../SettingsNavigator';
-import ExerciseList from '../Exercise/ExerciseList';
-import {
-  CATEGORY_WITH_EXERCISES,
-  CategoryWithExercisesData,
-} from '../../../graphql/CategoryGQL';
-import {REMOVE_EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL';
-import {useQuery, useMutation} from '@apollo/react-hooks';
-import EditCategory from './EditCategory';
-import NewExercise from '../Exercise/NewExercise';
+import React, {useState} from 'react'
+import {StyleSheet, View} from 'react-native'
+import {Text, Button, Divider, Overlay} from 'react-native-elements'
+import {RouteProp, useTheme} from '@react-navigation/native'
+import {StackNavigationProp} from '@react-navigation/stack'
+import {useQuery, useMutation} from '@apollo/react-hooks'
 
-type CategoryScreenRouteProp = RouteProp<SettingsStackParamList, 'Category'>;
+import PageLayout from '../../../layouts/PageLayout'
+import {SettingsStackParamList} from '../SettingsNavigator'
+import {CATEGORY_WITH_EXERCISES, CategoryWithExercisesData} from '../../../graphql/CategoryGQL'
+import {REMOVE_EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL'
+import ExerciseList from '../Exercise/ExerciseList'
+import EditCategory from './EditCategory'
+import NewExercise from '../Exercise/NewExercise'
+
+type CategoryScreenRouteProp = RouteProp<SettingsStackParamList, 'Category'>
 
 type CategoryScreenProps = {
-  navigation: StackNavigationProp<SettingsStackParamList>;
-  route: CategoryScreenRouteProp;
-};
+  navigation: StackNavigationProp<SettingsStackParamList>
+  route: CategoryScreenRouteProp
+}
 
 const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
-  const {colors} = useTheme();
-  const categoryId = route.params.id;
-  const {data, loading, refetch} = useQuery<CategoryWithExercisesData>(
-    CATEGORY_WITH_EXERCISES,
-    {
-      variables: {id: categoryId},
-    },
-  );
-  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-  const [isExerciseFormVisible, setIsExerciseFormVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [deleteExerciseId, setDeleteExerciseId] = useState('');
-  const [removeExercise] = useMutation<
-    {removedExercise: ExerciseData},
-    {id: string}
-  >(REMOVE_EXERCISE, {variables: {id: deleteExerciseId}});
+  const {colors} = useTheme()
+  const categoryId = route.params.id
+  const {data, loading, refetch} = useQuery<CategoryWithExercisesData>(CATEGORY_WITH_EXERCISES, {
+    variables: {id: categoryId}
+  })
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false)
+  const [isExerciseFormVisible, setIsExerciseFormVisible] = useState(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [deleteExerciseId, setDeleteExerciseId] = useState('')
+  const [removeExercise] = useMutation<{removedExercise: ExerciseData}, {id: string}>(REMOVE_EXERCISE, {
+    variables: {id: deleteExerciseId}
+  })
 
-  const handleEditPress = () => setIsEditFormVisible(true);
+  const handleEditPress = () => setIsEditFormVisible(true)
   navigation.setOptions({
-    headerRight: () =>
-      data?.category ? (
-        <Button title="Edit" type="clear" onPress={handleEditPress} />
-      ) : (
-        <></>
-      ),
-    title: data?.category.name || '',
-  });
+    headerRight: () => (data?.category ? <Button title='Edit' type='clear' onPress={handleEditPress} /> : <></>),
+    title: data?.category.name || ''
+  })
 
   const openEditExercise = (id: string, name: string) => {
     navigation.navigate('Exercise', {
       id,
-      name,
-    });
-  };
+      name
+    })
+  }
 
   const handleExerciseRemove = (doDelete: boolean) => {
-    setIsDeleteModalVisible(false);
+    setIsDeleteModalVisible(false)
     doDelete &&
       removeExercise()
         .then(() => refetch())
-        .catch((err) => console.log(err));
-  };
+        .catch((err) => console.log(err))
+  }
 
   const styles = StyleSheet.create({
     desc: {
-      textAlign: 'center',
+      textAlign: 'center'
     },
     exerciseHeader: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
+      justifyContent: 'space-between'
     },
     exerciseTitle: {
-      fontSize: 20,
+      fontSize: 20
     },
     divider: {
       padding: 10,
-      backgroundColor: colors.background,
+      backgroundColor: colors.background
     },
     modalDivider: {
       padding: 10,
-      backgroundColor: 'white',
+      backgroundColor: 'white'
     },
     dangerBtn: {
-      backgroundColor: 'red',
+      backgroundColor: 'red'
     },
     deleteWarning: {
       textAlign: 'center',
-      fontSize: 20,
-    },
-  });
+      fontSize: 20
+    }
+  })
 
-  const handleNewPress = () => setIsExerciseFormVisible(true);
-  const handleBackDropPress = () => setIsDeleteModalVisible(false);
-  const handleYesPress = () => handleExerciseRemove(true);
-  const handleNoPress = () => handleExerciseRemove(false);
+  const handleNewPress = () => setIsExerciseFormVisible(true)
+  const handleBackDropPress = () => setIsDeleteModalVisible(false)
+  const handleYesPress = () => handleExerciseRemove(true)
+  const handleNoPress = () => handleExerciseRemove(false)
 
   return (
     <PageLayout loading={loading} refetch={refetch}>
@@ -117,7 +106,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       <Divider style={styles.divider} />
       <View style={styles.exerciseHeader}>
         <Text style={styles.exerciseTitle}>Exercises</Text>
-        <Button title="Create New" type="clear" onPress={handleNewPress} />
+        <Button title='Create New' type='clear' onPress={handleNewPress} />
       </View>
       <ExerciseList
         exercises={data?.category.exercises || []}
@@ -131,25 +120,16 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
         categoryId={categoryId}
         refetch={refetch}
       />
-      <Overlay
-        isVisible={isDeleteModalVisible}
-        onBackdropPress={handleBackDropPress}
-        height="auto">
+      <Overlay isVisible={isDeleteModalVisible} onBackdropPress={handleBackDropPress} height='auto'>
         <>
-          <Text style={styles.deleteWarning}>
-            Are you sure you want to delete this exercise?
-          </Text>
+          <Text style={styles.deleteWarning}>Are you sure you want to delete this exercise?</Text>
           <Divider style={styles.modalDivider} />
-          <Button
-            title="Yes"
-            buttonStyle={styles.dangerBtn}
-            onPress={handleYesPress}
-          />
-          <Button title="No" onPress={handleNoPress} />
+          <Button title='Yes' buttonStyle={styles.dangerBtn} onPress={handleYesPress} />
+          <Button title='No' onPress={handleNoPress} />
         </>
       </Overlay>
     </PageLayout>
-  );
-};
+  )
+}
 
-export default CategoryScreen;
+export default CategoryScreen

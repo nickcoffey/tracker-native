@@ -1,37 +1,29 @@
-import React from 'react';
-import {Text, Icon} from 'react-native-elements';
-import RNPickerSelect from 'react-native-picker-select';
-import {Exercise} from '../../../graphql/ExerciseGQL';
-import {SelectorStyles, PickerStyles} from './ExerciseSelector';
+import React from 'react'
+import {Text, Icon} from 'react-native-elements'
+import RNPickerSelect from 'react-native-picker-select'
+import {Exercise} from '../../../graphql/ExerciseGQL'
+import {SelectorStyles, PickerStyles} from './ExerciseSelector'
 
 type Props = {
-  setSelectedExercise: React.Dispatch<
-    React.SetStateAction<Exercise | undefined>
-  >;
-  selectedExercise: Exercise | undefined;
-  styles: SelectorStyles;
-  pickerStyles: PickerStyles;
-  exercises: Exercise[] | undefined;
-};
+  setSelectedExercise: React.Dispatch<React.SetStateAction<Exercise | undefined>>
+  selectedExercise: Exercise | undefined
+  styles: SelectorStyles
+  pickerStyles: PickerStyles
+  exercises: Exercise[] | undefined
+}
 
-const ExerciseSelect = ({
-  selectedExercise,
-  setSelectedExercise,
-  styles,
-  pickerStyles,
-  exercises,
-}: Props) => {
+const ExerciseSelect = ({selectedExercise, setSelectedExercise, styles, pickerStyles, exercises}: Props) => {
   const handleValueChange = (value: any) => {
-    setSelectedExercise(value);
-  };
+    setSelectedExercise(value)
+  }
 
-  const icon = () => <Icon type="material" name="expand-more" size={40} />;
+  const icon = () => <Icon type='material' name='expand-more' size={40} />
 
   const items =
     exercises?.map((exercise) => ({
       label: exercise.name,
-      value: exercise,
-    })) || [];
+      value: exercise
+    })) || []
 
   return (
     <>
@@ -45,7 +37,7 @@ const ExerciseSelect = ({
         Icon={icon}
       />
     </>
-  );
-};
+  )
+}
 
-export default ExerciseSelect;
+export default ExerciseSelect

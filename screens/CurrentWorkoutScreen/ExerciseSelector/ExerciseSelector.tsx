@@ -1,53 +1,45 @@
-import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
-import {useQuery, useMutation} from '@apollo/react-hooks';
-import {Button} from 'react-native-elements';
+import React, {useState} from 'react'
+import {StyleSheet} from 'react-native'
+import {useQuery, useMutation} from '@apollo/react-hooks'
+import {Button} from 'react-native-elements'
 
 import {
   CategoriesWithExercisesData,
   ALL_CATEGORIES_WITH_EXERCISES,
-  CategoryWithExercises,
-} from '../../../graphql/CategoryGQL';
-import {Exercise} from 'graphql/ExerciseGQL';
-import {
-  ADD_WORKOUT_EXERCISE,
-  CreateWorkoutExerciseInput,
-  WorkoutExercise,
-} from '../../../graphql/WorkoutExerciseGQL';
-import CategorySelect from './CategorySelect';
-import ExerciseSelect from './ExerciseSelect';
+  CategoryWithExercises
+} from '../../../graphql/CategoryGQL'
+import {Exercise} from 'graphql/ExerciseGQL'
+import {ADD_WORKOUT_EXERCISE, CreateWorkoutExerciseInput, WorkoutExercise} from '../../../graphql/WorkoutExerciseGQL'
+import CategorySelect from './CategorySelect'
+import ExerciseSelect from './ExerciseSelect'
 
 type Props = {
-  workoutId: string;
-  refreshWorkout: () => void;
-};
+  workoutId: string
+  refreshWorkout: () => void
+}
 
 const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
-  const {data} = useQuery<CategoriesWithExercisesData>(
-    ALL_CATEGORIES_WITH_EXERCISES,
-  );
-  const [selectedCategory, setSelectedCategory] = useState<
-    CategoryWithExercises
-  >();
-  const [selectedExercise, setSelectedExercise] = useState<Exercise>();
+  const {data} = useQuery<CategoriesWithExercisesData>(ALL_CATEGORIES_WITH_EXERCISES)
+  const [selectedCategory, setSelectedCategory] = useState<CategoryWithExercises>()
+  const [selectedExercise, setSelectedExercise] = useState<Exercise>()
 
   const [addWorkoutExercise] = useMutation<
     {addWorkoutExercise: WorkoutExercise},
     {newWorkoutExercise: CreateWorkoutExerciseInput}
-  >(ADD_WORKOUT_EXERCISE);
+  >(ADD_WORKOUT_EXERCISE)
 
   const onWorkoutExerciseSubmit = () => {
     if (selectedExercise) {
-      const {name, desc} = selectedExercise;
+      const {name, desc} = selectedExercise
       addWorkoutExercise({
-        variables: {newWorkoutExercise: {name, desc, workoutId}},
+        variables: {newWorkoutExercise: {name, desc, workoutId}}
       })
         .then((res) => {
-          if (res.data?.addWorkoutExercise.id) refreshWorkout();
+          if (res.data?.addWorkoutExercise.id) refreshWorkout()
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     }
-  };
+  }
 
   return (
     <>
@@ -65,44 +57,40 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
         selectedExercise={selectedExercise}
         setSelectedExercise={setSelectedExercise}
       />
-      <Button
-        title="Add Exercise"
-        type="clear"
-        onPress={onWorkoutExerciseSubmit}
-      />
+      <Button title='Add Exercise' type='clear' onPress={onWorkoutExerciseSubmit} />
     </>
-  );
-};
+  )
+}
 
 const baseStyles = StyleSheet.create({
   styles: {
     textAlign: 'center',
     paddingHorizontal: 10,
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
-});
+    paddingRight: 30 // to ensure the text is never behind the icon
+  }
+})
 
 const pickerStyles = StyleSheet.create({
   inputIOS: {
     ...baseStyles.styles,
     paddingVertical: 10,
-    borderWidth: 1,
+    borderWidth: 1
   },
   inputAndroid: {
     ...baseStyles.styles,
     paddingVertical: 8,
-    borderWidth: 0.5,
-  },
-});
+    borderWidth: 0.5
+  }
+})
 
-export type PickerStyles = typeof pickerStyles;
+export type PickerStyles = typeof pickerStyles
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 16,
-  },
-});
+    fontSize: 16
+  }
+})
 
-export type SelectorStyles = typeof styles;
+export type SelectorStyles = typeof styles
 
-export default ExerciseSelector;
+export default ExerciseSelector

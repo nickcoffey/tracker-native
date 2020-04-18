@@ -1,81 +1,61 @@
-import React, {useState} from 'react';
-import {Overlay} from 'react-native-elements';
-import Form, {InputType} from '../../../components/Form';
-import {
-  Category,
-  CategoryCreateInput,
-  ADD_CATEGORY,
-  AllCategoriesData,
-} from '../../../graphql/CategoryGQL';
-import {useMutation} from '@apollo/react-hooks';
-import {ApolloQueryResult} from 'apollo-boost';
+import React, {useState} from 'react'
+import {Overlay} from 'react-native-elements'
+import Form, {InputType} from '../../../components/Form'
+import {Category, CategoryCreateInput, ADD_CATEGORY, AllCategoriesData} from '../../../graphql/CategoryGQL'
+import {useMutation} from '@apollo/react-hooks'
+import {ApolloQueryResult} from 'apollo-boost'
 
 type NewCategoryProps = {
-  isFormVisible: boolean;
-  setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  refetch: (
-    variables?: Record<string, any> | undefined,
-  ) => Promise<ApolloQueryResult<AllCategoriesData>>;
-};
+  isFormVisible: boolean
+  setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>
+  refetch: (variables?: Record<string, any> | undefined) => Promise<ApolloQueryResult<AllCategoriesData>>
+}
 
-const NewCategory = ({
-  isFormVisible,
-  setIsFormVisible,
-  refetch,
-}: NewCategoryProps) => {
+const NewCategory = ({isFormVisible, setIsFormVisible, refetch}: NewCategoryProps) => {
   const initialNewCategory = {
     name: '',
-    desc: '',
-  };
-  const [newCategory, setNewCategory] = useState(initialNewCategory);
+    desc: ''
+  }
+  const [newCategory, setNewCategory] = useState(initialNewCategory)
 
-  const [addCategory] = useMutation<
-    {returnedCategory: Category},
-    {newCategory: CategoryCreateInput}
-  >(ADD_CATEGORY, {variables: {newCategory}});
+  const [addCategory] = useMutation<{returnedCategory: Category}, {newCategory: CategoryCreateInput}>(ADD_CATEGORY, {
+    variables: {newCategory}
+  })
 
   const handleCategoryChange = (key: string, value: string) => {
-    setNewCategory({...newCategory, [key]: value});
-  };
+    setNewCategory({...newCategory, [key]: value})
+  }
 
   const handleSubmit = () => {
     addCategory()
       .then(() => refetch())
-      .catch((err) => console.log(err));
-    setNewCategory(initialNewCategory);
-    setIsFormVisible(false);
-  };
+      .catch((err) => console.log(err))
+    setNewCategory(initialNewCategory)
+    setIsFormVisible(false)
+  }
 
   const inputs: InputType[] = [
     {
       label: 'Name',
       placeholder: 'Enter a name',
       key: 'name',
-      value: newCategory.name,
+      value: newCategory.name
     },
     {
       label: 'Description',
       placeholder: 'Enter a description',
       key: 'desc',
-      value: newCategory.desc,
-    },
-  ];
+      value: newCategory.desc
+    }
+  ]
 
-  const handleBackdropPress = () => setIsFormVisible(false);
+  const handleBackdropPress = () => setIsFormVisible(false)
 
   return (
-    <Overlay
-      isVisible={isFormVisible}
-      onBackdropPress={handleBackdropPress}
-      height="auto">
-      <Form
-        inputs={inputs}
-        title="New Category"
-        handleChange={handleCategoryChange}
-        handleSubmit={handleSubmit}
-      />
+    <Overlay isVisible={isFormVisible} onBackdropPress={handleBackdropPress} height='auto'>
+      <Form inputs={inputs} title='New Category' handleChange={handleCategoryChange} handleSubmit={handleSubmit} />
     </Overlay>
-  );
-};
+  )
+}
 
-export default NewCategory;
+export default NewCategory

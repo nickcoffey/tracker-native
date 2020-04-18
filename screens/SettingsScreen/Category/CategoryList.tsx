@@ -1,26 +1,25 @@
-import React from 'react';
-import {GestureResponderEvent} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import React from 'react'
+import {ListItem} from 'react-native-elements'
 
-import {Category} from '../../../graphql/CategoryGQL';
+import {Category} from '../../../graphql/CategoryGQL'
 
 type CategoryListProps = {
-  categories: Category[];
-  openEditCategory: (id: string, name: string) => void;
-  setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setDeleteCategoryId: React.Dispatch<React.SetStateAction<string>>;
-};
+  categories: Category[]
+  openEditCategory: (id: string, name: string) => void
+  setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteCategoryId: React.Dispatch<React.SetStateAction<string>>
+}
 
 const CategoryList = ({
   categories,
   openEditCategory,
   setIsDeleteModalVisible,
-  setDeleteCategoryId,
+  setDeleteCategoryId
 }: CategoryListProps) => {
   const handleDeletePress = (id: string) => {
-    setDeleteCategoryId(id);
-    setIsDeleteModalVisible(true);
-  };
+    setDeleteCategoryId(id)
+    setIsDeleteModalVisible(true)
+  }
 
   return (
     <>
@@ -37,7 +36,7 @@ const CategoryList = ({
         />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default CategoryList;
+export default CategoryList

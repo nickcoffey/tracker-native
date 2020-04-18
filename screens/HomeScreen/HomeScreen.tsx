@@ -1,14 +1,14 @@
-import React from 'react';
-import PageLayout from '../../layouts/PageLayout';
-import {Text} from 'react-native-elements';
-import {StyleSheet} from 'react-native';
+import React from 'react'
+import PageLayout from '../../layouts/PageLayout'
+import {Text} from 'react-native-elements'
+import {StyleSheet} from 'react-native'
 
 const HomeScreen = () => {
   const styles = StyleSheet.create({
     header: {
-      textAlign: 'center',
-    },
-  });
+      textAlign: 'center'
+    }
+  })
 
   return (
     <PageLayout loading={false}>
@@ -16,7 +16,7 @@ const HomeScreen = () => {
         Home
       </Text>
     </PageLayout>
-  );
-};
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen

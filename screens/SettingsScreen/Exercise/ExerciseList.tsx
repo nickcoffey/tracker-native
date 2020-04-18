@@ -1,24 +1,24 @@
-import React from 'react';
-import {ListItem} from 'react-native-elements';
-import {Exercise} from '../../../graphql/ExerciseGQL';
+import React from 'react'
+import {ListItem} from 'react-native-elements'
+import {Exercise} from '../../../graphql/ExerciseGQL'
 
 type ExerciseListProps = {
-  exercises: Exercise[];
-  openEditExercise: (id: string, name: string) => void;
-  setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setDeleteExerciseId: React.Dispatch<React.SetStateAction<string>>;
-};
+  exercises: Exercise[]
+  openEditExercise: (id: string, name: string) => void
+  setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteExerciseId: React.Dispatch<React.SetStateAction<string>>
+}
 
 const ExerciseList = ({
   exercises,
   openEditExercise,
   setDeleteExerciseId,
-  setIsDeleteModalVisible,
+  setIsDeleteModalVisible
 }: ExerciseListProps) => {
   const handleDeletePress = (id: string) => {
-    setDeleteExerciseId(id);
-    setIsDeleteModalVisible(true);
-  };
+    setDeleteExerciseId(id)
+    setIsDeleteModalVisible(true)
+  }
 
   return (
     <>
@@ -35,7 +35,7 @@ const ExerciseList = ({
         />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default ExerciseList;
+export default ExerciseList

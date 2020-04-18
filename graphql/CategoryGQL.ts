@@ -1,5 +1,5 @@
-import {gql} from 'apollo-boost';
-import {Exercise} from './ExerciseGQL';
+import {gql} from 'apollo-boost'
+import {Exercise} from './ExerciseGQL'
 
 export const ALL_CATEGORIES = gql`
   {
@@ -9,7 +9,7 @@ export const ALL_CATEGORIES = gql`
       desc
     }
   }
-`;
+`
 
 export const ALL_CATEGORIES_WITH_EXERCISES = gql`
   {
@@ -24,7 +24,7 @@ export const ALL_CATEGORIES_WITH_EXERCISES = gql`
       }
     }
   }
-`;
+`
 
 export const CATEGORY_WITH_EXERCISES = gql`
   query getCategoryWithExercises($id: ID!) {
@@ -39,7 +39,7 @@ export const CATEGORY_WITH_EXERCISES = gql`
       }
     }
   }
-`;
+`
 
 export const ADD_CATEGORY = gql`
   mutation addCategory($newCategory: CategoryCreateInput!) {
@@ -49,7 +49,7 @@ export const ADD_CATEGORY = gql`
       desc
     }
   }
-`;
+`
 
 export const UPDATE_CATEGORY = gql`
   mutation updateCategory($updatedCategory: CategoryUpdateInput!) {
@@ -59,7 +59,7 @@ export const UPDATE_CATEGORY = gql`
       desc
     }
   }
-`;
+`
 
 export const REMOVE_CATEGORY = gql`
   mutation removeCategory($id: ID!) {
@@ -69,44 +69,44 @@ export const REMOVE_CATEGORY = gql`
       desc
     }
   }
-`;
+`
 
 export type Category = {
-  id: string;
-  name: string;
-  desc: string;
-};
+  id: string
+  name: string
+  desc: string
+}
 
 export type CategoryData = {
-  category: Category;
-};
+  category: Category
+}
 
 export type AllCategoriesData = {
-  categories: Category[];
-};
+  categories: Category[]
+}
 
 export type CategoryWithExercises = {
-  id: string;
-  name: string;
-  desc: string;
-  exercises: Exercise[];
-};
+  id: string
+  name: string
+  desc: string
+  exercises: Exercise[]
+}
 
 export type CategoriesWithExercisesData = {
-  categories: CategoryWithExercises[];
-};
+  categories: CategoryWithExercises[]
+}
 
 export type CategoryWithExercisesData = {
-  category: CategoryWithExercises;
-};
+  category: CategoryWithExercises
+}
 
 export type CategoryCreateInput = {
-  name: string;
-  desc?: string;
-};
+  name: string
+  desc?: string
+}
 
 export type CategoryUpdateInput = {
-  id: string;
-  name?: string;
-  desc?: string;
-};
+  id: string
+  name?: string
+  desc?: string
+}
