@@ -15,7 +15,7 @@ import {
   UPDATE_WORKOUT,
   WORKOUT_WITH_EXERCISES
 } from '../../graphql/WorkoutGQL'
-import {Exercise} from 'graphql/ExerciseGQL'
+import {WorkoutExercise} from 'graphql/WorkoutExerciseGQL'
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [addWorkout] = useMutation<{addWorkout: WorkoutWithExercises}, {newWorkout: WorkoutCreateInput}>(ADD_WORKOUT)
@@ -89,7 +89,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
 
   const getCurrentTimeString = (): string => new Date().getTime().toString()
 
-  const handleExercisePress = ({id, name}: Exercise) => {
+  const handleExercisePress = ({id, name}: WorkoutExercise) => {
     navigation.navigate('CurrentExercise', {
       id,
       name
@@ -106,7 +106,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
             key={index}
             title={exercise.name}
             topDivider={index === 0}
-            onPress={() => handleExercisePress(exercise as Exercise)}
+            onPress={() => handleExercisePress(exercise as WorkoutExercise)}
             bottomDivider
             chevron
           />

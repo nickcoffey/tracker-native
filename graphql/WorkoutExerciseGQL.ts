@@ -22,7 +22,7 @@ export const UPDATE_WORKOUT_EXERCISE = gql`
   }
 `
 
-export const WORKOUT_EXERCISE = gql`
+export const WORKOUT_EXERCISE_WITH_SETS = gql`
   query getWorkoutExercise($id: ID!) {
     workoutExercise(id: $id) {
       id
@@ -30,6 +30,11 @@ export const WORKOUT_EXERCISE = gql`
       desc
       workout {
         id
+      }
+      workoutSets {
+        id
+        weight
+        repetitions
       }
     }
   }
@@ -63,13 +68,20 @@ export type WorkoutExercise = {
   name: string
   desc: string
   workout: Workout
+}
+
+export type WorkoutExerciseWithSets = {
+  id: string
+  name: string
+  desc: string
+  workout: Workout
   workoutSets: WorkoutSet[]
 }
 
-export type WorkoutExerciseData = {
-  workoutExercise: WorkoutExercise
+export type WorkoutExerciseWithSetsData = {
+  workoutExercise: WorkoutExerciseWithSets
 }
 
 export type WorkoutExercisesData = {
-  workoutExercises: WorkoutExercise[]
+  workoutExercises: WorkoutExerciseWithSets[]
 }

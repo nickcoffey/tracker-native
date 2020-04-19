@@ -45,22 +45,22 @@ export const REMOVE_WORKOUT_SET = gql`
 `
 
 export type WorkoutSetCreateInput = {
-  weight: string
-  repetitions?: string
+  weight?: Number
+  repetitions?: Number
   workoutExerciseId: string
 }
 
 export type WorkoutSetUpdateInput = {
   id: string
-  weight?: string
-  repetitions?: string
-  workoutExerciseId: string
+  weight?: Number
+  repetitions?: Number
+  workoutExerciseId?: string
 }
 
 export type WorkoutSet = {
   id: string
-  weight: string
-  repetitions: string
+  weight: Number
+  repetitions: Number
   workoutExercise: WorkoutExercise
 }
 
