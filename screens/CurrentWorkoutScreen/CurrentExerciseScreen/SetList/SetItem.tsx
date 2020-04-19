@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {View} from 'react-native'
+import {StyleSheet, View, Alert} from 'react-native'
 import {ListItem, Text, Input, Button} from 'react-native-elements'
 
 import {WorkoutSet, WorkoutSetUpdateInput} from '../../../../graphql/WorkoutSetGQL'
@@ -7,10 +7,11 @@ import {WorkoutSet, WorkoutSetUpdateInput} from '../../../../graphql/WorkoutSetG
 type Props = {
   set: WorkoutSet
   index: number
-  onSetUpdate: (updatedWorkoutSet: WorkoutSetUpdateInput) => boolean
+  onSetUpdate: (updatedWorkoutSet: WorkoutSetUpdateInput) => void
+  onSetRemove: (id: string) => void
 }
 
-const SetItem = ({set, index, onSetUpdate}: Props) => {
+const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
   const [editableWorkoutSet, setEditableWorkoutSet] = useState({
     weight: set.weight || 0,
     repetitions: set.repetitions || 0
@@ -18,7 +19,8 @@ const SetItem = ({set, index, onSetUpdate}: Props) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const handleUpdate = () => {
-    if (onSetUpdate({id: set.id, ...editableWorkoutSet})) setIsEditing(false)
+    onSetUpdate({id: set.id, ...editableWorkoutSet})
+    setIsEditing(false)
   }
 
   const handleChange = (key: string, value: string) =>
@@ -27,6 +29,24 @@ const SetItem = ({set, index, onSetUpdate}: Props) => {
   const handleSetPress = () => setIsEditing(true)
 
   const handleCancelPress = () => setIsEditing(false)
+
+  const createDeleteAlert = () => {
+    Alert.alert(
+      'Delete Set?',
+      'Are you sure you want to delete this set?',
+      [
+        {text: 'No', style: 'cancel'},
+        {text: 'Yes', onPress: () => onSetRemove(set.id), style: 'destructive'}
+      ],
+      {cancelable: false}
+    )
+  }
+
+  const styles = StyleSheet.create({
+    deleteBtn: {
+      color: 'red'
+    }
+  })
 
   return (
     <ListItem
@@ -57,7 +77,7 @@ const SetItem = ({set, index, onSetUpdate}: Props) => {
               onChangeText={(text) => handleChange('repetitions', text)}
             />
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Button title='Delete' type='clear' titleStyle={{color: 'red'}} />
+              <Button title='Delete' type='clear' onPress={createDeleteAlert} titleStyle={styles.deleteBtn} />
               <Button title='Update' type='clear' onPress={handleUpdate} />
               <Button title='Cancel' type='clear' onPress={handleCancelPress} />
             </View>
