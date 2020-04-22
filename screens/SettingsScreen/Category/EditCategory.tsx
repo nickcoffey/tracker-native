@@ -1,5 +1,10 @@
 import React, {useState} from 'react'
+import {useMutation} from '@apollo/react-hooks'
+import {ApolloQueryResult} from 'apollo-boost'
+import {Button} from 'react-native-elements'
+
 import Form, {InputType} from '../../../components/Form'
+import FullScreenModal from '../../../components/FullScreenModal'
 import {
   Category,
   CategoryData,
@@ -7,9 +12,6 @@ import {
   CategoryUpdateInput,
   CategoryWithExercisesData
 } from '../../../graphql/CategoryGQL'
-import {Overlay} from 'react-native-elements'
-import {useMutation} from '@apollo/react-hooks'
-import {ApolloQueryResult} from 'apollo-boost'
 
 type EditCategoryProps = {
   category: Category
@@ -59,19 +61,18 @@ const EditCategory = ({category, isFormVisible, setIsFormVisible, refetch}: Edit
     setIsFormVisible(false)
   }
 
-  const handleBackDropPress = () => setIsFormVisible(false)
+  const handleClose = () => setIsFormVisible(false)
 
   return (
-    <>
-      <Overlay isVisible={isFormVisible} onBackdropPress={handleBackDropPress} height='auto'>
-        <Form
-          inputs={editInputs}
-          title={`Edit ${category && category.name}`}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
-      </Overlay>
-    </>
+    <FullScreenModal isVisible={isFormVisible}>
+      <Form
+        inputs={editInputs}
+        title={`Edit ${category && category.name}`}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+      <Button title='Close' type='clear' onPress={handleClose} />
+    </FullScreenModal>
   )
 }
 

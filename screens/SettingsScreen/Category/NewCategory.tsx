@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
-import {Overlay} from 'react-native-elements'
-import Form, {InputType} from '../../../components/Form'
-import {Category, CategoryCreateInput, ADD_CATEGORY, AllCategoriesData} from '../../../graphql/CategoryGQL'
+import {Button} from 'react-native-elements'
 import {useMutation} from '@apollo/react-hooks'
 import {ApolloQueryResult} from 'apollo-boost'
+
+import Form, {InputType} from '../../../components/Form'
+import FullScreenModal from '../../../components/FullScreenModal'
+import {Category, CategoryCreateInput, ADD_CATEGORY, AllCategoriesData} from '../../../graphql/CategoryGQL'
 
 type NewCategoryProps = {
   isFormVisible: boolean
@@ -49,12 +51,13 @@ const NewCategory = ({isFormVisible, setIsFormVisible, refetch}: NewCategoryProp
     }
   ]
 
-  const handleBackdropPress = () => setIsFormVisible(false)
+  const handleClose = () => setIsFormVisible(false)
 
   return (
-    <Overlay isVisible={isFormVisible} onBackdropPress={handleBackdropPress} height='auto'>
+    <FullScreenModal isVisible={isFormVisible}>
       <Form inputs={inputs} title='New Category' handleChange={handleCategoryChange} handleSubmit={handleSubmit} />
-    </Overlay>
+      <Button title='Close' type='clear' onPress={handleClose} />
+    </FullScreenModal>
   )
 }
 

@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
-import {Overlay} from 'react-native-elements'
-import Form, {InputType} from '../../../components/Form'
-import {Exercise, ExerciseData, ExerciseUpdateInput, UPDATE_EXERCISE} from '../../../graphql/ExerciseGQL'
+import {Button} from 'react-native-elements'
 import {useMutation} from '@apollo/react-hooks'
 import {ApolloQueryResult} from 'apollo-boost'
+
+import Form, {InputType} from '../../../components/Form'
+import FullScreenModal from '../../../components/FullScreenModal'
+import {Exercise, ExerciseData, ExerciseUpdateInput, UPDATE_EXERCISE} from '../../../graphql/ExerciseGQL'
 
 type EditExerciseProps = {
   exercise: Exercise
@@ -53,12 +55,13 @@ const EditExercise = ({exercise, isFormVisible, setIsFormVisible, refetch}: Edit
     setIsFormVisible(false)
   }
 
-  const handleBackdropPress = () => setIsFormVisible(false)
+  const handleClose = () => setIsFormVisible(false)
 
   return (
-    <Overlay isVisible={isFormVisible} onBackdropPress={handleBackdropPress} height='auto'>
+    <FullScreenModal isVisible={isFormVisible}>
       <Form inputs={inputs} title={`Edit ${exercise.name}`} handleChange={handleChange} handleSubmit={handleSubmit} />
-    </Overlay>
+      <Button title='Close' type='clear' onPress={handleClose} />
+    </FullScreenModal>
   )
 }
 
