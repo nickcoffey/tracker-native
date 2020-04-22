@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
-import {StyleSheet, Alert, View} from 'react-native'
-import {ListItem, Input, Button} from 'react-native-elements'
+import {Alert} from 'react-native'
+import {Input} from 'react-native-elements'
 
-import {WorkoutExercise, UpdateWorkoutExerciseInput} from 'graphql/WorkoutExerciseGQL'
+import {WorkoutExercise, UpdateWorkoutExerciseInput} from '../../../graphql/WorkoutExerciseGQL'
+import EditableListItem from '../../../components/EditableListItem'
 
 type Props = {
   exercise: WorkoutExercise
@@ -37,60 +38,34 @@ const WorkoutExerciseListItem = ({exercise, index, handleExercisePress, onExerci
     onExerciseUpdate({id: exercise.id, ...editableExercise})
     setIsEditing(false)
   }
-
-  const handleCancelPress = () => setIsEditing(false)
   const handlePress = () => handleExercisePress(exercise)
-  const handleLongPress = () => setIsEditing(true)
-
-  const styles = StyleSheet.create({
-    deleteBtn: {
-      color: 'red'
-    },
-    btnGroup: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between'
-    }
-  })
 
   return (
-    <ListItem
-      title={
-        isEditing ? (
-          <Input
-            label='Name'
-            placeholder='Name'
-            value={editableExercise.name}
-            onChangeText={(text) => handleChange('name', text)}
-          />
-        ) : (
-          exercise.name
-        )
+    <EditableListItem
+      title={exercise.name}
+      titleEditMode={
+        <Input
+          label='Name'
+          placeholder='Name'
+          value={editableExercise.name}
+          onChangeText={(text) => handleChange('name', text)}
+        />
       }
-      subtitle={
-        isEditing ? (
-          <>
-            <Input
-              label='Descripton'
-              placeholder='Description'
-              value={editableExercise.desc}
-              onChangeText={(text) => handleChange('desc', text)}
-            />
-            <View style={styles.btnGroup}>
-              <Button title='Delete' type='clear' onPress={createDeleteAlert} titleStyle={styles.deleteBtn} />
-              <Button title='Update' type='clear' onPress={handleUpdate} />
-              <Button title='Cancel' type='clear' onPress={handleCancelPress} />
-            </View>
-          </>
-        ) : (
-          exercise.desc
-        )
+      subtitle={exercise.desc}
+      subtitleEditMode={
+        <Input
+          label='Descripton'
+          placeholder='Description'
+          value={editableExercise.desc}
+          onChangeText={(text) => handleChange('desc', text)}
+        />
       }
       topDivider={index === 0}
-      onPress={handlePress}
-      onLongPress={handleLongPress}
-      bottomDivider
-      chevron
+      createDeleteAlert={createDeleteAlert}
+      handlePress={handlePress}
+      handleUpdate={handleUpdate}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
     />
   )
 }
