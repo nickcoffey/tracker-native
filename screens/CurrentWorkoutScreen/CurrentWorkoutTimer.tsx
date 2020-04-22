@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Text /*Button, ButtonGroup, ElementObject*/} from 'react-native-elements'
+import {Text} from 'react-native-elements'
 
 type CurrentWorkoutTimerProps = {
-  seconds: number
-  setSeconds: React.Dispatch<React.SetStateAction<number>>
   isTimerStarted: boolean
 }
 
-const CurrentWorkoutTimer = ({seconds, setSeconds, isTimerStarted}: CurrentWorkoutTimerProps) => {
+const CurrentWorkoutTimer = ({isTimerStarted}: CurrentWorkoutTimerProps) => {
+  const [seconds, setSeconds] = useState(0)
+
   const padDigits = (timeSegment: number): string => ('00' + timeSegment).slice(-2)
 
   const getTimerForattedString = (seconds: number): string => {
@@ -27,23 +27,10 @@ const CurrentWorkoutTimer = ({seconds, setSeconds, isTimerStarted}: CurrentWorko
       }, 1000)
     } else if (!isTimerStarted && seconds !== 0) {
       clearInterval(interval)
+      setSeconds(0)
     }
     return () => clearInterval(interval)
   }, [isTimerStarted, seconds])
-
-  // const handleButtonPress = (index: number) => {
-  //   switch (index) {
-  //     case 0:
-  //       setIsTimerStarted(!isTimerStarted);
-  //       break;
-  //     case 1:
-  //       setSeconds(0);
-  //       setIsTimerStarted(false);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
 
   const styles = StyleSheet.create({
     timer: {
@@ -52,18 +39,9 @@ const CurrentWorkoutTimer = ({seconds, setSeconds, isTimerStarted}: CurrentWorko
     }
   })
 
-  // let buttons = [isTimerStarted ? 'Stop' : 'Start'];
-  // if (seconds !== 0) {
-  //   buttons.push('Reset');
-  // }
-
   return (
     <>
       <Text style={styles.timer}>{(seconds !== 0 || isTimerStarted) && getTimerForattedString(seconds)}</Text>
-      {/* <ButtonGroup
-        buttons={buttons}
-        onPress={index => handleButtonPress(index)}
-      /> */}
     </>
   )
 }

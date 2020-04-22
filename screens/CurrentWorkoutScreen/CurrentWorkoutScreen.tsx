@@ -43,7 +43,6 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
     }
   }
 
-  const [seconds, setSeconds] = useState(0)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
 
   const handleNewPress = () => {
@@ -72,7 +71,6 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
       })
         .then(() => {
           setIsTimerStarted(false)
-          setSeconds(0)
           setWorkout(undefined)
         })
         .catch((err) => console.log(err))
@@ -99,7 +97,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
 
   return (
     <PageLayout loading={loading} refetch={workout?.id ? refetch : undefined}>
-      <CurrentWorkoutTimer seconds={seconds} setSeconds={setSeconds} isTimerStarted={isTimerStarted} />
+      <CurrentWorkoutTimer isTimerStarted={isTimerStarted} />
       <>{workout && workout.id && <ExerciseSelector workoutId={workout.id} refreshWorkout={refreshWorkout} />}</>
       <WorkoutExerciseList
         exercises={workout?.workoutExercises}
