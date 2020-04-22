@@ -25,7 +25,7 @@ const WorkoutExerciseListItem = ({exercise, index, handleExercisePress, onExerci
   const createDeleteAlert = () => {
     Alert.alert(
       'Delete Exercise?',
-      'Are you sure you want to delete this exercise?',
+      `Are you sure you want to delete ${exercise.name}?`,
       [
         {text: 'No', style: 'cancel'},
         {text: 'Yes', onPress: () => onExerciseRemove(exercise.id), style: 'destructive'}
