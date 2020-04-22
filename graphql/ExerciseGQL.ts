@@ -54,7 +54,7 @@ export type ExerciseUpdateInput = {
   id: string
   name?: string
   desc?: string
-  categoryId: string
+  categoryId?: string
 }
 
 export type Exercise = {

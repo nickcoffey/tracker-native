@@ -1,15 +1,14 @@
 import React, {useState} from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Text, Button, Divider, Overlay} from 'react-native-elements'
+import {Text, Button, Divider} from 'react-native-elements'
 import {RouteProp, useTheme} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
-import {useQuery, useMutation} from '@apollo/react-hooks'
+import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../../layouts/PageLayout'
 import {SettingsStackParamList} from '../SettingsNavigator'
 import {CATEGORY_WITH_EXERCISES, CategoryWithExercisesData} from '../../../graphql/CategoryGQL'
-import {REMOVE_EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL'
-import ExerciseList from '../Exercise/ExerciseList'
+import ExerciseList from '../Exercise/ExerciseList/ExerciseList'
 import EditCategory from './EditCategory'
 import NewExercise from '../Exercise/NewExercise'
 
@@ -21,18 +20,13 @@ type CategoryScreenProps = {
 }
 
 const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
-  const {colors} = useTheme()
   const categoryId = route.params.id
   const {data, loading, refetch} = useQuery<CategoryWithExercisesData>(CATEGORY_WITH_EXERCISES, {
     variables: {id: categoryId}
   })
+
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   const [isExerciseFormVisible, setIsExerciseFormVisible] = useState(false)
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [deleteExerciseId, setDeleteExerciseId] = useState('')
-  const [removeExercise] = useMutation<{removedExercise: ExerciseData}, {id: string}>(REMOVE_EXERCISE, {
-    variables: {id: deleteExerciseId}
-  })
 
   const handleEditPress = () => setIsEditFormVisible(true)
   navigation.setOptions({
@@ -47,14 +41,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     })
   }
 
-  const handleExerciseRemove = (doDelete: boolean) => {
-    setIsDeleteModalVisible(false)
-    doDelete &&
-      removeExercise()
-        .then(() => refetch())
-        .catch((err) => console.log(err))
-  }
-
+  const {colors} = useTheme()
   const styles = StyleSheet.create({
     desc: {
       textAlign: 'center'
@@ -71,24 +58,10 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     divider: {
       padding: 10,
       backgroundColor: colors.background
-    },
-    modalDivider: {
-      padding: 10,
-      backgroundColor: 'white'
-    },
-    dangerBtn: {
-      backgroundColor: 'red'
-    },
-    deleteWarning: {
-      textAlign: 'center',
-      fontSize: 20
     }
   })
 
   const handleNewPress = () => setIsExerciseFormVisible(true)
-  const handleBackDropPress = () => setIsDeleteModalVisible(false)
-  const handleYesPress = () => handleExerciseRemove(true)
-  const handleNoPress = () => handleExerciseRemove(false)
 
   return (
     <PageLayout loading={loading} refetch={refetch}>
@@ -108,26 +81,13 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
         <Text style={styles.exerciseTitle}>Exercises</Text>
         <Button title='Create New' type='clear' onPress={handleNewPress} />
       </View>
-      <ExerciseList
-        exercises={data?.category.exercises || []}
-        openEditExercise={openEditExercise}
-        setIsDeleteModalVisible={setIsDeleteModalVisible}
-        setDeleteExerciseId={setDeleteExerciseId}
-      />
+      <ExerciseList exercises={data?.category.exercises || []} openEditExercise={openEditExercise} refetch={refetch} />
       <NewExercise
         isFormVisible={isExerciseFormVisible}
         setIsFormVisible={setIsExerciseFormVisible}
         categoryId={categoryId}
         refetch={refetch}
       />
-      <Overlay isVisible={isDeleteModalVisible} onBackdropPress={handleBackDropPress} height='auto'>
-        <>
-          <Text style={styles.deleteWarning}>Are you sure you want to delete this exercise?</Text>
-          <Divider style={styles.modalDivider} />
-          <Button title='Yes' buttonStyle={styles.dangerBtn} onPress={handleYesPress} />
-          <Button title='No' onPress={handleNoPress} />
-        </>
-      </Overlay>
     </PageLayout>
   )
 }
