@@ -45,6 +45,11 @@ const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
   const styles = StyleSheet.create({
     deleteBtn: {
       color: 'red'
+    },
+    btnGroup: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between'
     }
   })
 
@@ -76,7 +81,7 @@ const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
               value={editableWorkoutSet.repetitions.toString()}
               onChangeText={(text) => handleChange('repetitions', text)}
             />
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={styles.btnGroup}>
               <Button title='Delete' type='clear' onPress={createDeleteAlert} titleStyle={styles.deleteBtn} />
               <Button title='Update' type='clear' onPress={handleUpdate} />
               <Button title='Cancel' type='clear' onPress={handleCancelPress} />

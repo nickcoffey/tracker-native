@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, ListItem} from 'react-native-elements'
+import {Button} from 'react-native-elements'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
@@ -16,6 +16,7 @@ import {
   WORKOUT_WITH_EXERCISES
 } from '../../graphql/WorkoutGQL'
 import {WorkoutExercise} from 'graphql/WorkoutExerciseGQL'
+import WorkoutExerciseList from './WorkoutExerciseList/WorkoutExerciseList'
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [addWorkout] = useMutation<{addWorkout: WorkoutWithExercises}, {newWorkout: WorkoutCreateInput}>(ADD_WORKOUT)
@@ -100,18 +101,11 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
     <PageLayout loading={loading} refetch={workout?.id ? refetch : undefined}>
       <CurrentWorkoutTimer seconds={seconds} setSeconds={setSeconds} isTimerStarted={isTimerStarted} />
       <>{workout && workout.id && <ExerciseSelector workoutId={workout.id} refreshWorkout={refreshWorkout} />}</>
-      <>
-        {workout?.workoutExercises?.map((exercise, index) => (
-          <ListItem
-            key={index}
-            title={exercise.name}
-            topDivider={index === 0}
-            onPress={() => handleExercisePress(exercise as WorkoutExercise)}
-            bottomDivider
-            chevron
-          />
-        ))}
-      </>
+      <WorkoutExerciseList
+        exercises={workout?.workoutExercises}
+        handleExercisePress={handleExercisePress}
+        refreshWorkout={refreshWorkout}
+      />
     </PageLayout>
   )
 }
