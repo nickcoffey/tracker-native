@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
-import {View, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
+import {Button, Divider, Text} from 'react-native-elements'
 import {useQuery, useMutation} from '@apollo/react-hooks'
-import {Button} from 'react-native-elements'
 
+import FullScreenModal from '../../../components/FullScreenModal'
+import CategorySelect from './CategorySelect'
+import ExerciseSelect from './ExerciseSelect'
 import {
   CategoriesWithExercisesData,
   ALL_CATEGORIES_WITH_EXERCISES,
@@ -10,16 +13,13 @@ import {
 } from '../../../graphql/CategoryGQL'
 import {Exercise} from 'graphql/ExerciseGQL'
 import {ADD_WORKOUT_EXERCISE, CreateWorkoutExerciseInput, WorkoutExercise} from '../../../graphql/WorkoutExerciseGQL'
-import CategorySelect from './CategorySelect'
-import ExerciseSelect from './ExerciseSelect'
 
 type Props = {
   workoutId: string
   refreshWorkout: () => void
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ExerciseSelector = ({workoutId, refreshWorkout, setIsVisible}: Props) => {
+const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
   const {data} = useQuery<CategoriesWithExercisesData>(ALL_CATEGORIES_WITH_EXERCISES)
   const [selectedCategory, setSelectedCategory] = useState<CategoryWithExercises>()
   const [selectedExercise, setSelectedExercise] = useState<Exercise>()
@@ -42,36 +42,42 @@ const ExerciseSelector = ({workoutId, refreshWorkout, setIsVisible}: Props) => {
     }
   }
 
-  const handleClosePress = () => setIsVisible(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const handleToggle = () => setIsVisible(!isVisible)
+  const handleClose = () => setIsVisible(false)
 
   return (
     <>
-      <CategorySelect
-        categories={data?.categories || []}
-        setSelectedCategory={setSelectedCategory}
-        setSelectedExercise={setSelectedExercise}
-      />
-      <ExerciseSelect
-        exercises={selectedCategory?.exercises}
-        selectedExercise={selectedExercise}
-        setSelectedExercise={setSelectedExercise}
-      />
-      <View style={styles.btnGroup}>
+      <Button title='Add Exercise' type='clear' onPress={handleToggle} />
+      <FullScreenModal handleClose={handleClose} isVisible={isVisible}>
+        <Text style={styles.title}>Add Exercise</Text>
+        <CategorySelect
+          categories={data?.categories || []}
+          setSelectedCategory={setSelectedCategory}
+          setSelectedExercise={setSelectedExercise}
+        />
+        <Divider style={styles.divider} />
+        <ExerciseSelect
+          exercises={selectedCategory?.exercises}
+          selectedExercise={selectedExercise}
+          setSelectedExercise={setSelectedExercise}
+        />
+        <Divider style={styles.divider} />
         <Button title='Add' type='clear' onPress={onWorkoutExerciseSubmit} />
-        <Button title='Close' type='clear' onPress={handleClosePress} titleStyle={styles.closeBtn} />
-      </View>
+      </FullScreenModal>
     </>
   )
 }
 
 const styles = StyleSheet.create({
-  btnGroup: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
+  title: {
+    textAlign: 'center',
+    fontSize: 20,
+    paddingVertical: 10
   },
-  closeBtn: {
-    color: 'gray'
+  divider: {
+    padding: 10,
+    backgroundColor: 'white'
   }
 })
 

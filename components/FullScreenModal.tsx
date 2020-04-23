@@ -7,6 +7,7 @@ type Props = {
   handleClose: () => void
 }
 
+// TODO: Move to top because of keyboard
 const FullScreenModal = ({isVisible, children, handleClose}: Props) => (
   <Modal transparent={true} animationType='slide' visible={isVisible}>
     <SafeAreaView style={styles.container}>
