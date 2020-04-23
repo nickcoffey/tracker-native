@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {Button} from 'react-native-elements'
 import {useMutation} from '@apollo/react-hooks'
 import {ApolloQueryResult} from 'apollo-boost'
 
@@ -55,9 +54,8 @@ const NewExercise = ({isFormVisible, setIsFormVisible, categoryId, refetch}: New
   const handleClose = () => setIsFormVisible(false)
 
   return (
-    <FullScreenModal isVisible={isFormVisible}>
+    <FullScreenModal handleClose={handleClose} isVisible={isFormVisible}>
       <Form inputs={exerciseInputs} title='New Exercise' handleChange={handleChange} handleSubmit={handleSubmit} />
-      <Button title='Close' type='clear' onPress={handleClose} />
     </FullScreenModal>
   )
 }

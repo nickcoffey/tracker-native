@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {useMutation} from '@apollo/react-hooks'
 import {ApolloQueryResult} from 'apollo-boost'
-import {Button} from 'react-native-elements'
 
 import Form, {InputType} from '../../../components/Form'
 import FullScreenModal from '../../../components/FullScreenModal'
@@ -64,14 +63,13 @@ const EditCategory = ({category, isFormVisible, setIsFormVisible, refetch}: Edit
   const handleClose = () => setIsFormVisible(false)
 
   return (
-    <FullScreenModal isVisible={isFormVisible}>
+    <FullScreenModal handleClose={handleClose} isVisible={isFormVisible}>
       <Form
         inputs={editInputs}
         title={`Edit ${category && category.name}`}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
-      <Button title='Close' type='clear' onPress={handleClose} />
     </FullScreenModal>
   )
 }

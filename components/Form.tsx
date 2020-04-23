@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {StyleSheet} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import ThemeContext from '../contexts/ThemeContext'
 import {Input, Button, Text, Divider} from 'react-native-elements'
 
@@ -22,31 +22,37 @@ const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
 
   const styles = StyleSheet.create({
     title: {
-      textAlign: 'center'
+      textAlign: 'center',
+      fontSize: 20,
+      paddingVertical: 10
     },
     divider: {
       padding: 10,
       backgroundColor: theme.white
+    },
+    inputContainer: {
+      paddingHorizontal: 10
+    },
+    label: {
+      paddingHorizontal: 10
     }
   })
 
   return (
     <>
-      <Text style={styles.title} h4>
-        {title}
-      </Text>
+      <Text style={styles.title}>{title}</Text>
       {inputs.map((input, index) => (
-        <React.Fragment key={index}>
-          <Text>{input.label}</Text>
+        <View style={styles.inputContainer} key={index}>
+          <Text style={styles.label}>{input.label}</Text>
           <Input
             placeholder={input.placeholder}
             value={input.value}
             onChangeText={(text) => handleChange(input.key, text)}
           />
-        </React.Fragment>
+          <Divider style={styles.divider} />
+        </View>
       ))}
-      <Divider style={styles.divider} />
-      <Button title='Submit' onPress={handleSubmit} />
+      <Button title='Submit' type='clear' onPress={handleSubmit} />
     </>
   )
 }

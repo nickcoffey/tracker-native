@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {Button} from 'react-native-elements'
 import {useMutation} from '@apollo/react-hooks'
 import {ApolloQueryResult} from 'apollo-boost'
 
@@ -54,9 +53,8 @@ const NewCategory = ({isFormVisible, setIsFormVisible, refetch}: NewCategoryProp
   const handleClose = () => setIsFormVisible(false)
 
   return (
-    <FullScreenModal isVisible={isFormVisible}>
+    <FullScreenModal handleClose={handleClose} isVisible={isFormVisible}>
       <Form inputs={inputs} title='New Category' handleChange={handleCategoryChange} handleSubmit={handleSubmit} />
-      <Button title='Close' type='clear' onPress={handleClose} />
     </FullScreenModal>
   )
 }

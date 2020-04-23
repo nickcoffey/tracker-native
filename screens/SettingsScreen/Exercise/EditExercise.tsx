@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {Button} from 'react-native-elements'
 import {useMutation} from '@apollo/react-hooks'
 import {ApolloQueryResult} from 'apollo-boost'
 
@@ -58,9 +57,8 @@ const EditExercise = ({exercise, isFormVisible, setIsFormVisible, refetch}: Edit
   const handleClose = () => setIsFormVisible(false)
 
   return (
-    <FullScreenModal isVisible={isFormVisible}>
+    <FullScreenModal handleClose={handleClose} isVisible={isFormVisible}>
       <Form inputs={inputs} title={`Edit ${exercise.name}`} handleChange={handleChange} handleSubmit={handleSubmit} />
-      <Button title='Close' type='clear' onPress={handleClose} />
     </FullScreenModal>
   )
 }
