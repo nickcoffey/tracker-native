@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {View, StyleSheet} from 'react-native'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 import {Button} from 'react-native-elements'
 
@@ -15,9 +16,10 @@ import ExerciseSelect from './ExerciseSelect'
 type Props = {
   workoutId: string
   refreshWorkout: () => void
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
+const ExerciseSelector = ({workoutId, refreshWorkout, setIsVisible}: Props) => {
   const {data} = useQuery<CategoriesWithExercisesData>(ALL_CATEGORIES_WITH_EXERCISES)
   const [selectedCategory, setSelectedCategory] = useState<CategoryWithExercises>()
   const [selectedExercise, setSelectedExercise] = useState<Exercise>()
@@ -40,6 +42,8 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
     }
   }
 
+  const handleClosePress = () => setIsVisible(false)
+
   return (
     <>
       <CategorySelect
@@ -52,9 +56,23 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
         selectedExercise={selectedExercise}
         setSelectedExercise={setSelectedExercise}
       />
-      <Button title='Add Exercise' type='clear' onPress={onWorkoutExerciseSubmit} />
+      <View style={styles.btnGroup}>
+        <Button title='Add' type='clear' onPress={onWorkoutExerciseSubmit} />
+        <Button title='Close' type='clear' onPress={handleClosePress} titleStyle={styles.closeBtn} />
+      </View>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  btnGroup: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  closeBtn: {
+    color: 'gray'
+  }
+})
 
 export default ExerciseSelector

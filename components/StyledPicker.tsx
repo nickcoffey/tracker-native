@@ -1,6 +1,6 @@
 import React from 'react'
-import {StyleSheet} from 'react-native'
-import {Icon, Text} from 'react-native-elements'
+import {StyleSheet, View} from 'react-native'
+import {Text} from 'react-native-elements'
 import RNPickerSelect, {Item} from 'react-native-picker-select'
 
 type Props = {
@@ -12,9 +12,8 @@ type Props = {
 }
 
 const StyledPicker = ({title, placeholder, value, handleValueChange, items}: Props) => {
-  const icon = () => <Icon type='material' name='expand-more' size={40} />
   return (
-    <>
+    <View style={styles.container}>
       <Text style={styles.label}>{title}</Text>
       <RNPickerSelect
         value={value}
@@ -22,36 +21,40 @@ const StyledPicker = ({title, placeholder, value, handleValueChange, items}: Pro
         items={items}
         style={pickerStyles}
         placeholder={placeholder}
-        Icon={icon}
       />
-    </>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   label: {
     fontSize: 16
+  },
+  container: {
+    paddingHorizontal: 15
   }
 })
 
 const basePickerStyles = StyleSheet.create({
   styles: {
+    fontSize: 16,
     textAlign: 'center',
+    paddingVertical: 12,
     paddingHorizontal: 10,
-    paddingRight: 30 // to ensure the text is never behind the icon
+    paddingRight: 30, // to ensure the text is never behind the icon
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    backgroundColor: 'white'
   }
 })
 
 const pickerStyles = StyleSheet.create({
   inputIOS: {
-    ...basePickerStyles.styles,
-    paddingVertical: 10,
-    borderWidth: 1
+    ...basePickerStyles.styles
   },
   inputAndroid: {
-    ...basePickerStyles.styles,
-    paddingVertical: 8,
-    borderWidth: 0.5
+    ...basePickerStyles.styles
   }
 })
 

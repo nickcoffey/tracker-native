@@ -77,6 +77,8 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
     }
   }
 
+  const [isSelectorVisible, setIsSelectorVisible] = useState(false)
+
   navigation.setOptions({
     headerRight: () =>
       workout === undefined ? (
@@ -95,10 +97,24 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
     })
   }
 
+  const handleAddExercisePress = () => setIsSelectorVisible(true)
+
   return (
     <PageLayout loading={loading} refetch={workout?.id ? refetch : undefined}>
       <CurrentWorkoutTimer isTimerStarted={isTimerStarted} />
-      <>{workout && workout.id && <ExerciseSelector workoutId={workout.id} refreshWorkout={refreshWorkout} />}</>
+      <>
+        {workout &&
+          workout.id &&
+          (isSelectorVisible ? (
+            <ExerciseSelector
+              workoutId={workout.id}
+              refreshWorkout={refreshWorkout}
+              setIsVisible={setIsSelectorVisible}
+            />
+          ) : (
+            <Button title='Add Exercise' type='clear' onPress={handleAddExercisePress} />
+          ))}
+      </>
       <WorkoutExerciseList
         exercises={workout?.workoutExercises}
         handleExercisePress={handleExercisePress}
