@@ -57,12 +57,14 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
           setSelectedExercise={setSelectedExercise}
         />
         <Divider style={styles.divider} />
+        {/* TODO: Fix select not clearing on category change */}
         <ExerciseSelect
           exercises={selectedCategory?.exercises}
           selectedExercise={selectedExercise}
           setSelectedExercise={setSelectedExercise}
         />
         <Divider style={styles.divider} />
+        {/* TODO: close modal on submit */}
         <Button title='Add' type='clear' onPress={onWorkoutExerciseSubmit} />
       </FullScreenModal>
     </>
