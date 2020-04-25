@@ -44,7 +44,7 @@ const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
             value={input.value}
             onChangeText={(text) => handleChange(input.key, text)}
           />
-          <StyledDivider />
+          <StyledDivider color='white' />
         </View>
       ))}
       <Button title='Submit' type='clear' onPress={handleSubmit} />

@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
+import getFormattedDate from '../../utils/DateUtils'
 import StyledDivider from '../../components/StyledDivider'
 import {ALL_WORKOUTS, AllWorkoutsData} from '../../graphql/WorkoutGQL'
 
@@ -19,12 +20,12 @@ const PastWorkoutsScreen = () => {
             title={
               <>
                 <Text>
-                  <Text style={styles.itemHeader}>Start Time:</Text> {workout.startTime}
+                  <Text style={styles.itemHeader}>Start Time:</Text> {getFormattedDate(workout.startTime)}
                 </Text>
                 <Text>
                   <Text style={styles.itemHeader}>End Time:</Text>
                   {'   '}
-                  {workout.endTime}
+                  {getFormattedDate(workout.endTime)}
                 </Text>
               </>
             }

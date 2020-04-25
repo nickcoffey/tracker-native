@@ -3,12 +3,17 @@ import {StyleSheet} from 'react-native'
 import {Divider} from 'react-native-elements'
 import {useTheme} from '@react-navigation/native'
 
-const StyledDivider = () => {
+type Props = {
+  color?: string
+  size?: number
+}
+
+const StyledDivider = ({color, size}: Props) => {
   const {colors} = useTheme()
   const styles = StyleSheet.create({
     divider: {
-      padding: 10,
-      backgroundColor: colors.background
+      padding: size ? size : 10,
+      backgroundColor: color ? color : colors.background
     }
   })
 
