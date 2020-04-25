@@ -1,5 +1,6 @@
 import React, {ReactElement} from 'react'
-import {Modal, SafeAreaView, StyleSheet, View, TouchableOpacity} from 'react-native'
+import {SafeAreaView, StyleSheet, View, TouchableOpacity} from 'react-native'
+import Modal from 'react-native-modal'
 
 type Props = {
   isVisible: boolean
@@ -7,27 +8,29 @@ type Props = {
   handleClose: () => void
 }
 
-// TODO: Move to top because of keyboard
 const FullScreenModal = ({isVisible, children, handleClose}: Props) => (
-  <Modal transparent={true} animationType='slide' visible={isVisible}>
+  <Modal isVisible={isVisible} animationIn='slideInDown' animationOut='slideOutUp' style={styles.modal}>
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.top} onPress={handleClose}></TouchableOpacity>
       <View style={styles.content}>{children}</View>
+      <TouchableOpacity style={styles.bottom} onPress={handleClose}></TouchableOpacity>
     </SafeAreaView>
   </Modal>
 )
 
 const styles = StyleSheet.create({
+  modal: {
+    margin: 0
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-end'
   },
-  top: {
-    flex: 1
-  },
   content: {
     backgroundColor: 'white'
+  },
+  bottom: {
+    flex: 1
   }
 })
 
