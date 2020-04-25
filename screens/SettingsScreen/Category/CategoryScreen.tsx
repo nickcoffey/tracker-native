@@ -1,16 +1,17 @@
 import React, {useState} from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Text, Button, Divider} from 'react-native-elements'
-import {RouteProp, useTheme} from '@react-navigation/native'
+import {Text, Button} from 'react-native-elements'
+import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../../layouts/PageLayout'
+import StyledDivider from '../../../components/StyledDivider'
 import {SettingsStackParamList} from '../SettingsNavigator'
-import {CATEGORY_WITH_EXERCISES, CategoryWithExercisesData} from '../../../graphql/CategoryGQL'
 import ExerciseList from '../Exercise/ExerciseList/ExerciseList'
 import EditCategory from './EditCategory'
 import NewExercise from '../Exercise/NewExercise'
+import {CATEGORY_WITH_EXERCISES, CategoryWithExercisesData} from '../../../graphql/CategoryGQL'
 
 type CategoryScreenRouteProp = RouteProp<SettingsStackParamList, 'Category'>
 
@@ -41,7 +42,6 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     })
   }
 
-  const {colors} = useTheme()
   const styles = StyleSheet.create({
     desc: {
       textAlign: 'center'
@@ -54,10 +54,6 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
     },
     exerciseTitle: {
       fontSize: 20
-    },
-    divider: {
-      padding: 10,
-      backgroundColor: colors.background
     }
   })
 
@@ -76,7 +72,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       ) : (
         <></>
       )}
-      <Divider style={styles.divider} />
+      <StyledDivider />
       <View style={styles.exerciseHeader}>
         <Text style={styles.exerciseTitle}>Exercises</Text>
         <Button title='Create New' type='clear' onPress={handleNewPress} />

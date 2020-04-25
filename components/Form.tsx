@@ -1,7 +1,8 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {StyleSheet, View} from 'react-native'
-import ThemeContext from '../contexts/ThemeContext'
-import {Input, Button, Text, Divider} from 'react-native-elements'
+import {Input, Button, Text} from 'react-native-elements'
+
+import StyledDivider from './StyledDivider'
 
 export type InputType = {
   label: string
@@ -18,17 +19,11 @@ type FormProps = {
 }
 
 const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
-  const theme = useContext(ThemeContext)
-
   const styles = StyleSheet.create({
     title: {
       textAlign: 'center',
       fontSize: 20,
       paddingVertical: 10
-    },
-    divider: {
-      padding: 10,
-      backgroundColor: theme.white
     },
     inputContainer: {
       paddingHorizontal: 10
@@ -49,7 +44,7 @@ const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
             value={input.value}
             onChangeText={(text) => handleChange(input.key, text)}
           />
-          <Divider style={styles.divider} />
+          <StyledDivider />
         </View>
       ))}
       <Button title='Submit' type='clear' onPress={handleSubmit} />

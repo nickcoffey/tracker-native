@@ -1,10 +1,9 @@
 import React, {useState} from 'react'
-import {StyleSheet} from 'react-native'
-import {Button, Divider} from 'react-native-elements'
+import {Button} from 'react-native-elements'
 import {useQuery} from '@apollo/react-hooks'
-import {useTheme} from '@react-navigation/native'
 
 import PageLayout from '../../layouts/PageLayout'
+import StyledDivider from '../../components/StyledDivider'
 import {SettingsNavigationProps} from './SettingsNavigator'
 import CategoryList from './Category/CategoryList/CategoryList'
 import NewCategory from './Category/NewCategory'
@@ -29,17 +28,9 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
     })
   }
 
-  const {colors} = useTheme()
-  const styles = StyleSheet.create({
-    divider: {
-      padding: 10,
-      backgroundColor: colors.background
-    }
-  })
-
   return (
     <PageLayout loading={loading} refetch={refetch}>
-      <Divider style={styles.divider} />
+      <StyledDivider />
       <CategoryList categories={data?.categories || []} openEditCategory={openEditCategory} refetch={refetch} />
       <NewCategory isFormVisible={isNewFormVisible} setIsFormVisible={setIsNewFormVisible} refetch={refetch} />
     </PageLayout>

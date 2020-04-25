@@ -1,13 +1,15 @@
 import React, {useState} from 'react'
-import PageLayout from '../../../layouts/PageLayout'
-import {Text, Button, Divider} from 'react-native-elements'
 import {StyleSheet} from 'react-native'
-import {RouteProp, useTheme} from '@react-navigation/native'
+import {Text, Button} from 'react-native-elements'
+import {RouteProp} from '@react-navigation/native'
+import {StackNavigationProp} from '@react-navigation/stack'
+import {useQuery} from '@apollo/react-hooks'
+
+import PageLayout from '../../../layouts/PageLayout'
+import StyledDivider from '../../../components/StyledDivider'
+import EditExercise from './EditExercise'
 import {SettingsStackParamList} from '../SettingsNavigator'
 import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL'
-import {useQuery} from '@apollo/react-hooks'
-import EditExercise from './EditExercise'
-import {StackNavigationProp} from '@react-navigation/stack'
 
 type ExerciseScreenRouteProp = RouteProp<SettingsStackParamList, 'Exercise'>
 
@@ -17,8 +19,6 @@ type ExerciseProps = {
 }
 
 const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
-  const {colors} = useTheme()
-
   const exerciseId = route.params.id
   const {data, loading, refetch} = useQuery<ExerciseData>(EXERCISE, {
     variables: {id: exerciseId}
@@ -35,17 +35,13 @@ const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
   const styles = StyleSheet.create({
     subHeaderText: {
       textAlign: 'center'
-    },
-    divider: {
-      padding: 10,
-      backgroundColor: colors.background
     }
   })
 
   return (
     <PageLayout loading={loading} refetch={refetch}>
       <Text style={styles.subHeaderText}>{data?.exercise.desc}</Text>
-      <Divider style={styles.divider} />
+      <StyledDivider />
       {data?.exercise ? (
         <EditExercise
           exercise={data.exercise}

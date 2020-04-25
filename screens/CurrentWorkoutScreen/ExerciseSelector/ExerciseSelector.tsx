@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Button, Divider, Text} from 'react-native-elements'
+import {Button, Text} from 'react-native-elements'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 
 import FullScreenModal from '../../../components/FullScreenModal'
+import StyledDivider from '../../../components/StyledDivider'
 import CategorySelect from './CategorySelect'
 import ExerciseSelect from './ExerciseSelect'
 import {
@@ -56,14 +57,14 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
           setSelectedCategory={setSelectedCategory}
           setSelectedExercise={setSelectedExercise}
         />
-        <Divider style={styles.divider} />
+        <StyledDivider />
         {/* TODO: Fix select not clearing on category change */}
         <ExerciseSelect
           exercises={selectedCategory?.exercises}
           selectedExercise={selectedExercise}
           setSelectedExercise={setSelectedExercise}
         />
-        <Divider style={styles.divider} />
+        <StyledDivider />
         {/* TODO: close modal on submit */}
         <Button title='Add' type='clear' onPress={onWorkoutExerciseSubmit} />
       </FullScreenModal>
@@ -76,10 +77,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     paddingVertical: 10
-  },
-  divider: {
-    padding: 10,
-    backgroundColor: 'white'
   }
 })
 
