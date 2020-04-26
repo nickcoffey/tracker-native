@@ -8,22 +8,18 @@ import ExerciseSelector from './ExerciseSelector/ExerciseSelector'
 import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator'
 import {
   ADD_WORKOUT,
-  WorkoutCreateInput,
   WorkoutWithExercises,
   WorkoutDataWithExercises,
-  WorkoutUpdateInput,
-  UPDATE_WORKOUT,
-  WORKOUT_WITH_EXERCISES
+  WORKOUT_WITH_EXERCISES,
+  STOP_WORKOUT
 } from '../../graphql/WorkoutGQL'
 import {WorkoutExercise} from 'graphql/WorkoutExerciseGQL'
 import WorkoutExerciseList from './WorkoutExerciseList/WorkoutExerciseList'
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
-  const [addWorkout] = useMutation<{addWorkout: WorkoutWithExercises}, {newWorkout: WorkoutCreateInput}>(ADD_WORKOUT)
+  const [addWorkout] = useMutation<{addWorkout: WorkoutWithExercises}>(ADD_WORKOUT)
 
-  const [updateWorkout] = useMutation<{updateWorkout: WorkoutWithExercises}, {updatedWorkout: WorkoutUpdateInput}>(
-    UPDATE_WORKOUT
-  )
+  const [stopWorkout] = useMutation<{updateWorkout: WorkoutWithExercises}, {id: string}>(STOP_WORKOUT)
 
   const [workout, setWorkout] = useState<WorkoutWithExercises | undefined>()
   const {refetch, loading} = useQuery<WorkoutDataWithExercises>(WORKOUT_WITH_EXERCISES, {
@@ -46,14 +42,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [isTimerStarted, setIsTimerStarted] = useState(false)
 
   const handleNewPress = () => {
-    addWorkout({
-      variables: {
-        newWorkout: {
-          ...blankWorkout,
-          startTime: getCurrentTimeString()
-        }
-      }
-    })
+    addWorkout()
       .then((res) => {
         setWorkout(res.data?.addWorkout)
         setIsTimerStarted(true)
@@ -64,10 +53,8 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const handleStopPress = () => {
     if (workout) {
       const {id} = workout
-      updateWorkout({
-        variables: {
-          updatedWorkout: {id, endTime: getCurrentTimeString()}
-        }
+      stopWorkout({
+        variables: {id}
       })
         .then(() => {
           setIsTimerStarted(false)
@@ -85,8 +72,6 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
         <Button title='Stop' type='clear' onPress={handleStopPress} />
       )
   })
-
-  const getCurrentTimeString = (): string => new Date().getTime().toString()
 
   const handleExercisePress = ({id, name}: WorkoutExercise) => {
     navigation.navigate('CurrentExercise', {
@@ -106,11 +91,6 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
       />
     </PageLayout>
   )
-}
-
-const blankWorkout: WorkoutCreateInput = {
-  startTime: '',
-  endTime: ''
 }
 
 export default CurrentWorkoutScreen
