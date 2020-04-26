@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
-import getFormattedDate from '../../utils/DateUtils'
+import {getFormattedDate, getDuration} from '../../utils/DateUtils'
 import StyledDivider from '../../components/StyledDivider'
 import {ALL_WORKOUTS, AllWorkoutsData} from '../../graphql/WorkoutGQL'
 
@@ -17,18 +17,12 @@ const PastWorkoutsScreen = () => {
       <>
         {data?.workouts.map((workout, index) => (
           <ListItem
-            title={
-              <>
-                <Text>
-                  <Text style={styles.itemHeader}>Start Time:</Text> {getFormattedDate(workout.startTime)}
-                </Text>
-                <Text>
-                  <Text style={styles.itemHeader}>End Time:</Text>
-                  {'   '}
-                  {getFormattedDate(workout.endTime)}
-                </Text>
-              </>
+            leftElement={
+              <Text>
+                <Text style={styles.itemHeader}>Date:</Text> {getFormattedDate(workout.startTime)}
+              </Text>
             }
+            rightElement={<Text>{getDuration(workout.endTime, workout.startTime)}</Text>}
             topDivider={index === 0}
             bottomDivider
             key={index}

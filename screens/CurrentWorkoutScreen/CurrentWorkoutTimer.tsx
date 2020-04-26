@@ -2,22 +2,14 @@ import React, {useEffect, useState} from 'react'
 import {StyleSheet} from 'react-native'
 import {Text} from 'react-native-elements'
 
+import {getTimerFormattedString} from '../../utils/DateUtils'
+
 type CurrentWorkoutTimerProps = {
   isTimerStarted: boolean
 }
 
 const CurrentWorkoutTimer = ({isTimerStarted}: CurrentWorkoutTimerProps) => {
   const [seconds, setSeconds] = useState(0)
-
-  const padDigits = (timeSegment: number): string => ('00' + timeSegment).slice(-2)
-
-  const getTimerForattedString = (seconds: number): string => {
-    let sec = seconds % 60
-    seconds = (seconds - sec) / 60
-    let mm = seconds % 60
-    let hh = (seconds - mm) / 60
-    return `${padDigits(hh)}:${padDigits(mm)}:${padDigits(sec)}`
-  }
 
   let interval: NodeJS.Timeout
   useEffect(() => {
@@ -41,7 +33,7 @@ const CurrentWorkoutTimer = ({isTimerStarted}: CurrentWorkoutTimerProps) => {
 
   return (
     <>
-      <Text style={styles.timer}>{(seconds !== 0 || isTimerStarted) && getTimerForattedString(seconds)}</Text>
+      <Text style={styles.timer}>{(seconds !== 0 || isTimerStarted) && getTimerFormattedString(seconds)}</Text>
     </>
   )
 }
