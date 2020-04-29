@@ -1,8 +1,7 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {ApolloQueryResult} from 'apollo-boost'
 
 import PageLayout from '../../layouts/PageLayout'
-import CurrentWorkoutTimer from '../../screens/CurrentWorkoutScreen/CurrentWorkoutTimer'
 import ExerciseSelector from './ExerciseSelector/ExerciseSelector'
 import WorkoutExerciseList from './WorkoutExerciseList/WorkoutExerciseList'
 import {WorkoutWithExercises} from '../../graphql/WorkoutGQL'
@@ -13,13 +12,13 @@ type Props = {
   workout?: WorkoutWithExercises
   refetch: (variables?: Record<string, any> | undefined) => Promise<ApolloQueryResult<any>>
   refreshWorkout: () => void
-  isTimerStarted: boolean
   handleExercisePress: ({id, name}: WorkoutExercise) => void
+  children?: ReactElement | ReactElement[]
 }
 
-const WorkoutPage = ({loading, workout, refetch, refreshWorkout, isTimerStarted, handleExercisePress}: Props) => (
+const WorkoutPage = ({loading, workout, refetch, refreshWorkout, handleExercisePress, children}: Props) => (
   <PageLayout loading={loading} refetch={workout?.id ? refetch : undefined}>
-    <CurrentWorkoutTimer isTimerStarted={isTimerStarted} />
+    <>{children}</>
     <>{workout && workout.id && <ExerciseSelector workoutId={workout.id} refreshWorkout={refreshWorkout} />}</>
     <WorkoutExerciseList
       exercises={workout?.workoutExercises}

@@ -37,7 +37,6 @@ const EditWorkoutScreen = ({navigation, route}: Props) => {
       refetch={refetch}
       refreshWorkout={refreshWorkout}
       handleExercisePress={handleExercisePress}
-      isTimerStarted={false}
       workout={data?.workout}
     />
   )

@@ -1,7 +1,11 @@
 import React, {useState} from 'react'
-import {Button} from 'react-native-elements'
+import {StyleSheet} from 'react-native'
+import {Button, Text} from 'react-native-elements'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 
+import WorkoutPage from '../../components/Workout/WorkoutPage'
+import StyledDivider from '../../components/StyledDivider'
+import CurrentWorkoutTimer from './CurrentWorkoutTimer'
 import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator'
 import {
   ADD_WORKOUT,
@@ -11,7 +15,6 @@ import {
   STOP_WORKOUT
 } from '../../graphql/WorkoutGQL'
 import {WorkoutExercise} from 'graphql/WorkoutExerciseGQL'
-import WorkoutPage from '../../components/Workout/WorkoutPage'
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [addWorkout] = useMutation<{addWorkout: WorkoutWithExercises}>(ADD_WORKOUT)
@@ -59,12 +62,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   }
 
   navigation.setOptions({
-    headerRight: () =>
-      workout === undefined ? (
-        <Button title='New' type='clear' onPress={handleNewPress} />
-      ) : (
-        <Button title='Stop' type='clear' onPress={handleStopPress} />
-      )
+    headerRight: () => workout !== undefined && <Button title='Stop' type='clear' onPress={handleStopPress} />
   })
 
   const handleExercisePress = ({id, name}: WorkoutExercise) => {
@@ -80,10 +78,27 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
       refetch={refetch}
       refreshWorkout={refreshWorkout}
       handleExercisePress={handleExercisePress}
-      isTimerStarted={isTimerStarted}
-      workout={workout}
-    />
+      workout={workout}>
+      <>
+        {workout === undefined && (
+          <>
+            <StyledDivider size={125} />
+            <Text style={styles.header} h4>
+              Ready for your next workout?
+            </Text>
+            <Button title='Start Workout' type='clear' onPress={handleNewPress} />
+          </>
+        )}
+      </>
+      <CurrentWorkoutTimer isTimerStarted={isTimerStarted} />
+    </WorkoutPage>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    textAlign: 'center'
+  }
+})
 
 export default CurrentWorkoutScreen

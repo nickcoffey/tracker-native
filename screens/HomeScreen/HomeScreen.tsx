@@ -1,22 +1,26 @@
 import React from 'react'
-import PageLayout from '../../layouts/PageLayout'
-import {Text} from 'react-native-elements'
-import {StyleSheet} from 'react-native'
+import {StyleSheet, View} from 'react-native'
+import {Text, Button} from 'react-native-elements'
 
-const HomeScreen = () => {
-  const styles = StyleSheet.create({
-    header: {
-      textAlign: 'center'
-    }
-  })
+import {RootNavigationProps} from '../../App'
+
+const HomeScreen = ({navigation}: RootNavigationProps) => {
+  const handlePress = () => navigation.navigate('CurrentWorkoutNavigator')
 
   return (
-    <PageLayout loading={false}>
-      <Text style={styles.header} h4>
-        Home
-      </Text>
-    </PageLayout>
+    <View style={styles.container}>
+      <Text h4>Welcome to Tracker</Text>
+      <Button type='clear' title='Start A New Workout' onPress={handlePress} />
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
 export default HomeScreen
