@@ -8,19 +8,16 @@ import {ApolloQueryResult} from 'apollo-boost'
 type Props = {
   workouts?: Workout[]
   refetch: (variables?: Record<string, any> | undefined) => Promise<ApolloQueryResult<AllWorkoutsData>>
+  openEditWorkout: (id: string) => void
 }
 
-const WorkoutList = ({workouts, refetch}: Props) => {
+const WorkoutList = ({workouts, refetch, openEditWorkout}: Props) => {
   const [removeWorkout] = useMutation<{removedWorkout: Workout}, {id: string}>(REMOVE_WORKOUT)
 
   const onWorkoutRemove = (id: string) => {
     removeWorkout({variables: {id}})
       .then(() => refetch())
       .catch((err) => console.log(err))
-  }
-
-  const openEditWorkout = (id: string) => {
-    console.log(id)
   }
 
   return (
