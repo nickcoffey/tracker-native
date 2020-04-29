@@ -11,6 +11,14 @@ export const ADD_WORKOUT = gql`
   }
 `
 
+export const REMOVE_WORKOUT = gql`
+  mutation removeWorkout($id: ID!) {
+    removeWorkout(id: $id) {
+      id
+    }
+  }
+`
+
 export const WORKOUT_WITH_EXERCISES = gql`
   query getWorkoutWithExercises($id: ID!) {
     workout(id: $id) {

@@ -8,7 +8,7 @@ type Props = {
   handlePress: () => void
   title: string | ReactElement
   titleEditMode: ReactElement
-  subtitle?: string
+  subtitle?: string | ReactElement
   subtitleEditMode: ReactElement
   topDivider: boolean
   createDeleteAlert: () => void
