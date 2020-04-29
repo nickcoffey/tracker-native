@@ -2,9 +2,6 @@ import React, {useState} from 'react'
 import {Button} from 'react-native-elements'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 
-import PageLayout from '../../layouts/PageLayout'
-import CurrentWorkoutTimer from './CurrentWorkoutTimer'
-import ExerciseSelector from './ExerciseSelector/ExerciseSelector'
 import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator'
 import {
   ADD_WORKOUT,
@@ -14,7 +11,7 @@ import {
   STOP_WORKOUT
 } from '../../graphql/WorkoutGQL'
 import {WorkoutExercise} from 'graphql/WorkoutExerciseGQL'
-import WorkoutExerciseList from './WorkoutExerciseList/WorkoutExerciseList'
+import WorkoutPage from '../../components/Workout/WorkoutPage'
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [addWorkout] = useMutation<{addWorkout: WorkoutWithExercises}>(ADD_WORKOUT)
@@ -22,10 +19,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [stopWorkout] = useMutation<{updateWorkout: WorkoutWithExercises}, {id: string}>(STOP_WORKOUT)
 
   const [workout, setWorkout] = useState<WorkoutWithExercises | undefined>()
-  const {refetch, loading} = useQuery<WorkoutDataWithExercises>(WORKOUT_WITH_EXERCISES, {
-    //variables: {id: workout?.id}, // TODO: left for opening screen from past workouts
-    skip: true
-  })
+  const {refetch, loading} = useQuery<WorkoutDataWithExercises>(WORKOUT_WITH_EXERCISES, {skip: true})
 
   const refreshWorkout = () => {
     if (workout?.id) {
@@ -81,15 +75,14 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   }
 
   return (
-    <PageLayout loading={loading} refetch={workout?.id ? refetch : undefined}>
-      <CurrentWorkoutTimer isTimerStarted={isTimerStarted} />
-      <>{workout && workout.id && <ExerciseSelector workoutId={workout.id} refreshWorkout={refreshWorkout} />}</>
-      <WorkoutExerciseList
-        exercises={workout?.workoutExercises}
-        handleExercisePress={handleExercisePress}
-        refreshWorkout={refreshWorkout}
-      />
-    </PageLayout>
+    <WorkoutPage
+      loading={loading}
+      refetch={refetch}
+      refreshWorkout={refreshWorkout}
+      handleExercisePress={handleExercisePress}
+      isTimerStarted={isTimerStarted}
+      workout={workout}
+    />
   )
 }
 

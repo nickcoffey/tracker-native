@@ -3,7 +3,7 @@ import {Alert} from 'react-native'
 import {Input} from 'react-native-elements'
 
 import {WorkoutExercise, UpdateWorkoutExerciseInput} from '../../../graphql/WorkoutExerciseGQL'
-import EditableListItem from '../../../components/EditableListItem'
+import EditableListItem from '../../EditableListItem'
 
 type Props = {
   exercise: WorkoutExercise

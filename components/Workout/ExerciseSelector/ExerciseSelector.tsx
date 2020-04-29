@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native'
 import {Button, Text} from 'react-native-elements'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 
-import FullScreenModal from '../../../components/FullScreenModal'
-import StyledDivider from '../../../components/StyledDivider'
+import FullScreenModal from '../../FullScreenModal'
+import StyledDivider from '../../StyledDivider'
 import CategorySelect from './CategorySelect'
 import ExerciseSelect from './ExerciseSelect'
 import {
@@ -37,6 +37,7 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
         variables: {newWorkoutExercise: {name, desc, workoutId}}
       })
         .then((res) => {
+          handleClose()
           if (res.data?.addWorkoutExercise.id) refreshWorkout()
         })
         .catch((err) => console.log(err))
@@ -46,6 +47,8 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
   const [isVisible, setIsVisible] = useState(false)
   const handleToggle = () => setIsVisible(!isVisible)
   const handleClose = () => setIsVisible(false)
+
+  const WhiteDivider = <StyledDivider color='white' />
 
   return (
     <>
@@ -57,15 +60,14 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
           setSelectedCategory={setSelectedCategory}
           setSelectedExercise={setSelectedExercise}
         />
-        <StyledDivider />
+        {WhiteDivider}
         {/* TODO: Fix select not clearing on category change */}
         <ExerciseSelect
           exercises={selectedCategory?.exercises}
           selectedExercise={selectedExercise}
           setSelectedExercise={setSelectedExercise}
         />
-        <StyledDivider />
-        {/* TODO: close modal on submit */}
+        {WhiteDivider}
         <Button title='Add' type='clear' onPress={onWorkoutExerciseSubmit} />
       </FullScreenModal>
     </>

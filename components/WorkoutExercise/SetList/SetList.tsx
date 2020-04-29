@@ -7,7 +7,7 @@ import {
   UPDATE_WORKOUT_SET,
   WorkoutSetUpdateInput,
   REMOVE_WORKOUT_SET
-} from '../../../../graphql/WorkoutSetGQL'
+} from '../../../graphql/WorkoutSetGQL'
 import SetItem from './SetItem'
 
 type Props = {

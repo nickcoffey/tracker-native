@@ -3,19 +3,19 @@ import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 
-import {CurrentWorkoutStackParamList} from '../CurrentWorkoutNavigator'
+import {PastWorkoutsStackParamList} from '../PastWorkoutsNavigator'
 import WorkoutExercisePage from '../../../components/WorkoutExercise/WorkoutExercisePage'
 import {WORKOUT_EXERCISE_WITH_SETS, WorkoutExerciseWithSetsData} from '../../../graphql/WorkoutExerciseGQL'
 import {WorkoutSet, WorkoutSetCreateInput, ADD_WORKOUT_SET} from '../../../graphql/WorkoutSetGQL'
 
-type CurrentExerciseRouteProp = RouteProp<CurrentWorkoutStackParamList, 'CurrentExercise'>
+type PastExerciseRouteProp = RouteProp<PastWorkoutsStackParamList, 'PastExercise'>
 
-type CurrentExerciseProps = {
-  navigation: StackNavigationProp<CurrentWorkoutStackParamList>
-  route: CurrentExerciseRouteProp
+type PastExerciseProps = {
+  navigation: StackNavigationProp<PastWorkoutsStackParamList>
+  route: PastExerciseRouteProp
 }
 
-const CurrentExerciseScreen = ({route}: CurrentExerciseProps) => {
+const PastExerciseScreen = ({route}: PastExerciseProps) => {
   const {data, loading, refetch} = useQuery<WorkoutExerciseWithSetsData>(WORKOUT_EXERCISE_WITH_SETS, {
     variables: {id: route.params.id}
   })
@@ -49,4 +49,4 @@ const CurrentExerciseScreen = ({route}: CurrentExerciseProps) => {
   )
 }
 
-export default CurrentExerciseScreen
+export default PastExerciseScreen

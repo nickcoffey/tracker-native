@@ -1,6 +1,6 @@
 import React from 'react'
 
-import StyledPicker from '../../../components/StyledPicker'
+import StyledPicker from '../../StyledPicker'
 import {Exercise} from '../../../graphql/ExerciseGQL'
 
 type Props = {

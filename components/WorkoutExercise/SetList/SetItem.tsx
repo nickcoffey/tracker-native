@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import {Alert} from 'react-native'
 import {Text, Input} from 'react-native-elements'
 
-import {WorkoutSet, WorkoutSetUpdateInput} from '../../../../graphql/WorkoutSetGQL'
-import EditableListItem from '../../../../components/EditableListItem'
+import {WorkoutSet, WorkoutSetUpdateInput} from '../../../graphql/WorkoutSetGQL'
+import EditableListItem from '../../EditableListItem'
 
 type Props = {
   set: WorkoutSet
