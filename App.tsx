@@ -21,6 +21,7 @@ export type RootNavigationProps = {
   navigation: BottomTabNavigationProp<RootTabParamList>
 }
 
+// TODO: test Android
 const App = () => {
   const RootTabs = createBottomTabNavigator<RootTabParamList>()
 
