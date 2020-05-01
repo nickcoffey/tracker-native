@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Button, Text} from 'react-native-elements'
+import {Text} from 'react-native-elements'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 
 import WorkoutPage from '../../components/Workout/WorkoutPage'
 import StyledDivider from '../../components/StyledDivider'
+import StyledButton from '../../components/StyledButton'
 import CurrentWorkoutTimer from './CurrentWorkoutTimer'
 import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator'
 import {
@@ -14,7 +15,7 @@ import {
   WORKOUT_WITH_EXERCISES,
   STOP_WORKOUT
 } from '../../graphql/WorkoutGQL'
-import {WorkoutExercise} from 'graphql/WorkoutExerciseGQL'
+import {WorkoutExercise} from '../../graphql/WorkoutExerciseGQL'
 
 const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   const [addWorkout] = useMutation<{addWorkout: WorkoutWithExercises}>(ADD_WORKOUT)
@@ -62,7 +63,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
   }
 
   navigation.setOptions({
-    headerRight: () => workout !== undefined && <Button title='Stop' type='clear' onPress={handleStopPress} />
+    headerRight: () => workout !== undefined && <StyledButton title='Stop' onPress={handleStopPress} />
   })
 
   const handleExercisePress = ({id, exercise}: WorkoutExercise) => {
@@ -86,7 +87,7 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
             <Text style={styles.header} h4>
               Ready for your next workout?
             </Text>
-            <Button title='Start Workout' type='clear' onPress={handleNewPress} />
+            <StyledButton title='Start Workout' onPress={handleNewPress} />
           </>
         )}
       </>

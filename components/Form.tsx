@@ -1,8 +1,9 @@
 import React from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Input, Button, Text} from 'react-native-elements'
+import {Input, Text} from 'react-native-elements'
 
 import StyledDivider from './StyledDivider'
+import StyledButton from './StyledButton'
 
 export type InputType = {
   label: string
@@ -47,7 +48,7 @@ const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
           <StyledDivider color='white' />
         </View>
       ))}
-      <Button title='Submit' type='clear' onPress={handleSubmit} />
+      <StyledButton title='Submit' onPress={handleSubmit} />
     </>
   )
 }

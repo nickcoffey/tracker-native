@@ -1,6 +1,8 @@
 import React, {ReactElement} from 'react'
 import {View, StyleSheet} from 'react-native'
-import {ListItem, Button} from 'react-native-elements'
+import {ListItem} from 'react-native-elements'
+
+import StyledButton from './StyledButton'
 
 type Props = {
   isEditing: boolean
@@ -31,9 +33,6 @@ const EditableListItem = ({
   const handleLongPress = () => setIsEditing(true)
 
   const styles = StyleSheet.create({
-    deleteBtn: {
-      color: 'red'
-    },
     btnGroup: {
       flex: 1,
       flexDirection: 'row',
@@ -49,9 +48,9 @@ const EditableListItem = ({
           <>
             {subtitleEditMode}
             <View style={styles.btnGroup}>
-              <Button title='Delete' type='clear' onPress={createDeleteAlert} titleStyle={styles.deleteBtn} />
-              <Button title='Update' type='clear' onPress={handleUpdate} />
-              <Button title='Cancel' type='clear' onPress={handleCancelPress} />
+              <StyledButton title='Delete' onPress={createDeleteAlert} isDelete />
+              <StyledButton title='Update' onPress={handleUpdate} />
+              <StyledButton title='Cancel' onPress={handleCancelPress} isCancel />
             </View>
           </>
         ) : (

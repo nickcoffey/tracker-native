@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import {Button} from 'react-native-elements'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
+import StyledButton from '../../components/StyledButton'
 import StyledDivider from '../../components/StyledDivider'
 import {SettingsNavigationProps} from './SettingsNavigator'
 import CategoryList from './Category/CategoryList/CategoryList'
@@ -18,7 +18,7 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
     setIsNewFormVisible(true)
   }
   navigation.setOptions({
-    headerRight: () => <Button title='Create' type='clear' onPress={handleCreatePress} />
+    headerRight: () => <StyledButton title='Create' onPress={handleCreatePress} />
   })
 
   const openEditCategory = (id: string, name: string) => {

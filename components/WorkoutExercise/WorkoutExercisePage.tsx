@@ -1,8 +1,8 @@
 import React from 'react'
-import {Button} from 'react-native-elements'
 import {ApolloQueryResult} from 'apollo-boost'
 
 import PageLayout from '../../layouts/PageLayout'
+import StyledButton from '../../components/StyledButton'
 import SetList from '../../components/WorkoutExercise/SetList/SetList'
 import {WorkoutExerciseWithSets} from '../../graphql/WorkoutExerciseGQL'
 
@@ -26,7 +26,7 @@ const WorkoutExercisePage = ({
       <>
         {workoutExercise?.workoutSets && (
           <>
-            <Button title='Add Set' type='clear' onPress={handleWorkoutSetCreate} />
+            <StyledButton title='Add Set' onPress={handleWorkoutSetCreate} />
             <SetList sets={workoutExercise.workoutSets} refreshWorkoutExercise={refreshWorkoutExercise} />
           </>
         )}

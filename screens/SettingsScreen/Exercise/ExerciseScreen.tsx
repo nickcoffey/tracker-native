@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Text, Button} from 'react-native-elements'
+import {Text} from 'react-native-elements'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../../layouts/PageLayout'
 import StyledDivider from '../../../components/StyledDivider'
+import StyledButton from '../../../components/StyledButton'
 import EditExercise from './EditExercise'
 import {SettingsStackParamList} from '../SettingsNavigator'
 import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL'
@@ -28,7 +29,7 @@ const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
 
   const handleEditPress = () => setIsFormVisible(true)
   navigation.setOptions({
-    headerRight: () => (data?.exercise ? <Button title='Edit' type='clear' onPress={handleEditPress} /> : <></>),
+    headerRight: () => (data?.exercise ? <StyledButton title='Edit' onPress={handleEditPress} /> : <></>),
     title: data?.exercise.name || ''
   })
 

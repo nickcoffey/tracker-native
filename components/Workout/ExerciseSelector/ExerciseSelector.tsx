@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Button, Text} from 'react-native-elements'
+import {Text} from 'react-native-elements'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 
+import StyledButton from '../../../components/StyledButton'
 import FullScreenModal from '../../FullScreenModal'
 import StyledDivider from '../../StyledDivider'
 import CategorySelect from './CategorySelect'
@@ -51,7 +52,7 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
 
   return (
     <>
-      <Button title='Add Exercise' type='clear' onPress={handleToggle} />
+      <StyledButton title='Add Exercise' onPress={handleToggle} />
       <FullScreenModal handleClose={handleClose} isVisible={isVisible}>
         <Text style={styles.title}>Add Exercise</Text>
         <CategorySelect
@@ -67,7 +68,7 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
           setSelectedExercise={setSelectedExercise}
         />
         {WhiteDivider}
-        <Button title='Add' type='clear' onPress={onWorkoutExerciseSubmit} />
+        <StyledButton title='Add' onPress={onWorkoutExerciseSubmit} />
       </FullScreenModal>
     </>
   )

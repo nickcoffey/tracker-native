@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Text, Button} from 'react-native-elements'
+import {Text} from 'react-native-elements'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../../layouts/PageLayout'
 import StyledDivider from '../../../components/StyledDivider'
+import StyledButton from '../../../components/StyledButton'
 import {SettingsStackParamList} from '../SettingsNavigator'
 import ExerciseList from '../Exercise/ExerciseList/ExerciseList'
 import EditCategory from './EditCategory'
@@ -31,7 +32,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
 
   const handleEditPress = () => setIsEditFormVisible(true)
   navigation.setOptions({
-    headerRight: () => (data?.category ? <Button title='Edit' type='clear' onPress={handleEditPress} /> : <></>),
+    headerRight: () => (data?.category ? <StyledButton title='Edit' onPress={handleEditPress} /> : <></>),
     title: data?.category.name || ''
   })
 
@@ -75,7 +76,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       <StyledDivider />
       <View style={styles.exerciseHeader}>
         <Text style={styles.exerciseTitle}>Exercises</Text>
-        <Button title='Create New' type='clear' onPress={handleNewPress} />
+        <StyledButton title='Create New' onPress={handleNewPress} />
       </View>
       <ExerciseList exercises={data?.category.exercises || []} openEditExercise={openEditExercise} refetch={refetch} />
       <NewExercise
