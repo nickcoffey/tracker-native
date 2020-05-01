@@ -2,6 +2,7 @@ import React from 'react'
 import {createStackNavigator, StackNavigationProp} from '@react-navigation/stack'
 import {RouteProp} from '@react-navigation/native'
 
+import {useHeaderImage} from '../../components/HeaderImage'
 import SettingsScreen from './SettingsScreen'
 import CategoryScreen from './Category/CategoryScreen'
 import ExerciseScreen from './Exercise/ExerciseScreen'
@@ -32,9 +33,13 @@ const SettingsNavigator = () => {
 
   return (
     <SettingsStack.Navigator>
-      <SettingsStack.Screen name='Settings' component={SettingsScreen} options={{title: 'Categories'}} />
-      <SettingsStack.Screen name='Category' component={CategoryScreen} options={options} />
-      <SettingsStack.Screen name='Exercise' component={ExerciseScreen} options={options} />
+      <SettingsStack.Screen
+        name='Settings'
+        component={SettingsScreen}
+        options={{title: 'Categories', ...useHeaderImage()}}
+      />
+      <SettingsStack.Screen name='Category' component={CategoryScreen} options={{...options, ...useHeaderImage()}} />
+      <SettingsStack.Screen name='Exercise' component={ExerciseScreen} options={{...options, ...useHeaderImage()}} />
     </SettingsStack.Navigator>
   )
 }

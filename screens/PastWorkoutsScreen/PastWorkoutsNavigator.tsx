@@ -2,6 +2,7 @@ import React from 'react'
 import {RouteProp} from '@react-navigation/native'
 import {createStackNavigator, StackNavigationProp} from '@react-navigation/stack'
 
+import {useHeaderImage} from '../../components/HeaderImage'
 import PastWorkoutsScreen from './PastWorkoutsScreen'
 import EditWorkoutScreen from './EditWorkoutScreen/EditWorkoutScreen'
 import PastExerciseScreen from './PastExerciseScreen/PastExerciseScreen'
@@ -32,9 +33,21 @@ const PastWorkoutsNavigator = () => {
 
   return (
     <PastWorkoutsStack.Navigator>
-      <PastWorkoutsStack.Screen name='PastWorkouts' component={PastWorkoutsScreen} options={{title: 'Past'}} />
-      <PastWorkoutsStack.Screen name='EditWorkout' component={EditWorkoutScreen} options={{title: 'Edit'}} />
-      <PastWorkoutsStack.Screen name='PastExercise' component={PastExerciseScreen} options={options} />
+      <PastWorkoutsStack.Screen
+        name='PastWorkouts'
+        component={PastWorkoutsScreen}
+        options={{title: 'Past', ...useHeaderImage()}}
+      />
+      <PastWorkoutsStack.Screen
+        name='EditWorkout'
+        component={EditWorkoutScreen}
+        options={{title: 'Edit', ...useHeaderImage()}}
+      />
+      <PastWorkoutsStack.Screen
+        name='PastExercise'
+        component={PastExerciseScreen}
+        options={{...options, ...useHeaderImage()}}
+      />
     </PastWorkoutsStack.Navigator>
   )
 }

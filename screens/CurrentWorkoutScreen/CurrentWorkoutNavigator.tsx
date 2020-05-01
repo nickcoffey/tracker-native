@@ -2,6 +2,7 @@ import React from 'react'
 import {createStackNavigator, StackNavigationProp} from '@react-navigation/stack'
 import {RouteProp} from '@react-navigation/native'
 
+import {useHeaderImage} from '../../components/HeaderImage'
 import CurrentWorkoutScreen from './CurrentWorkoutScreen'
 import CurrentExerciseScreen from './CurrentExerciseScreen/CurrentExerciseScreen'
 
@@ -30,8 +31,16 @@ const CurrentWorkoutNavigator = () => {
 
   return (
     <CurrentWorkoutStack.Navigator>
-      <CurrentWorkoutStack.Screen name='CurrentWorkout' component={CurrentWorkoutScreen} options={{title: 'Current'}} />
-      <CurrentWorkoutStack.Screen name='CurrentExercise' component={CurrentExerciseScreen} options={options} />
+      <CurrentWorkoutStack.Screen
+        name='CurrentWorkout'
+        component={CurrentWorkoutScreen}
+        options={{title: 'Workout', ...useHeaderImage()}}
+      />
+      <CurrentWorkoutStack.Screen
+        name='CurrentExercise'
+        component={CurrentExerciseScreen}
+        options={{...options, ...useHeaderImage()}}
+      />
     </CurrentWorkoutStack.Navigator>
   )
 }
