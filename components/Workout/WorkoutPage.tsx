@@ -12,7 +12,7 @@ type Props = {
   workout?: WorkoutWithExercises
   refetch: (variables?: Record<string, any> | undefined) => Promise<ApolloQueryResult<any>>
   refreshWorkout: () => void
-  handleExercisePress: ({id, name}: WorkoutExercise) => void
+  handleExercisePress: ({id, exercise}: WorkoutExercise) => void
   children?: ReactElement | ReactElement[]
 }
 

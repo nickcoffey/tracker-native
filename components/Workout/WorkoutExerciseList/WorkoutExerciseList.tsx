@@ -11,7 +11,7 @@ import {
 
 type Props = {
   exercises?: WorkoutExercise[]
-  handleExercisePress: ({id, name}: WorkoutExercise) => void
+  handleExercisePress: ({id, exercise}: WorkoutExercise) => void
   refreshWorkout: () => void
 }
 
@@ -43,7 +43,7 @@ const WorkoutExerciseList = ({exercises, handleExercisePress, refreshWorkout}: P
     <>
       {exercises?.map((exercise, index) => (
         <WorkoutExerciseListItem
-          exercise={exercise}
+          workoutExercise={exercise}
           handleExercisePress={handleExercisePress}
           index={index}
           onExerciseRemove={onExerciseRemove}

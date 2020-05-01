@@ -27,8 +27,10 @@ export const WORKOUT_WITH_EXERCISES = gql`
       endTime
       workoutExercises {
         id
-        name
-        desc
+        exercise {
+          name
+          desc
+        }
       }
     }
   }

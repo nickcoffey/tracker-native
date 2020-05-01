@@ -24,10 +24,10 @@ const EditWorkoutScreen = ({navigation, route}: Props) => {
     refetch().catch((err) => console.log(err))
   }
 
-  const handleExercisePress = ({id, name}: WorkoutExercise) => {
+  const handleExercisePress = ({id, exercise}: WorkoutExercise) => {
     navigation.navigate('PastExercise', {
       id,
-      name
+      name: exercise.name
     })
   }
 

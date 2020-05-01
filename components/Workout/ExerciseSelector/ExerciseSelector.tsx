@@ -32,9 +32,8 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
 
   const onWorkoutExerciseSubmit = () => {
     if (selectedExercise) {
-      const {name, desc} = selectedExercise
       addWorkoutExercise({
-        variables: {newWorkoutExercise: {name, desc, workoutId}}
+        variables: {newWorkoutExercise: {exerciseId: selectedExercise.id, workoutId}}
       })
         .then((res) => {
           handleClose()

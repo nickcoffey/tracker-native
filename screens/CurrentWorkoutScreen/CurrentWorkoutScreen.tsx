@@ -65,10 +65,10 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
     headerRight: () => workout !== undefined && <Button title='Stop' type='clear' onPress={handleStopPress} />
   })
 
-  const handleExercisePress = ({id, name}: WorkoutExercise) => {
+  const handleExercisePress = ({id, exercise}: WorkoutExercise) => {
     navigation.navigate('CurrentExercise', {
       id,
-      name
+      name: exercise.name
     })
   }
 
