@@ -44,7 +44,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
   }
 
   const styles = StyleSheet.create({
-    desc: {
+    header: {
       textAlign: 'center'
     },
     exerciseHeader: {
@@ -54,7 +54,8 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       justifyContent: 'space-between'
     },
     exerciseTitle: {
-      fontSize: 20
+      fontSize: 20,
+      paddingLeft: 5
     }
   })
 
@@ -62,7 +63,16 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
 
   return (
     <PageLayout loading={loading} refetch={refetch}>
-      <Text style={styles.desc}>{data && data?.category.desc}</Text>
+      <>
+        {data?.category && (
+          <>
+            <Text h4 h4Style={styles.header}>
+              {data && data?.category.name}
+            </Text>
+            <Text style={styles.header}>{data && data?.category.desc}</Text>
+          </>
+        )}
+      </>
       {data?.category ? (
         <EditCategory
           category={data.category}

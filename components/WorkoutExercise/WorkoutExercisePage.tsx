@@ -1,4 +1,6 @@
 import React from 'react'
+import {StyleSheet} from 'react-native'
+import {Text} from 'react-native-elements'
 import {ApolloQueryResult} from 'apollo-boost'
 
 import PageLayout from '../../layouts/PageLayout'
@@ -26,6 +28,10 @@ const WorkoutExercisePage = ({
       <>
         {workoutExercise?.workoutSets && (
           <>
+            <Text h4 h4Style={styles.header}>
+              {workoutExercise.exercise.name}
+            </Text>
+            <Text style={styles.header}>{workoutExercise.exercise.desc}</Text>
             <StyledButton title='Add Set' onPress={handleWorkoutSetCreate} />
             <SetList sets={workoutExercise.workoutSets} refreshWorkoutExercise={refreshWorkoutExercise} />
           </>
@@ -34,5 +40,11 @@ const WorkoutExercisePage = ({
     </PageLayout>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    textAlign: 'center'
+  }
+})
 
 export default WorkoutExercisePage

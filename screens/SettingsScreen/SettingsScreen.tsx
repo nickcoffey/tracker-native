@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import {StyleSheet} from 'react-native'
+import {Text} from 'react-native-elements'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
@@ -31,10 +33,20 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
   return (
     <PageLayout loading={loading} refetch={refetch}>
       <StyledDivider />
+      <Text h4 h4Style={styles.header}>
+        Categories
+      </Text>
+      <StyledDivider size={5} />
       <CategoryList categories={data?.categories || []} openEditCategory={openEditCategory} refetch={refetch} />
       <NewCategory isFormVisible={isNewFormVisible} setIsFormVisible={setIsNewFormVisible} refetch={refetch} />
     </PageLayout>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    textAlign: 'center'
+  }
+})
 
 export default SettingsScreen

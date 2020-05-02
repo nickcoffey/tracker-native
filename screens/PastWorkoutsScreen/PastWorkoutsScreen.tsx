@@ -1,4 +1,6 @@
 import React from 'react'
+import {StyleSheet} from 'react-native'
+import {Text} from 'react-native-elements'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
@@ -17,9 +19,19 @@ const PastWorkoutsScreen = ({navigation}: PastWorkoutsNavigationProps) => {
   return (
     <PageLayout loading={loading} refetch={refetch}>
       <StyledDivider />
+      <Text h4 h4Style={styles.header}>
+        Past Workouts
+      </Text>
+      <StyledDivider size={5} />
       <WorkoutList workouts={data?.workouts} refetch={refetch} openEditWorkout={openEditWorkout} />
     </PageLayout>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    textAlign: 'center'
+  }
+})
 
 export default PastWorkoutsScreen

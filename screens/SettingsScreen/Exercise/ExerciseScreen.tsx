@@ -34,14 +34,23 @@ const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
   })
 
   const styles = StyleSheet.create({
-    subHeaderText: {
+    header: {
       textAlign: 'center'
     }
   })
 
   return (
     <PageLayout loading={loading} refetch={refetch}>
-      <Text style={styles.subHeaderText}>{data?.exercise.desc}</Text>
+      <>
+        {data?.exercise && (
+          <>
+            <Text h4 h4Style={styles.header}>
+              {data?.exercise.name}
+            </Text>
+            <Text style={styles.header}>{data?.exercise.desc}</Text>
+          </>
+        )}
+      </>
       <StyledDivider />
       {data?.exercise ? (
         <EditExercise
