@@ -24,7 +24,7 @@ const ExerciseSelect = ({selectedExercise, setSelectedExercise, exercises}: Prop
     <StyledPicker
       items={items}
       title='Exercise'
-      value={selectedExercise}
+      value={selectedExercise === undefined ? null : selectedExercise}
       handleValueChange={handleValueChange}
       placeholder={{label: 'Select an exercise', value: null}}
     />

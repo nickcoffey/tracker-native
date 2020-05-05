@@ -38,6 +38,7 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
       })
         .then((res) => {
           handleClose()
+          setSelectedExercise(undefined)
           if (res.data?.addWorkoutExercise.id) refreshWorkout()
         })
         .catch((err) => console.log(err))
@@ -61,7 +62,6 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
           setSelectedExercise={setSelectedExercise}
         />
         {WhiteDivider}
-        {/* TODO: Fix select not clearing on category change */}
         <ExerciseSelect
           exercises={selectedCategory?.exercises}
           selectedExercise={selectedExercise}
