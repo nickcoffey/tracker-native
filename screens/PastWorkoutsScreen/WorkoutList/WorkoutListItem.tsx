@@ -30,6 +30,7 @@ const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, topDivider}
           text: 'Yes',
           onPress: () => {
             onWorkoutRemove(workout.id)
+            setIsEditing(false)
           },
           style: 'destructive'
         }

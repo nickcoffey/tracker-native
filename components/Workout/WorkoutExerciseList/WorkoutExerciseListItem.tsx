@@ -34,7 +34,14 @@ const WorkoutExerciseListItem = ({
       `Are you sure you want to delete ${workoutExercise.exercise.name}?`,
       [
         {text: 'No', style: 'cancel'},
-        {text: 'Yes', onPress: () => onExerciseRemove(workoutExercise.id), style: 'destructive'}
+        {
+          text: 'Yes',
+          onPress: () => {
+            onExerciseRemove(workoutExercise.id)
+            setIsEditing(false)
+          },
+          style: 'destructive'
+        }
       ],
       {cancelable: false}
     )

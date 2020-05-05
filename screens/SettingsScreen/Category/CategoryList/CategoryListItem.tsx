@@ -26,7 +26,14 @@ const CategoryListItem = ({category, index, openEditCategory, onCategoryRemove, 
       `Are you sure you want to delete ${category.name}?`,
       [
         {text: 'No', style: 'cancel'},
-        {text: 'Yes', onPress: () => onCategoryRemove(category.id), style: 'destructive'}
+        {
+          text: 'Yes',
+          onPress: () => {
+            onCategoryRemove(category.id)
+            setIsEditing(false)
+          },
+          style: 'destructive'
+        }
       ],
       {cancelable: false}
     )

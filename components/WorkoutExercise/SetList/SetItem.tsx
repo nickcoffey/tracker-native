@@ -35,7 +35,14 @@ const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
       'Are you sure you want to delete this set?',
       [
         {text: 'No', style: 'cancel'},
-        {text: 'Yes', onPress: () => onSetRemove(set.id), style: 'destructive'}
+        {
+          text: 'Yes',
+          onPress: () => {
+            onSetRemove(set.id)
+            setIsEditing(false)
+          },
+          style: 'destructive'
+        }
       ],
       {cancelable: false}
     )
