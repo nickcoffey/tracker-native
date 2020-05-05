@@ -91,7 +91,11 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
           </>
         )}
       </>
-      <CurrentWorkoutTimer isTimerStarted={isTimerStarted} />
+      {workout?.startTime ? (
+        <CurrentWorkoutTimer isTimerStarted={isTimerStarted} startTime={Number(workout?.startTime)} />
+      ) : (
+        <></>
+      )}
     </WorkoutPage>
   )
 }

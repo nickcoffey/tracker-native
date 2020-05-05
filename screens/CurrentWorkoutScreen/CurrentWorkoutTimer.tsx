@@ -6,16 +6,17 @@ import {getTimerFormattedString} from '../../utils/DateUtils'
 
 type CurrentWorkoutTimerProps = {
   isTimerStarted: boolean
+  startTime: number
 }
 
-const CurrentWorkoutTimer = ({isTimerStarted}: CurrentWorkoutTimerProps) => {
+const CurrentWorkoutTimer = ({isTimerStarted, startTime}: CurrentWorkoutTimerProps) => {
   const [seconds, setSeconds] = useState(0)
 
   let interval: NodeJS.Timeout
   useEffect(() => {
     if (isTimerStarted) {
       interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 1)
+        setSeconds(Math.floor((Date.now() - startTime) / 1000))
       }, 1000)
     } else if (!isTimerStarted && seconds !== 0) {
       clearInterval(interval)
