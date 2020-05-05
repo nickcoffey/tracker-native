@@ -17,7 +17,8 @@ type Props = {
 const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, topDivider}: Props) => {
   const [isEditing, setIsEditing] = useState(false)
 
-  const duration = getDuration(workout.endTime, workout.startTime)
+  const notFinished = 'Not finished'
+  const duration = workout.endTime ? getDuration(workout.endTime, workout.startTime) : notFinished
 
   const createDeleteAlert = () => {
     Alert.alert(
@@ -49,7 +50,8 @@ const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, topDivider}
         <Text style={styles.itemHeader}>Date:</Text> {getFormattedDate(workout.startTime)}
       </Text>
       <Text style={styles.subtitle}>
-        <Text style={styles.itemHeader}>Duration:</Text> {duration.includes(':') ? duration : `${duration} sec`}
+        <Text style={styles.itemHeader}>Duration:</Text>{' '}
+        {duration.includes(':') || duration === notFinished ? duration : `${duration} sec`}
       </Text>
     </View>
   )
