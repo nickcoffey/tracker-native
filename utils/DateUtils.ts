@@ -67,7 +67,7 @@ export const getDuration = (endUnixStr: string, startUnixStr: string): string =>
     seconds = (seconds - sec) / 60
     let mm = seconds % 60
     let hh = (seconds - mm) / 60
-    timeDiff = `${hh > 0 ? `${padDigits(hh)}:` : ''}${mm ? `${padDigits(mm)}:` : ''}${padDigits(sec)}`
+    timeDiff = `${hh}:${padDigits(mm)}:${padDigits(sec)}`
   }
   return timeDiff
 }

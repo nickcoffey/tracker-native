@@ -48,11 +48,12 @@ const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, topDivider}
   const title = (
     <View style={styles.title}>
       <Text style={styles.subtitle}>
-        <Text style={styles.itemHeader}>Date:</Text> {getFormattedDate(workout.startTime)}
+        <Text style={styles.itemHeader}>Date: </Text>
+        {getFormattedDate(workout.startTime)}
       </Text>
       <Text style={styles.subtitle}>
-        <Text style={styles.itemHeader}>Duration:</Text>{' '}
-        {duration.includes(':') || duration === notFinished ? duration : `${duration} sec`}
+        <Text style={styles.itemHeader}>Duration: </Text>
+        {duration}
       </Text>
     </View>
   )
