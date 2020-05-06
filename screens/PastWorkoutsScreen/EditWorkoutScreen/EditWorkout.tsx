@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 import {View, TouchableOpacity, StyleSheet} from 'react-native'
 import {Text} from 'react-native-elements'
 import {useTheme} from '@react-navigation/native'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import {getFormattedDateTime} from '../../../utils/DateUtils'
+import StyledDateTimePicker from '../../../components/StyledDateTimePicker'
 import {Workout} from '../../../graphql/WorkoutGQL'
 
 type Props = {
@@ -57,17 +57,15 @@ const EditWorkout = ({editableWorkout, setEditableWorkout}: Props) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <DateTimePickerModal
+      <StyledDateTimePicker
         isVisible={isStartTimePickerVisible}
         date={editableWorkout.startTime ? new Date(Number(editableWorkout.startTime)) : new Date()}
-        mode='datetime'
         onConfirm={handleStartTimeConfirm}
         onCancel={hideStartTimePicker}
       />
-      <DateTimePickerModal
+      <StyledDateTimePicker
         isVisible={isEndTimePickerVisible}
         date={editableWorkout.endTime ? new Date(Number(editableWorkout.endTime)) : new Date()}
-        mode='datetime'
         onConfirm={handleEndTimeConfirm}
         onCancel={hideEndTimePicker}
       />

@@ -1,5 +1,6 @@
 import React from 'react'
 import {StatusBar} from 'react-native'
+import {AppearanceProvider} from 'react-native-appearance'
 import {Icon} from 'react-native-elements'
 import {NavigationContainer, Route} from '@react-navigation/native'
 import {createBottomTabNavigator, BottomTabNavigationProp} from '@react-navigation/bottom-tabs'
@@ -65,21 +66,24 @@ const App = () => {
   }
 
   return (
-    <GQLProvider>
-      <StatusBar barStyle='dark-content' />
-      <NavigationContainer>
-        <RootTabs.Navigator initialRouteName='HomeNavigator' screenOptions={screenOptions}>
-          <RootTabs.Screen name='HomeNavigator' component={HomeNavigator} options={{title: 'Home'}} />
-          <RootTabs.Screen
-            name='CurrentWorkoutNavigator'
-            component={CurrentWorkoutNavigator}
-            options={{title: 'Current'}}
-          />
-          <RootTabs.Screen name='PastWorkoutsNavigator' component={PastWorkoutsNavigator} options={{title: 'Past'}} />
-          <RootTabs.Screen name='SettingsNavigator' component={SettingsNavigator} options={{title: 'Categories'}} />
-        </RootTabs.Navigator>
-      </NavigationContainer>
-    </GQLProvider>
+    <AppearanceProvider>
+      <GQLProvider>
+        <StatusBar barStyle='dark-content' />
+        {/* TODO: <NavigationContainer theme={Appearance.getColorScheme() === 'dark' ? DarkTheme : DefaultTheme}> */}
+        <NavigationContainer>
+          <RootTabs.Navigator initialRouteName='HomeNavigator' screenOptions={screenOptions}>
+            <RootTabs.Screen name='HomeNavigator' component={HomeNavigator} options={{title: 'Home'}} />
+            <RootTabs.Screen
+              name='CurrentWorkoutNavigator'
+              component={CurrentWorkoutNavigator}
+              options={{title: 'Current'}}
+            />
+            <RootTabs.Screen name='PastWorkoutsNavigator' component={PastWorkoutsNavigator} options={{title: 'Past'}} />
+            <RootTabs.Screen name='SettingsNavigator' component={SettingsNavigator} options={{title: 'Categories'}} />
+          </RootTabs.Navigator>
+        </NavigationContainer>
+      </GQLProvider>
+    </AppearanceProvider>
   )
 }
 
