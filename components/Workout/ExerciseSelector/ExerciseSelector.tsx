@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
+import {useTheme} from '@react-navigation/native'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 
 import StyledButton from '../../../components/StyledButton'
@@ -49,7 +50,8 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
   const handleToggle = () => setIsVisible(!isVisible)
   const handleClose = () => setIsVisible(false)
 
-  const WhiteDivider = <StyledDivider color='white' />
+  const {colors} = useTheme()
+  const Divider = <StyledDivider color={colors.border} />
 
   return (
     <>
@@ -61,13 +63,13 @@ const ExerciseSelector = ({workoutId, refreshWorkout}: Props) => {
           setSelectedCategory={setSelectedCategory}
           setSelectedExercise={setSelectedExercise}
         />
-        {WhiteDivider}
+        {Divider}
         <ExerciseSelect
           exercises={selectedCategory?.exercises}
           selectedExercise={selectedExercise}
           setSelectedExercise={setSelectedExercise}
         />
-        {WhiteDivider}
+        {Divider}
         <StyledButton title='Add' onPress={onWorkoutExerciseSubmit} />
       </FullScreenModal>
     </>
