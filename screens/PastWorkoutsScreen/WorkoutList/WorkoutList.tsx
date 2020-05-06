@@ -1,9 +1,9 @@
 import React from 'react'
-
-import WorkoutListItem from './WorkoutListItem'
-import {Workout, REMOVE_WORKOUT, AllWorkoutsData} from '../../../graphql/WorkoutGQL'
 import {useMutation} from '@apollo/react-hooks'
 import {ApolloQueryResult} from 'apollo-boost'
+
+import WorkoutListItem from './WorkoutListItem'
+import {Workout, REMOVE_WORKOUT, AllWorkoutsData, WorkoutUpdateInput, UPDATE_WORKOUT} from '../../../graphql/WorkoutGQL'
 
 type Props = {
   workouts?: Workout[]
@@ -13,11 +13,16 @@ type Props = {
 
 const WorkoutList = ({workouts, refetch, openEditWorkout}: Props) => {
   const [removeWorkout] = useMutation<{removedWorkout: Workout}, {id: string}>(REMOVE_WORKOUT)
+  const [updateWorkout] = useMutation<{returnedWorkout: Workout}, {updatedWorkout: WorkoutUpdateInput}>(UPDATE_WORKOUT)
 
   const onWorkoutRemove = (id: string) => {
     removeWorkout({variables: {id}})
       .then(() => refetch())
       .catch((err) => console.log(err))
+  }
+
+  const onWorkoutUpdate = (workout: WorkoutUpdateInput) => {
+    updateWorkout({variables: {updatedWorkout: workout}})
   }
 
   return (
@@ -28,6 +33,7 @@ const WorkoutList = ({workouts, refetch, openEditWorkout}: Props) => {
           topDivider={index === 0}
           openEditWorkout={openEditWorkout}
           onWorkoutRemove={onWorkoutRemove}
+          onWorkoutUpdate={onWorkoutUpdate}
           key={index}
         />
       ))}

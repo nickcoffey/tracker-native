@@ -1,14 +1,11 @@
 import React, {useState} from 'react'
-import {StyleSheet, TouchableOpacity, View} from 'react-native'
-import {Text} from 'react-native-elements'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import {ApolloQueryResult} from 'apollo-boost'
 import {useMutation} from '@apollo/react-hooks'
 
 import FullScreenModal from '../../../components/FullScreenModal'
 import Form from '../../../components/Form'
-import {getFormattedDateTime} from '../../../utils/DateUtils'
 import {Workout, UPDATE_WORKOUT, WorkoutUpdateInput, WorkoutDataWithExercises} from '../../../graphql/WorkoutGQL'
+import EditWorkout from './EditWorkout'
 
 type Props = {
   workout: Workout
@@ -40,70 +37,13 @@ const EditWorkoutModal = ({workout, isVisible, setIsVisible, refetch}: Props) =>
     setIsVisible(false)
   }
 
-  const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false)
-  const showStartTimePicker = () => setStartTimePickerVisibility(true)
-  const hideStartTimePicker = () => setStartTimePickerVisibility(false)
-  const handleStartTimeConfirm = (startTime: Date) => {
-    setEditableWorkout({...editableWorkout, startTime: startTime.getTime().toString()})
-    hideStartTimePicker()
-  }
-
-  const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false)
-  const showEndTimePicker = () => setEndTimePickerVisibility(true)
-  const hideEndTimePicker = () => setEndTimePickerVisibility(false)
-  const handleEndTimeConfirm = (endTime: any) => {
-    setEditableWorkout({...editableWorkout, endTime: endTime.getTime().toString()})
-    hideEndTimePicker()
-  }
-
   return (
     <FullScreenModal isVisible={isVisible} handleClose={handleClose}>
       <Form title='Update Workout' handleChange={() => {}} inputs={[]} handleSubmit={handleSubmit}>
-        <View style={styles.container}>
-          <Text style={{...styles.boldText, ...styles.text}}>Started:</Text>
-          <TouchableOpacity onPress={showStartTimePicker}>
-            <Text style={styles.text}>
-              {editableWorkout.startTime ? getFormattedDateTime(editableWorkout.startTime) : 'Start Time'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.container}>
-          <Text style={{...styles.boldText, ...styles.text}}>Ended:</Text>
-          <TouchableOpacity onPress={showEndTimePicker}>
-            <Text style={styles.text}>
-              {editableWorkout.endTime ? getFormattedDateTime(editableWorkout.endTime) : 'In Progress'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <DateTimePickerModal
-          isVisible={isStartTimePickerVisible}
-          date={editableWorkout.startTime ? new Date(Number(editableWorkout.startTime)) : new Date()}
-          mode='datetime'
-          onConfirm={handleStartTimeConfirm}
-          onCancel={hideStartTimePicker}
-        />
-        <DateTimePickerModal
-          isVisible={isEndTimePickerVisible}
-          date={editableWorkout.endTime ? new Date(Number(editableWorkout.endTime)) : new Date()}
-          mode='datetime'
-          onConfirm={handleEndTimeConfirm}
-          onCancel={hideEndTimePicker}
-        />
+        <EditWorkout editableWorkout={editableWorkout} setEditableWorkout={setEditableWorkout} />
       </Form>
     </FullScreenModal>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 10
-  },
-  text: {
-    fontSize: 18
-  },
-  boldText: {
-    fontWeight: 'bold'
-  }
-})
 
 export default EditWorkoutModal

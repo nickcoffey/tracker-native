@@ -4,18 +4,23 @@ import {Text} from 'react-native-elements'
 
 import {getFormattedDate, getDuration} from '../../../utils/DateUtils'
 import EditableListItem from '../../../components/EditableListItem'
-import {Workout} from '../../../graphql/WorkoutGQL'
+import {Workout, WorkoutUpdateInput} from '../../../graphql/WorkoutGQL'
+import EditWorkout from '../EditWorkoutScreen/EditWorkout'
 
 type Props = {
   workout: Workout
   topDivider: boolean
   openEditWorkout: (id: string) => void
   onWorkoutRemove: (id: string) => void
-  //   onWorkoutUpdate: (updatedWorkout: WorkoutUpdateInput) => void
+  onWorkoutUpdate: (updatedWorkout: WorkoutUpdateInput) => void
 }
 
-const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, topDivider}: Props) => {
+const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, onWorkoutUpdate, topDivider}: Props) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [editableWorkout, setEditableWorkout] = useState<Workout>(() => {
+    const {id, startTime, endTime} = workout
+    return {id, startTime, endTime}
+  })
 
   const duration = workout.endTime ? getDuration(workout.endTime, workout.startTime) : 'In Progress'
 
@@ -39,28 +44,26 @@ const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, topDivider}
   }
 
   const handleUpdate = () => {
-    // onWorkoutUpdate({id: category.id, ...editableCategory})
+    onWorkoutUpdate(editableWorkout)
     setIsEditing(false)
   }
   const handlePress = () => openEditWorkout(workout.id)
-  //   const handleChange = (key: string, value: string) => setEditableWorkout({...editableWorkout, [key]: value})
-  const title = (
-    <View style={styles.title}>
-      <Text style={styles.subtitle}>
-        <Text style={styles.itemHeader}>Date: </Text>
-        {getFormattedDate(workout.startTime)}
-      </Text>
-      <Text style={styles.subtitle}>
-        <Text style={styles.itemHeader}>Duration: </Text>
-        {duration}
-      </Text>
-    </View>
-  )
 
   return (
     <EditableListItem
-      title={title}
-      titleEditMode={title}
+      title={
+        <View style={styles.title}>
+          <Text style={styles.subtitle}>
+            <Text style={styles.itemHeader}>Date: </Text>
+            {getFormattedDate(workout.startTime)}
+          </Text>
+          <Text style={styles.subtitle}>
+            <Text style={styles.itemHeader}>Duration: </Text>
+            {duration}
+          </Text>
+        </View>
+      }
+      titleEditMode={<EditWorkout editableWorkout={editableWorkout} setEditableWorkout={setEditableWorkout} />}
       subtitleEditMode={<></>}
       topDivider={topDivider}
       handlePress={handlePress}
