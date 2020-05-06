@@ -17,8 +17,7 @@ type Props = {
 const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, topDivider}: Props) => {
   const [isEditing, setIsEditing] = useState(false)
 
-  const notFinished = 'Not finished'
-  const duration = workout.endTime ? getDuration(workout.endTime, workout.startTime) : notFinished
+  const duration = workout.endTime ? getDuration(workout.endTime, workout.startTime) : 'In Progress'
 
   const createDeleteAlert = () => {
     Alert.alert(

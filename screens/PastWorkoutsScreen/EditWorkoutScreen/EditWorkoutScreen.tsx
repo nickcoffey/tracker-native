@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {StyleSheet, View} from 'react-native'
 import {Text, Icon} from 'react-native-elements'
 import {RouteProp} from '@react-navigation/native'
@@ -8,9 +8,11 @@ import {useQuery} from '@apollo/react-hooks'
 import {PastWorkoutsStackParamList} from '../PastWorkoutsNavigator'
 import WorkoutPage from '../../../components/Workout/WorkoutPage'
 import StyledDivider from '../../../components/StyledDivider'
+import StyledButton from '../../../components/StyledButton'
 import {getFormattedTime, getFormattedDate} from '../../../utils/DateUtils'
 import {WorkoutDataWithExercises, WORKOUT_WITH_EXERCISES} from '../../../graphql/WorkoutGQL'
 import {WorkoutExercise} from '../../../graphql/WorkoutExerciseGQL'
+import EditWorkoutModal from './EditWorkoutModal'
 
 type EditWorkoutScreenRouteProp = RouteProp<PastWorkoutsStackParamList, 'EditWorkout'>
 
@@ -52,9 +54,14 @@ const EditWorkoutScreen = ({navigation, route}: Props) => {
   }
   const doDisplayEndDate =
     Boolean(formattedStartDate) && Boolean(formattedEndDate) && formattedStartDate !== formattedEndDate
-  console.log(doDisplayEndDate)
 
   const Arrow = <Icon type='material' name='trending-flat' />
+
+  const [isEditVisible, setIsEditVisible] = useState(false)
+  const handleEditPress = () => setIsEditVisible(true)
+  navigation.setOptions({
+    headerRight: () => (data?.workout ? <StyledButton title='Edit' onPress={handleEditPress} /> : <></>)
+  })
 
   return (
     <WorkoutPage
@@ -72,8 +79,18 @@ const EditWorkoutScreen = ({navigation, route}: Props) => {
       <View style={styles.header}>
         <Text style={styles.headerText}>{formattedStartTime}</Text>
         {!doDisplayEndDate && Arrow}
-        <Text style={styles.headerText}>{formattedEndTime || 'Not finished'}</Text>
+        <Text style={styles.headerText}>{formattedEndTime || 'In Progress'}</Text>
       </View>
+      {data?.workout ? (
+        <EditWorkoutModal
+          isVisible={isEditVisible}
+          setIsVisible={setIsEditVisible}
+          workout={data.workout}
+          refetch={refetch}
+        />
+      ) : (
+        <></>
+      )}
     </WorkoutPage>
   )
 }

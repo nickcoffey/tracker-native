@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {StyleSheet, View} from 'react-native'
 import {Input, Text} from 'react-native-elements'
 
@@ -17,9 +17,10 @@ type FormProps = {
   title: string
   handleChange: (key: string, value: string) => void
   handleSubmit: () => void
+  children?: ReactElement | ReactElement[]
 }
 
-const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
+const Form = ({inputs, title, handleChange, handleSubmit, children}: FormProps) => {
   const styles = StyleSheet.create({
     title: {
       textAlign: 'center',
@@ -48,6 +49,7 @@ const Form = ({inputs, title, handleChange, handleSubmit}: FormProps) => {
           <StyledDivider color='white' />
         </View>
       ))}
+      {children}
       <StyledButton title='Submit' onPress={handleSubmit} />
     </>
   )
