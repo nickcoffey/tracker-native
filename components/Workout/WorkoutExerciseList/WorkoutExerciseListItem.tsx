@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import {Alert} from 'react-native'
-import {Input, Text} from 'react-native-elements'
+import {Input} from 'react-native-elements'
 
-import {WorkoutExercise, UpdateWorkoutExerciseInput} from '../../../graphql/WorkoutExerciseGQL'
 import EditableListItem from '../../EditableListItem'
+import StyledText from '../../../components/StyledText'
+import {WorkoutExercise, UpdateWorkoutExerciseInput} from '../../../graphql/WorkoutExerciseGQL'
 
 type Props = {
   workoutExercise: WorkoutExercise
@@ -58,7 +59,7 @@ const WorkoutExerciseListItem = ({
     <EditableListItem
       title={workoutExercise.exercise.name}
       titleEditMode={
-        <Text>{workoutExercise.exercise.name}</Text>
+        <StyledText>{workoutExercise.exercise.name}</StyledText>
         // <Input
         //   label='Name'
         //   placeholder='Name'
@@ -68,7 +69,7 @@ const WorkoutExerciseListItem = ({
       }
       subtitle={workoutExercise.exercise.desc}
       subtitleEditMode={
-        <Text>{workoutExercise.exercise.desc}</Text>
+        <StyledText>{workoutExercise.exercise.desc}</StyledText>
         // <Input
         //   label='Descripton'
         //   placeholder='Description'

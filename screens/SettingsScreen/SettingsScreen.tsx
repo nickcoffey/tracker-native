@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Text} from 'react-native-elements'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
 import StyledButton from '../../components/StyledButton'
 import StyledDivider from '../../components/StyledDivider'
+import StyledText from '../../components/StyledText'
 import {SettingsNavigationProps} from './SettingsNavigator'
 import CategoryList from './Category/CategoryList/CategoryList'
 import NewCategory from './Category/NewCategory'
@@ -33,9 +33,9 @@ const SettingsScreen = ({navigation}: SettingsNavigationProps) => {
   return (
     <PageLayout loading={loading} refetch={refetch}>
       <StyledDivider />
-      <Text h4 h4Style={styles.header}>
+      <StyledText h4 style={styles.header}>
         Categories
-      </Text>
+      </StyledText>
       <StyledDivider size={5} />
       <CategoryList categories={data?.categories || []} openEditCategory={openEditCategory} refetch={refetch} />
       <NewCategory isFormVisible={isNewFormVisible} setIsFormVisible={setIsNewFormVisible} refetch={refetch} />

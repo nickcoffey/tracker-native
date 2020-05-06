@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Text} from 'react-native-elements'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../../layouts/PageLayout'
 import StyledDivider from '../../../components/StyledDivider'
+import StyledText from '../../../components/StyledText'
 import StyledButton from '../../../components/StyledButton'
 import {SettingsStackParamList} from '../SettingsNavigator'
 import ExerciseList from '../Exercise/ExerciseList/ExerciseList'
@@ -66,10 +66,10 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       <>
         {data?.category && (
           <>
-            <Text h4 h4Style={styles.header}>
+            <StyledText h4 style={styles.header}>
               {data && data?.category.name}
-            </Text>
-            <Text style={styles.header}>{data && data?.category.desc}</Text>
+            </StyledText>
+            <StyledText style={styles.header}>{data && data?.category.desc}</StyledText>
           </>
         )}
       </>
@@ -85,7 +85,7 @@ const CategoryScreen = ({navigation, route}: CategoryScreenProps) => {
       )}
       <StyledDivider />
       <View style={styles.exerciseHeader}>
-        <Text style={styles.exerciseTitle}>Exercises</Text>
+        <StyledText style={styles.exerciseTitle}>Exercises</StyledText>
         <StyledButton title='Create New' onPress={handleNewPress} />
       </View>
       <ExerciseList exercises={data?.category.exercises || []} openEditExercise={openEditExercise} refetch={refetch} />

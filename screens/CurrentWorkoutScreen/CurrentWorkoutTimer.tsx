@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Text} from 'react-native-elements'
 
 import {getTimerFormattedString} from '../../utils/DateUtils'
+import StyledText from '../../components/StyledText'
 
 type CurrentWorkoutTimerProps = {
   isTimerStarted: boolean
@@ -34,7 +34,9 @@ const CurrentWorkoutTimer = ({isTimerStarted, startTime}: CurrentWorkoutTimerPro
 
   return (
     <>
-      <Text style={styles.timer}>{(seconds !== 0 || isTimerStarted) && getTimerFormattedString(seconds)}</Text>
+      <StyledText style={styles.timer}>
+        {(seconds !== 0 || isTimerStarted) && getTimerFormattedString(seconds)}
+      </StyledText>
     </>
   )
 }

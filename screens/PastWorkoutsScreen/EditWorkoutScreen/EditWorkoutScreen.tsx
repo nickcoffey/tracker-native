@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Text, Icon} from 'react-native-elements'
+import {Icon} from 'react-native-elements'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useQuery} from '@apollo/react-hooks'
@@ -9,6 +9,7 @@ import {PastWorkoutsStackParamList} from '../PastWorkoutsNavigator'
 import WorkoutPage from '../../../components/Workout/WorkoutPage'
 import StyledDivider from '../../../components/StyledDivider'
 import StyledButton from '../../../components/StyledButton'
+import StyledText from '../../../components/StyledText'
 import {getFormattedTime, getFormattedDate} from '../../../utils/DateUtils'
 import {WorkoutDataWithExercises, WORKOUT_WITH_EXERCISES} from '../../../graphql/WorkoutGQL'
 import {WorkoutExercise} from '../../../graphql/WorkoutExerciseGQL'
@@ -72,14 +73,16 @@ const EditWorkoutScreen = ({navigation, route}: Props) => {
       workout={data?.workout}>
       <StyledDivider />
       <View style={styles.header}>
-        <Text style={{...styles.headerText, ...styles.dateHeader}}>{formattedStartDate}</Text>
-        {doDisplayEndDate && <Text style={{...styles.headerText, ...styles.dateHeader}}>{formattedEndDate}</Text>}
+        <StyledText style={{...styles.headerText, ...styles.dateHeader}}>{formattedStartDate}</StyledText>
+        {doDisplayEndDate && (
+          <StyledText style={{...styles.headerText, ...styles.dateHeader}}>{formattedEndDate}</StyledText>
+        )}
       </View>
       {doDisplayEndDate ? Arrow : <StyledDivider size={5} />}
       <View style={styles.header}>
-        <Text style={styles.headerText}>{formattedStartTime}</Text>
+        <StyledText style={styles.headerText}>{formattedStartTime}</StyledText>
         {!doDisplayEndDate && Arrow}
-        <Text style={styles.headerText}>{formattedEndTime || 'In Progress'}</Text>
+        <StyledText style={styles.headerText}>{formattedEndTime || 'In Progress'}</StyledText>
       </View>
       {data?.workout ? (
         <EditWorkoutModal

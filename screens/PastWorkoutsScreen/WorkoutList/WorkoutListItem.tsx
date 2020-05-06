@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import {StyleSheet, Alert, View} from 'react-native'
-import {Text} from 'react-native-elements'
 
 import {getFormattedDate, getDuration} from '../../../utils/DateUtils'
 import EditableListItem from '../../../components/EditableListItem'
+import StyledText from '../../../components/StyledText'
 import {Workout, WorkoutUpdateInput} from '../../../graphql/WorkoutGQL'
 import EditWorkout from '../EditWorkoutScreen/EditWorkout'
 
@@ -53,14 +53,14 @@ const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, onWorkoutUp
     <EditableListItem
       title={
         <View style={styles.title}>
-          <Text style={styles.subtitle}>
-            <Text style={styles.itemHeader}>Date: </Text>
+          <StyledText style={styles.subtitle}>
+            <StyledText style={styles.itemHeader}>Date: </StyledText>
             {getFormattedDate(workout.startTime)}
-          </Text>
-          <Text style={styles.subtitle}>
-            <Text style={styles.itemHeader}>Duration: </Text>
+          </StyledText>
+          <StyledText style={styles.subtitle}>
+            <StyledText style={styles.itemHeader}>Duration: </StyledText>
             {duration}
-          </Text>
+          </StyledText>
         </View>
       }
       titleEditMode={<EditWorkout editableWorkout={editableWorkout} setEditableWorkout={setEditableWorkout} />}

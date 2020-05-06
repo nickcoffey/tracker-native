@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import {View, TouchableOpacity, StyleSheet} from 'react-native'
-import {Text} from 'react-native-elements'
 import {useTheme} from '@react-navigation/native'
 
+import StyledText from '../../../components/StyledText'
 import {getFormattedDateTime} from '../../../utils/DateUtils'
 import StyledDateTimePicker from '../../../components/StyledDateTimePicker'
 import {Workout} from '../../../graphql/WorkoutGQL'
@@ -42,19 +42,19 @@ const EditWorkout = ({editableWorkout, setEditableWorkout}: Props) => {
   return (
     <>
       <View style={styles.container}>
-        <Text>Started:</Text>
+        <StyledText>Started:</StyledText>
         <TouchableOpacity onPress={showStartTimePicker}>
-          <Text style={styles.inputText}>
+          <StyledText style={styles.inputText}>
             {editableWorkout.startTime ? getFormattedDateTime(editableWorkout.startTime) : 'Start Time'}
-          </Text>
+          </StyledText>
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
-        <Text>Ended:</Text>
+        <StyledText>Ended:</StyledText>
         <TouchableOpacity onPress={showEndTimePicker}>
-          <Text style={styles.inputText}>
+          <StyledText style={styles.inputText}>
             {editableWorkout.endTime ? getFormattedDateTime(editableWorkout.endTime) : 'In Progress'}
-          </Text>
+          </StyledText>
         </TouchableOpacity>
       </View>
       <StyledDateTimePicker

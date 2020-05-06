@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Text} from 'react-native-elements'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 
 import WorkoutPage from '../../components/Workout/WorkoutPage'
 import StyledDivider from '../../components/StyledDivider'
 import StyledButton from '../../components/StyledButton'
+import StyledText from '../../components/StyledText'
 import CurrentWorkoutTimer from './CurrentWorkoutTimer'
 import {CurrentWorkoutNavigationProps} from './CurrentWorkoutNavigator'
 import {
@@ -84,9 +84,9 @@ const CurrentWorkoutScreen = ({navigation}: CurrentWorkoutNavigationProps) => {
         {workout === undefined && (
           <>
             <StyledDivider size={125} />
-            <Text style={styles.header} h4>
+            <StyledText style={styles.header} h4>
               Ready for your next workout?
-            </Text>
+            </StyledText>
             <StyledButton title='Start Workout' onPress={handleNewPress} />
           </>
         )}

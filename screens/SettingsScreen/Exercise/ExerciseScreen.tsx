@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native'
-import {Text} from 'react-native-elements'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useQuery} from '@apollo/react-hooks'
@@ -8,6 +7,7 @@ import {useQuery} from '@apollo/react-hooks'
 import PageLayout from '../../../layouts/PageLayout'
 import StyledDivider from '../../../components/StyledDivider'
 import StyledButton from '../../../components/StyledButton'
+import StyledText from '../../../components/StyledText'
 import EditExercise from './EditExercise'
 import {SettingsStackParamList} from '../SettingsNavigator'
 import {EXERCISE, ExerciseData} from '../../../graphql/ExerciseGQL'
@@ -44,10 +44,10 @@ const ExerciseScreen = ({navigation, route}: ExerciseProps) => {
       <>
         {data?.exercise && (
           <>
-            <Text h4 h4Style={styles.header}>
+            <StyledText h4 style={styles.header}>
               {data?.exercise.name}
-            </Text>
-            <Text style={styles.header}>{data?.exercise.desc}</Text>
+            </StyledText>
+            <StyledText style={styles.header}>{data?.exercise.desc}</StyledText>
           </>
         )}
       </>

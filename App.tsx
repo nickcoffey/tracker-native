@@ -1,8 +1,8 @@
 import React from 'react'
 import {StatusBar} from 'react-native'
-import {AppearanceProvider} from 'react-native-appearance'
+import {AppearanceProvider, Appearance} from 'react-native-appearance'
 import {Icon} from 'react-native-elements'
-import {NavigationContainer, Route} from '@react-navigation/native'
+import {NavigationContainer, Route, DarkTheme, DefaultTheme} from '@react-navigation/native'
 import {createBottomTabNavigator, BottomTabNavigationProp} from '@react-navigation/bottom-tabs'
 
 import HomeNavigator from './screens/HomeScreen/HomeNavigator'
@@ -69,8 +69,7 @@ const App = () => {
     <AppearanceProvider>
       <GQLProvider>
         <StatusBar barStyle='dark-content' />
-        {/* TODO: <NavigationContainer theme={Appearance.getColorScheme() === 'dark' ? DarkTheme : DefaultTheme}> */}
-        <NavigationContainer>
+        <NavigationContainer theme={Appearance.getColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
           <RootTabs.Navigator initialRouteName='HomeNavigator' screenOptions={screenOptions}>
             <RootTabs.Screen name='HomeNavigator' component={HomeNavigator} options={{title: 'Home'}} />
             <RootTabs.Screen

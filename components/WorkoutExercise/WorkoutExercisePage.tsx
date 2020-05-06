@@ -1,10 +1,10 @@
 import React from 'react'
 import {StyleSheet} from 'react-native'
-import {Text} from 'react-native-elements'
 import {ApolloQueryResult} from 'apollo-boost'
 
 import PageLayout from '../../layouts/PageLayout'
 import StyledButton from '../../components/StyledButton'
+import StyledText from '../../components/StyledText'
 import SetList from '../../components/WorkoutExercise/SetList/SetList'
 import {WorkoutExerciseWithSets} from '../../graphql/WorkoutExerciseGQL'
 
@@ -28,10 +28,10 @@ const WorkoutExercisePage = ({
       <>
         {workoutExercise?.workoutSets && (
           <>
-            <Text h4 h4Style={styles.header}>
+            <StyledText h4 style={styles.header}>
               {workoutExercise.exercise.name}
-            </Text>
-            <Text style={styles.header}>{workoutExercise.exercise.desc}</Text>
+            </StyledText>
+            <StyledText style={styles.header}>{workoutExercise.exercise.desc}</StyledText>
             <StyledButton title='Add Set' onPress={handleWorkoutSetCreate} />
             <SetList sets={workoutExercise.workoutSets} refreshWorkoutExercise={refreshWorkoutExercise} />
           </>

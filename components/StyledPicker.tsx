@@ -1,7 +1,8 @@
 import React from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Text} from 'react-native-elements'
 import RNPickerSelect, {Item} from 'react-native-picker-select'
+
+import StyledText from './StyledText'
 
 type Props = {
   title: string
@@ -14,7 +15,7 @@ type Props = {
 const StyledPicker = ({title, placeholder, value, handleValueChange, items}: Props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{title}</Text>
+      <StyledText style={styles.label}>{title}</StyledText>
       <RNPickerSelect
         value={value}
         onValueChange={handleValueChange}

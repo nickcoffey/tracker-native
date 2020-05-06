@@ -1,12 +1,12 @@
 import React from 'react'
 import {StyleSheet} from 'react-native'
-import {Text} from 'react-native-elements'
 import {useQuery} from '@apollo/react-hooks'
 
 import PageLayout from '../../layouts/PageLayout'
 import {PastWorkoutsNavigationProps} from './PastWorkoutsNavigator'
 import WorkoutList from './WorkoutList/WorkoutList'
 import StyledDivider from '../../components/StyledDivider'
+import StyledText from '../../components/StyledText'
 import {ALL_WORKOUTS, AllWorkoutsData} from '../../graphql/WorkoutGQL'
 
 const PastWorkoutsScreen = ({navigation}: PastWorkoutsNavigationProps) => {
@@ -19,9 +19,9 @@ const PastWorkoutsScreen = ({navigation}: PastWorkoutsNavigationProps) => {
   return (
     <PageLayout loading={loading} refetch={refetch}>
       <StyledDivider />
-      <Text h4 h4Style={styles.header}>
+      <StyledText h4 style={styles.header}>
         Past Workouts
-      </Text>
+      </StyledText>
       <StyledDivider size={5} />
       <WorkoutList workouts={data?.workouts} refetch={refetch} openEditWorkout={openEditWorkout} />
     </PageLayout>

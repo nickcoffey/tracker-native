@@ -1,16 +1,16 @@
 import React from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Text} from 'react-native-elements'
 
 import {RootNavigationProps} from '../../App'
 import StyledButton from '../../components/StyledButton'
+import StyledText from '../../components/StyledText'
 
 const HomeScreen = ({navigation}: RootNavigationProps) => {
   const handlePress = () => navigation.navigate('CurrentWorkoutNavigator')
 
   return (
     <View style={styles.container}>
-      <Text h4>Welcome to Tracker</Text>
+      <StyledText h4>Welcome to Tracker</StyledText>
       <StyledButton title='Start A New Workout' onPress={handlePress} />
     </View>
   )

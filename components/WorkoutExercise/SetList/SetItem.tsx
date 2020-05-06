@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import {Alert} from 'react-native'
-import {Text, Input} from 'react-native-elements'
+import {Input} from 'react-native-elements'
 
-import {WorkoutSet, WorkoutSetUpdateInput} from '../../../graphql/WorkoutSetGQL'
 import EditableListItem from '../../EditableListItem'
+import StyledText from '../../../components/StyledText'
+import {WorkoutSet, WorkoutSetUpdateInput} from '../../../graphql/WorkoutSetGQL'
 
 type Props = {
   set: WorkoutSet
@@ -52,8 +53,8 @@ const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
     <EditableListItem
       title={
         <>
-          <Text>{`Weight: ${set.weight ? set.weight : 0}`}</Text>
-          <Text>{`Repetitions: ${set.repetitions ? set.repetitions : 0}`}</Text>
+          <StyledText>{`Weight: ${set.weight ? set.weight : 0}`}</StyledText>
+          <StyledText>{`Repetitions: ${set.repetitions ? set.repetitions : 0}`}</StyledText>
         </>
       }
       titleEditMode={
