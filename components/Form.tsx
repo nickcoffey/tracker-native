@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import {StyleSheet, View} from 'react-native'
 import {Input} from 'react-native-elements'
+import {useTheme} from '@react-navigation/native'
 
 import StyledDivider from './StyledDivider'
 import StyledButton from './StyledButton'
@@ -22,6 +23,7 @@ type FormProps = {
 }
 
 const Form = ({inputs, title, handleChange, handleSubmit, children}: FormProps) => {
+  const {colors} = useTheme()
   const styles = StyleSheet.create({
     title: {
       textAlign: 'center',
@@ -47,7 +49,7 @@ const Form = ({inputs, title, handleChange, handleSubmit, children}: FormProps) 
             value={input.value}
             onChangeText={(text) => handleChange(input.key, text)}
           />
-          <StyledDivider color='white' />
+          <StyledDivider color={colors.border} />
         </View>
       ))}
       {children}
