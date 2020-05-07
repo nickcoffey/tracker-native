@@ -72,6 +72,7 @@ const CategoryListItem = ({category, index, openEditCategory, onCategoryRemove, 
       setIsEditing={setIsEditing}
       createDeleteAlert={createDeleteAlert}
       handleUpdate={handleUpdate}
+      chevron
     />
   )
 }

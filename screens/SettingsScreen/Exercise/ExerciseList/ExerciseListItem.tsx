@@ -72,6 +72,7 @@ const ExerciseListItem = ({exercise, index, openEditExercise, onExerciseRemove, 
       setIsEditing={setIsEditing}
       createDeleteAlert={createDeleteAlert}
       handleUpdate={handleUpdate}
+      chevron
     />
   )
 }

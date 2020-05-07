@@ -15,6 +15,7 @@ type Props = {
   subtitle?: string | ReactElement
   subtitleEditMode: ReactElement
   topDivider: boolean
+  chevron?: boolean
   createDeleteAlert: () => void
   handleUpdate: () => void
 }
@@ -28,6 +29,7 @@ const EditableListItem = ({
   subtitle,
   subtitleEditMode,
   topDivider,
+  chevron,
   createDeleteAlert,
   handleUpdate
 }: Props) => {
@@ -70,7 +72,7 @@ const EditableListItem = ({
         onPress={handlePress}
         onLongPress={handleLongPress}
         bottomDivider
-        chevron
+        chevron={chevron}
       />
       {/* <StyledDivider color={colors.background} size={5} /> */}
     </>

@@ -82,6 +82,7 @@ const WorkoutExerciseListItem = ({
       handleUpdate={handleUpdate}
       isEditing={isEditing}
       setIsEditing={setIsEditing}
+      chevron
     />
   )
 }

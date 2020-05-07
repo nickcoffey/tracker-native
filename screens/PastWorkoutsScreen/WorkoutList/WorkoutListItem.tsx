@@ -71,6 +71,7 @@ const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, onWorkoutUp
       createDeleteAlert={createDeleteAlert}
       isEditing={isEditing}
       setIsEditing={setIsEditing}
+      chevron
     />
   )
 }
