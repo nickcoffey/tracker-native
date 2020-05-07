@@ -53,12 +53,12 @@ const WorkoutListItem = ({workout, openEditWorkout, onWorkoutRemove, onWorkoutUp
     <EditableListItem
       title={
         <View style={styles.title}>
-          <StyledText style={styles.subtitle}>
-            <StyledText style={styles.itemHeader}>Date: </StyledText>
+          <StyledText style={styles.subtitle} h5>
+            <StyledText style={styles.itemHeader} h5>Date: </StyledText>
             {getFormattedDate(workout.startTime)}
           </StyledText>
-          <StyledText style={styles.subtitle}>
-            <StyledText style={styles.itemHeader}>Duration: </StyledText>
+          <StyledText style={styles.subtitle} h5>
+            <StyledText style={styles.itemHeader} h5>Duration: </StyledText>
             {duration}
           </StyledText>
         </View>

@@ -53,8 +53,8 @@ const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
     <EditableListItem
       title={
         <>
-          <StyledText>{`Weight: ${set.weight ? set.weight : 0}`}</StyledText>
-          <StyledText>{`Repetitions: ${set.repetitions ? set.repetitions : 0}`}</StyledText>
+          <StyledText h5>{`Weight: ${set.weight ? set.weight : 0}`}</StyledText>
+          <StyledText h5>{`Repetitions: ${set.repetitions ? set.repetitions : 0}`}</StyledText>
         </>
       }
       titleEditMode={
