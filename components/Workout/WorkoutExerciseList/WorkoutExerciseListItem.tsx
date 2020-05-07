@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {Alert} from 'react-native'
-import {Input} from 'react-native-elements'
 
 import EditableListItem from '../../EditableListItem'
 import StyledText from '../../../components/StyledText'
@@ -60,7 +59,7 @@ const WorkoutExerciseListItem = ({
       title={workoutExercise.exercise.name}
       titleEditMode={
         <StyledText>{workoutExercise.exercise.name}</StyledText>
-        // <Input
+        // <StyledInput
         //   label='Name'
         //   placeholder='Name'
         //   value={editableExercise.name}
@@ -70,7 +69,7 @@ const WorkoutExerciseListItem = ({
       subtitle={workoutExercise.exercise.desc}
       subtitleEditMode={
         <StyledText>{workoutExercise.exercise.desc}</StyledText>
-        // <Input
+        // <StyledInput
         //   label='Descripton'
         //   placeholder='Description'
         //   value={editableExercise.desc}

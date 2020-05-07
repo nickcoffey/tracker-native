@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import {Input} from 'react-native-elements'
 import {Alert} from 'react-native'
 
+import StyledInput from '../../../../components/StyledInput'
 import EditableListItem from '../../../../components/EditableListItem'
 import {Exercise, ExerciseUpdateInput} from '../../../../graphql/ExerciseGQL'
 
@@ -50,7 +50,7 @@ const ExerciseListItem = ({exercise, index, openEditExercise, onExerciseRemove, 
     <EditableListItem
       title={exercise.name}
       titleEditMode={
-        <Input
+        <StyledInput
           label='Name'
           placeholder='Name'
           value={editableExercise.name}
@@ -59,7 +59,7 @@ const ExerciseListItem = ({exercise, index, openEditExercise, onExerciseRemove, 
       }
       subtitle={exercise.desc}
       subtitleEditMode={
-        <Input
+        <StyledInput
           label='Descripton'
           placeholder='Description'
           value={editableExercise.desc}

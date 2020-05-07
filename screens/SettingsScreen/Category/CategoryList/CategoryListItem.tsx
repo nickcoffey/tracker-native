@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import {Alert} from 'react-native'
-import {Input} from 'react-native-elements'
 
 import {Category, CategoryUpdateInput} from '../../../../graphql/CategoryGQL'
 import EditableListItem from '../../../../components/EditableListItem'
+import StyledInput from '../../../../components/StyledInput'
 
 type Props = {
   category: Category
@@ -50,7 +50,7 @@ const CategoryListItem = ({category, index, openEditCategory, onCategoryRemove, 
     <EditableListItem
       title={category.name}
       titleEditMode={
-        <Input
+        <StyledInput
           label='Name'
           placeholder='Name'
           value={editableCategory.name}
@@ -59,7 +59,7 @@ const CategoryListItem = ({category, index, openEditCategory, onCategoryRemove, 
       }
       subtitle={category.desc}
       subtitleEditMode={
-        <Input
+        <StyledInput
           label='Descripton'
           placeholder='Description'
           value={editableCategory.desc}

@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import {Alert} from 'react-native'
-import {Input} from 'react-native-elements'
 
 import EditableListItem from '../../EditableListItem'
 import StyledText from '../../../components/StyledText'
+import StyledInput from '../../../components/StyledInput'
 import {WorkoutSet, WorkoutSetUpdateInput} from '../../../graphql/WorkoutSetGQL'
 
 type Props = {
@@ -58,7 +58,7 @@ const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
         </>
       }
       titleEditMode={
-        <Input
+        <StyledInput
           label='Weight'
           placeholder='Weight'
           keyboardType='decimal-pad'
@@ -67,7 +67,7 @@ const SetItem = ({set, index, onSetUpdate, onSetRemove}: Props) => {
         />
       }
       subtitleEditMode={
-        <Input
+        <StyledInput
           label='Repetitions'
           placeholder='Repetitions'
           keyboardType='number-pad'

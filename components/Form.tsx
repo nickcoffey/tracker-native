@@ -1,11 +1,11 @@
 import React, {ReactElement} from 'react'
 import {StyleSheet, View} from 'react-native'
-import {Input} from 'react-native-elements'
 import {useTheme} from '@react-navigation/native'
 
 import StyledDivider from './StyledDivider'
 import StyledButton from './StyledButton'
 import StyledText from './StyledText'
+import StyledInput from './StyledInput'
 
 export type InputType = {
   label: string
@@ -43,8 +43,8 @@ const Form = ({inputs, title, handleChange, handleSubmit, children}: FormProps) 
       <StyledText style={styles.title}>{title}</StyledText>
       {inputs.map((input, index) => (
         <View style={styles.inputContainer} key={index}>
-          <StyledText style={styles.label}>{input.label}</StyledText>
-          <Input
+          <StyledInput
+            label={input.label}
             placeholder={input.placeholder}
             value={input.value}
             onChangeText={(text) => handleChange(input.key, text)}
