@@ -54,9 +54,9 @@ const EditableListItem = ({
             <>
               {subtitleEditMode}
               <View style={styles.btnGroup}>
-                <StyledButton title='Delete' onPress={createDeleteAlert} isDelete />
+                <StyledButton title='Delete' onPress={createDeleteAlert} color='danger' />
                 <StyledButton title='Update' onPress={handleUpdate} />
-                <StyledButton title='Cancel' onPress={handleCancelPress} isCancel />
+                <StyledButton title='Cancel' onPress={handleCancelPress} color='default' />
               </View>
             </>
           ) : (

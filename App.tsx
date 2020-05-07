@@ -22,6 +22,10 @@ export type RootNavigationProps = {
   navigation: BottomTabNavigationProp<RootTabParamList>
 }
 
+const MyTheme = {danger: 'red', default: 'grey', warning: 'yellow'}
+const MyDarkTheme = {...DarkTheme, colors: {...DarkTheme.colors, ...MyTheme}}
+const MyDefaultTheme = {...DefaultTheme, colors: {...DefaultTheme.colors, ...MyTheme}}
+
 // TODO: test Android
 const App = () => {
   const RootTabs = createBottomTabNavigator<RootTabParamList>()
@@ -69,7 +73,7 @@ const App = () => {
     <AppearanceProvider>
       <GQLProvider>
         <StatusBar barStyle='dark-content' />
-        <NavigationContainer theme={Appearance.getColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
+        <NavigationContainer theme={Appearance.getColorScheme() === 'dark' ? MyDarkTheme : MyDefaultTheme}>
           <RootTabs.Navigator initialRouteName='HomeNavigator' screenOptions={screenOptions}>
             <RootTabs.Screen name='HomeNavigator' component={HomeNavigator} options={{title: 'Home'}} />
             <RootTabs.Screen
